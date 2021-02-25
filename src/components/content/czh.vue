@@ -4,10 +4,12 @@
 
 <script>
     export default {
-        name: "czh"
+        name: "czh",
+        components:{}
     }
 </script>
 
 <style scoped>
 
 </style>
+
