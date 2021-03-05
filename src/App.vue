@@ -1,21 +1,24 @@
 <template>
   <div id="app">
-    <index/>
+    <Index></Index>
   </div>
 </template>
 
 <script>
- //import HomePage from "./views/HomePage/HomePage";
- import Index from "./views/Index"
+   import Index from "./views/Index"
 export default {
   name: 'App',
   components:{
-    //HomePage
     Index
   }
 }
 </script>
 
 <style>
-
+  html, body, #app {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
 </style>

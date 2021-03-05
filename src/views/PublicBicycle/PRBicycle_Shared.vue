@@ -1,0 +1,173 @@
+<!--
+组件：共享单车分析
+作者：李江川
+时间：2021/3/3
+-->
+<template>
+  <div id="PRBicycle_Shared">
+    <div id="PRBicycleShared_container" class="container"></div>
+    <input id="domain4" class="button blue" type="button" @click="changeRentOverlay();" value="切换借车点/还车点位置" />
+    <rightdomain></rightdomain>
+    <SharedLengend></SharedLengend>
+  </div>
+</template>
+
+<script>
+import stylejson from "../../assets/js/PRBicycle_Shared/StyleJson"
+import BMap from 'BMap'
+import {request} from "../../network/request";
+import rightdomain from "./Child/rightdomain";
+import SharedLengend from "./Child/SharedLengend";
+
+let map
+let returnoptions1
+let rentoptions1
+
+
+export default {
+  name: "PRBicycle_Shared",
+  components:{
+    rightdomain,//右侧echarts
+    SharedLengend//左侧图例
+  },
+  data(){
+    return{
+      rentLatLng:[],
+      returnLatLng:[],
+      rentpoints:[],
+      returnpoints:[],
+      changeRR:0
+    }
+  },
+  mounted() {
+    //绘制地图
+    map = new BMap.Map("PRBicycleShared_container", {enableMapClick:false});
+    map.centerAndZoom(new BMap.Point(116.402598,39.941999), 17);
+    map.enableScrollWheelZoom(true);  //开启鼠标滚轮缩放
+    map.setMapStyle({styleJson:stylejson.styleJson});
+    let that = this;
+
+    //后台获取数据
+    request({
+      url:'/TraSysC/get/rentlatandrentlng',
+      method:'get'
+    }).then(res=>{
+      console.log(res)
+      // for(let i=0;i<res.msg.length;i++){
+      //   that.rentLatLng.push([res.msg[i].rentlng,res.msg[i].rentlat]);
+      //   that.returnLatLng.push([res.msg[i].returnlng,res.msg[i].returnlat])
+      //   //console.log(this.rentLatLng)
+      //};
+      //console.log(this);
+      //console.log(that);
+      //this.initdata(map)
+    }).catch(err=>{
+      console.log(err);
+    })
+
+  },
+  methods: {
+    //数据预处理，此处运行时间较长
+    initdata(map) {
+      //alert('运行到此');
+      for (let i = 0; i < this.rentLatLng.length; i++) {
+        this.rentLatLng[i][0] = parseFloat(this.rentLatLng[i][0]) + 0.0125;
+        this.rentLatLng[i][1] = parseFloat(this.rentLatLng[i][1]) + 0.0078;
+      }
+      for (let i = 0; i < this.returnLatLng.length; i++) {
+        this.returnLatLng[i][0] = parseFloat(this.returnLatLng[i][0]) + 0.0125;
+        this.returnLatLng[i][1] = parseFloat(this.returnLatLng[i][1]) + 0.0078;
+      }
+      //alert('运行到此')
+      console.log(this.rentLatLng);
+      this.rentbike(map);
+      this.returnbike(map);
+      // for (let i = 0; i < rentLatLng.length; i++) {
+      //   rentpoints.push(new BMap.Point(rentLatLng[i][0], rentLatLng[i][1]));
+      // };
+      //console.log(rentpoints);
+    },
+    //租车点分布
+    rentbike(map) {
+      for (let i = 0; i < this.rentLatLng.length; i++) {
+        let rentLatLng=this.rentLatLng
+        this.rentpoints.push(new BMap.Point(rentLatLng[i][0], rentLatLng[i][1]));
+      }
+      let rentoptions = {
+        size: BMAP_POINT_SIZE_TINY,
+        shape: BMAP_POINT_SHAPE_CIRCLE,
+        color: '#33CCFF'
+      }
+      rentoptions1=rentoptions
+      let rentpointCollection = new BMap.PointCollection(this.rentpoints, rentoptions);
+      map.addOverlay(rentpointCollection);  // 添加借车Overlay
+    },
+    //还车点分布
+    returnbike(map) {
+      for (let i = 0; i < this.returnLatLng.length; i++) {
+        this.returnLatLng[i][0] = parseFloat(this.returnLatLng[i][0]) + 0.0125;
+        this.returnLatLng[i][1] = parseFloat(this.returnLatLng[i][1]) + 0.0078;
+      }
+      console.log(this.returnLatLng)
+      for (let i = 0; i < this.returnLatLng.length; i++) {
+        let returnLatLng=this.returnLatLng
+        this.returnpoints.push(new BMap.Point(returnLatLng[i][0], returnLatLng[i][1]));
+      }
+      let returnoptions = {
+        size: BMAP_POINT_SIZE_TINY,
+        shape: BMAP_POINT_SHAPE_CIRCLE,
+        color: '#FFFF00'
+      }
+      returnoptions1=returnoptions
+      //let returnpointCollection = new BMap.PointCollection(this.returnpoints, returnoptions);
+      //map.addOverlay(returnpointCollection);  // 添加借车Overlay
+
+    },
+    //切换
+    changeRentOverlay(){
+      if (this.changeRR==0){
+        this.changeRR=1;
+        //rentpointCollection.hide();
+        map.clearOverlays();
+        map.centerAndZoom(new BMap.Point(116.402598,39.941999), 15);
+        let returnpointCollection = new BMap.PointCollection(this.returnpoints, returnoptions1);  // 初始化PointCollection
+        map.addOverlay(returnpointCollection);  // 添加还车Overlay
+        //returnpointCollection.show();//添加还车点位置
+
+      } else{
+        this.changeRR=0;
+        map.clearOverlays();
+        map.centerAndZoom(new BMap.Point(116.402598,39.941999), 17);
+        let rentpointCollection = new BMap.PointCollection(this.rentpoints, rentoptions1);
+        map.addOverlay(rentpointCollection); //添加借车点位置
+        // returnpointCollection.hide();
+        // rentpointCollection.show();
+
+
+      }
+
+    }
+  }
+
+  }
+</script>
+
+<style scoped>
+#PRBicycle_Shared{
+  height:100vh;
+  width:100%
+}
+.container{
+  width:100%;height:100%
+}
+#domain4 {
+  width:12%;
+  height:4%;
+  top:92%;
+  left:43%;
+  position:absolute;
+  z-index:9999;
+  border:0px;
+}
+
+</style>

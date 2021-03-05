@@ -1,34 +1,50 @@
+const  webpack = require('webpack')
 'use strict'
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
-
+const cesiumSource = '../node_modules/cesium/Source'
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
-
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {
     app: './src/main.js'
   },
+  externals: {
+    "BMap": "BMap",
+  },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      jquery: "jquery",
+      "window.jQuery": "jquery"
+    })
+  ],
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
-      : config.dev.assetsPublicPath
+      : config.dev.assetsPublicPath,
+    sourcePrefix: ''
+  },
+  amd:{
+    toUrlUndefined:true
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
       '@': resolve('src'),
+      'cesium':path.resolve(__dirname,cesiumSource)
     }
   },
   module: {
+    unknownContextCritical: false,
     rules: [
       {
         test: /\.vue$/,
