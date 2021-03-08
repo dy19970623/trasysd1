@@ -1,7 +1,6 @@
 <template>
   <div id="rightPane">
-    <div id="control_title" style="background-color:rgba(0,140,255,0.6);margin-bottom: 1px;padding: 1px 47px;color: white">图例</div>
-    <div id="control_content" style="background-color:rgba(1,19,66,0.8);padding: 12px 24px;">
+    <div id="control_content" style="padding: 12px 24px;">
       <div>
         <span class="subway_icon" style="background-color:#A4343A"></span>
         <span class="subway-txt">1号线</span>
@@ -105,17 +104,21 @@ export default {
 
 <style scoped>
 #rightPane {
-  top: 21.7em;
-  left: 1em;
+  top: 51%;
+  left: 92%;
   position: absolute;
   z-index: 1000;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(40, 176, 213, 1);
 }
 .subway_icon{
-  width:8px;
-  height:8px;
-  bottom:2px;
-  position: relative;
-  display: inline-block;
+  position: absolute;
+  left: 10%;
+  width: 12.3%;
+  height: 3.2%;
+  border: none;
+  border-radius: 4px;
 
 }
 .subway-txt{

@@ -1,54 +1,62 @@
 <template>
   <div>
-    <div id="MutiStation">
-      <el-select v-model="station_value1" multiple placeholder="请选择" >
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value"
-        >
-        </el-option>
-      </el-select>
-      <el-button type="primary" @click="chart1change">查询</el-button>
-      <div class="block">
-        <span class="demonstration">带快捷选项</span>
-        <el-date-picker
-          v-model="value21"
-          type="datetimerange"
-          :picker-options="pickerOptions1"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          align="right"
-          value-format="yyyy-MM-dd HH:mm:ss"
-        >
-        </el-date-picker>
+    <div id="MutiStation" class="MutiStation">
+      <div id="biaodan1">
+        <div id="m1" class="m1">
+          <el-select   v-model="station_value1"  :multiple-limit="3" multiple placeholder="请选择站点" >
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div id="m2" class="m2">
+          <el-select  v-model="a1"   placeholder="请选择时间段" >
+            <el-option
+              v-for="item in options1"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div id="button1">
+          <el-button type="primary" @click="chart1change">查询</el-button>
+        </div>
+
       </div>
       <div id="Subway_Flow_chart1" style="margin-left: 18px;width: 395px;height:275px ;"></div>
     </div>
-    <div id="SimpleStation">
-      <el-select v-model="station_value2" placeholder="请选择">
-        <el-option
-          v-for="item in options"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button type="primary" @click="chart2change">查询</el-button>
-      <div class="block">
-        <span class="demonstration">带快捷选项</span>
-        <el-date-picker
-          v-model="value22"
-          type="datetimerange"
-          :picker-options="pickerOptions1"
-          range-separator="至"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
-          value-format="yyyy-MM-dd HH:mm:ss"
-          align="right">
-        </el-date-picker>
+    <div id="SimpleStation" class="SimpleStation">
+      <div id="biaodan2">
+        <div id="s1" class="s1">
+          <el-select v-model="station_value2" placeholder="请选择站点">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
+        </div>
+        <div id="s2" class="s2">
+          <el-select  v-model="a2"  placeholder="请选择时间段" >
+            <el-option
+              v-for="item in options2"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div id="button2">
+          <el-button type="primary" @click="chart2change">查询</el-button>
+        </div>
       </div>
       <div id="Subway_Flow_chart2" style="margin-left: 18px;width: 395px;height:275px"></div>
     </div>
@@ -59,6 +67,7 @@
 import echarts from "echarts"
 import axios from "axios"
 import {request} from "../../../network/request";
+import {graphic} from "echarts/lib/export";
 
 export default {
   name: "leftPane",
@@ -154,39 +163,34 @@ export default {
         label: '崇文门'
       }
       ],
+      options1:[
+        {
+          value: '2016-03-02 00:00:00~2016-03-08 00:00:00',
+          label: '2016年3月2日~8日'
+        }, {
+          value: '2016-03-09 00:00:00~2016-03-15 00:00:00',
+          label: '2016年3月9日~15日'
+        }, {
+          value: '2016-03-16 00:00:00~2016-03-25 00:00:00',
+          label: '2016年3月16日~25日'
+        },
+      ],
+      options2:[
+        {
+          value: '2016-03-02 00:00:00~2016-03-07 00:00:00',
+          label: '2016年3月2日~7日'
+        }, {
+          value: '2016-03-03 00:00:00~2016-03-08 00:00:00',
+          label: '2016年3月3日~8日'
+        }, {
+          value: '2016-03-04 00:00:00~2016-03-09 00:00:00',
+          label: '2016年3月4日~9日'
+        },
+      ],
       station_value1: '',
       station_value2: '',
-      //时间选择控件数据
-      pickerOptions1: {
-        shortcuts: [{
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
-      value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
-      value21: '',
-      value22: ''
+      a1:'',
+      a2:'',
     }
   },
   methods:{
@@ -200,7 +204,7 @@ export default {
         title: [{
           text: '多站点分析',
           textStyle:{
-            fontSize:15,
+            fontSize:21,
             color:'#FFFFFF'
           }
         }],
@@ -209,7 +213,7 @@ export default {
         },
         legend: {
           top: '12%',
-          data:['东单','五道口','上地'],
+          data:['东单','五道口'],
           textStyle:{
             color:'#FFFFFF'
           }
@@ -228,6 +232,7 @@ export default {
             rotate:30
           },
           axisLine: {
+            show:true,
             lineStyle: {
               color: "white"
               ,color:'#FFFFFF'
@@ -238,7 +243,9 @@ export default {
           boundaryGap: false,
           data: ['2018-09-01','2018-09-02','2018-09-03']
         },
-        yAxis: { axisLine: {
+        yAxis: {
+          axisLine: {
+            show:false,
             lineStyle: {
               color: "white"
             }
@@ -260,15 +267,9 @@ export default {
             type:'line',
             stack: '总量',
             data:[16749, 18126, 23357]
-          },
-          {
-            name:'上地',
-            type:'line',
-            stack: '总量',
-            data:[27354, 15669, 25615]
           }
         ]
-        , color:['#f1c049', '#30e68e', '#e81e87']
+        , color:['#ff0033', '#0c8c9a']
       };
       Subway_Flow_chart2.setOption(Subway_Flow_option2);
     },
@@ -281,10 +282,10 @@ export default {
           color:'#FFFFFF'
         },
         title: [{
-          text: '单个站点分析',
+          text: '单站点分析',
           textStyle:{
             color:'#FFFFFF',
-            fontSize:15
+            fontSize:21
 
           }
         }],
@@ -309,19 +310,17 @@ export default {
         },
         xAxis : [
           {
-
             axisLine: {
+              show:true,
               lineStyle: {
                 color: "white"
               }
             },
-
             type : 'value'
           }
         ],
         yAxis : [
           {
-
             axisLine: {
               lineStyle: {
                 color: "white"
@@ -330,15 +329,21 @@ export default {
 
             type : 'category',
             axisTick : {show: false},
-            data : ['2018-09-1','2018-09-2','2018-09-3','2018-09-4']
+            //data : ['2018-09-1','2018-09-2','2018-09-3','2018-09-4']
           }
         ],
         series : [
-
           {
             name:'进站人数',
             type:'bar',
             stack: '总量',
+            color: new graphic.LinearGradient(0, 0, 1, 0, [{
+              offset: 0,
+              color: '#689EA9'
+            }, {
+              offset: 1,
+              color: '#92C5B0'
+            }]),
             label: {
               normal: {
                 show: true
@@ -350,6 +355,13 @@ export default {
             name:'出站人数',
             type:'bar',
             stack: '总量',
+            color: new graphic.LinearGradient(0, 0, 1, 0, [{
+              offset: 0,
+              color: '#4AB3DF'
+            }, {
+              offset: 1,
+              color: '#19344B'
+            }]),
             label: {
               normal: {
                 show: true,
@@ -357,29 +369,20 @@ export default {
               }
             },
             data:[-37587, -49673, -65872, -57698]
-          },{
-            name:'总人数',
-            type:'bar',
-            label: {
-              normal: {
-                show: true,
-                position: 'inside'
-              }
-            },
-            data:[48158, 19301, 13082, 19179]
-          }
+          },
         ]
-        , color:['#91c7ae', '#61a0a8', '#6495ED']
+        ,
       };
       Subway_Flow_chart1.setOption(Subway_Flow_option1);
     },
     //方法：后台查询多站数据
     chart1change(){
       //处理控件数据
-      let turnoverRatetime=this.value21;
-      console.log(turnoverRatetime)
-      let turnoverRatetimeMINDATE=turnoverRatetime[0]
-      let turnoverRatetimeMAXDATE=turnoverRatetime[1]
+      let time1=this.a1
+      console.log(time1.substring(0,19))
+      console.log(time1.substring(20))
+      let turnoverRatetimeMINDATE=time1.substring(0,19)
+      let turnoverRatetimeMAXDATE=time1.substring(20)
       let stationPlace = this.station_value1;
       let value2 = {};
       value2.MINDATE=turnoverRatetimeMINDATE;
@@ -474,7 +477,7 @@ export default {
               title: [{
                 text: '多站点分析',
                 textStyle:{
-                  fontSize:15
+                  fontSize:21
                   ,color:'#FFFFFF'
                 }
               }
@@ -531,7 +534,7 @@ export default {
                   data:residuePeople1
                 }
               ]
-              , color:['#f1c049', '#30e68e', '#e81e87']
+              , color:['#ff0033', '#0c8c9a', '#FF6633']
             };
 
 
@@ -666,10 +669,8 @@ export default {
                   data:residuePeople2
                 }
               ]
-              , color:['#f1c049', '#30e68e', '#e81e87']
+              , color:['#ff0033', '#0c8c9a', '#e81e87']
             };
-
-
             Subway_Flow_chart2.setOption(Subway_Flow_option2,true);
           }else{
             //分类数据，站点是3个的进行展示
@@ -764,7 +765,7 @@ export default {
               title: [{
                 text: '多站点分析',
                 textStyle:{
-                  fontSize:15
+                  fontSize:21
                   ,color:'#FFFFFF'
                 }
               }],
@@ -832,7 +833,7 @@ export default {
                   data:residuePeople3
                 }
               ]
-              , color:['#f1c049', '#30e68e', '#e81e87']
+              , color:['#ff0033', '#0c8c9a', '#FF6633']
             };
 
 
@@ -846,10 +847,11 @@ export default {
     },
     //方法：后台查询单站数据
     chart2change(){
-      let turnoverRatetime=this.value22;
-      console.log(turnoverRatetime)
-      let turnoverRatetimeMINDATE=turnoverRatetime[0]
-      let turnoverRatetimeMAXDATE=turnoverRatetime[1]
+      let time1=this.a2
+      console.log(time1.substring(0,19))
+      console.log(time1.substring(20))
+      let turnoverRatetimeMINDATE=time1.substring(0,19)
+      let turnoverRatetimeMAXDATE=time1.substring(20)
       let stationPlace = this.station_value2;
       let value1 = {
         STATIONNAME : stationPlace,
@@ -963,10 +965,10 @@ export default {
               color:'#FFFFFF'
             },
             title: [{
-              text: '单个站点分析',
+              text: '单站点分析',
               textStyle:{
                 color:'#FFFFFF',
-                fontSize:15
+                fontSize:21
               }
             }],
             tooltip : {
@@ -1015,6 +1017,13 @@ export default {
                 name:'进站人数',
                 type:'bar',
                 stack: '总量',
+                color: new graphic.LinearGradient(0, 0, 1, 0, [{
+                  offset: 0,
+                  color: '#689EA9'
+                }, {
+                  offset: 1,
+                  color: '#92C5B0'
+                }]),
                 label: {
                   normal: {
                     show: true
@@ -1026,6 +1035,13 @@ export default {
                 name:'出站人数',
                 type:'bar',
                 stack: '总量',
+                color: new graphic.LinearGradient(0, 0, 1, 0, [{
+                  offset: 0,
+                  color: '#4AB3DF'
+                }, {
+                  offset: 1,
+                  color: '#19344B'
+                }]),
                 label: {
                   normal: {
                     show: true,
@@ -1033,19 +1049,8 @@ export default {
                   }
                 },
                 data:exitPeople
-              },{
-                name:'总人数',
-                type:'bar',
-                label: {
-                  normal: {
-                    show: true,
-                    position: 'inside'
-                  }
-                },
-                data:residuePeople
               }
             ]
-            , color:['#91c7ae', '#61a0a8', '#6495ED']
           };
           Subway_Flow_chart1.setOption(Subway_Flow_option1,true);
       })
@@ -1060,14 +1065,129 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 #MutiStation{
-  height: 400px;
-  width:100%
+  position: absolute;
+  height: 40%;
+  width:80%;
+  top:1%;
+  left:5%;
+  border:40px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border2.png") 45 stretch;
 }
 #SimpleStation{
-  height: 350px;
+  height: 40%;
+  width: 80%;
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  border:40px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border2.png") 45 stretch;
+}
+#biaodan1{
+  position: relative;
+  top:0.1%;
+  height:40%;
+  width: 100%;
+}
+#biaodan2{
+  position: relative;
+  top:0.1%;
+  height:40%;
+  width: 100%;
+}
+#m1{
+  position: relative;
+  width: 100%;
+}
+.m1 .el-select{
   width:100%
 }
+#m2{
+  position: relative;
+  width: 80%;
+  top: 5%;
+}
+.m2 .el-select{
+  width: 100%;
+}
+#s1{
+  position: relative;
+  width: 100%;
+}
+.s1 .el-select{
+  width:100%
+}
+
+#s2{
+  position: relative;
+  width: 80%;
+  top: 5%;
+}
+.s2 .el-select{
+  width: 100%;
+}
+
+#button1{
+  position: relative;
+  margin-top:-7%;
+  left:82%;
+  width: 10%;
+}
+#button2{
+  position: relative;
+  margin-top:-7%;
+  left:82%;
+  width: 10%;
+}
+#Subway_Flow_chart1{
+  position: relative;
+  margin-top:-7%;
+  height: 40%;
+  width: 100%;
+}
+#Subway_Flow_chart2{
+  position: relative;
+  margin-top:-7%;
+  height: 40%;
+  width: 100%;
+}
+
+.MutiStation .el-button--primary{
+  color: #303133;
+  background-color: #fff;
+  border:0px;
+  box-shadow: 2px 2px 5px rgba(153, 153, 153, 1);
+  font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
+  font-size: 17px;
+}
+.MutiStation .el-input__inner{
+  border-radius: 4px;
+  border: 2px solid #409eff;
+  padding-right: 47%;
+  background-color: #606266;
+  color: #fff;
+  width:100%
+}
+.SimpleStation .el-button--primary{
+  color: #303133;
+  background-color: #fff;
+  border:0px;
+  box-shadow: 2px 2px 5px rgba(153, 153, 153, 1);
+  font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
+  font-size: 17px;
+}
+.SimpleStation .el-input__inner{
+  border-radius: 4px;
+  border: 2px solid #409eff;
+  padding-right: 47%;
+  background-color: #606266;
+  color: #fff;
+  width:100%
+}
+.MutiStation .el-scrollbar__wrap{
+  background-color: #606266
+}
+
 
 </style>

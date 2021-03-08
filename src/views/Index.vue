@@ -3,7 +3,7 @@
      <el-container>
        <el-header height="9%">
          <el-row>
-           <el-col :span="3">
+           <el-col :sm="3">
              <div class="grid-content bg-purple">
              <el-col :span="10">
                <div style="font-size: 24px;text-align: center;padding-top: 20px;">{{nowTime}}</div>
@@ -17,11 +17,18 @@
              </el-col>-->
            </div>
            </el-col>
-           <el-col :span="7"><div class="grid-content bg-purple"><menu-left/></div></el-col>
-           <el-col :span="4"><div class="grid-content bg-purple-light">
-             <p style="vertical-align: middle;line-height: 100%;cursor: pointer;text-align: center;font-size: 22px; ">交通大数据可视化平台</p></div></el-col>
-           <el-col :span="7"><div class="grid-content bg-purple"><menu-right/></div></el-col>
-           <el-col :span="3"><div class="grid-content bg-purple"></div></el-col>
+           <el-col :sm="5"><div class="grid-content bg-purple"><menu-left/></div></el-col>
+           <el-col :sm="8">
+             <div class="grid-content bg-purple-light">
+               <router-link to="/homepage">
+                 <p style="vertical-align: middle;line-height: 100%;cursor: pointer;text-align: center;font-size: 28px; font-weight:bold;padding-top: -8px">
+                   交&nbsp;&nbsp;&nbsp;通&nbsp;&nbsp;&nbsp;大&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;据&nbsp;&nbsp;&nbsp;可&nbsp;&nbsp;&nbsp;视&nbsp;&nbsp;&nbsp;化&nbsp;&nbsp;&nbsp;平&nbsp;&nbsp;&nbsp;台
+                 </p>
+               </router-link>
+             </div>
+           </el-col>
+           <el-col :sm="5"><div class="grid-content bg-purple"><menu-right/></div></el-col>
+           <el-col :sm="3"><div class="grid-content bg-purple"></div></el-col>
          </el-row>
 
        </el-header>
@@ -95,7 +102,10 @@ export default {
 
 <style scoped>
 #index{
-    font-family: 'Lato', Calibri, Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  font-family: 'Lato', Calibri, Arial, sans-serif;
+  background-image: linear-gradient(to right,#0D0715,#000033,#00093A,#0D0715,#000033,#000838,#000000)
   }
 .el-container {
   display: flex;
@@ -105,7 +115,8 @@ export default {
   top:0px;
   width: 100%;
   color: white;
-  background: url("../assets/image/HomePage/Navigation.png");
+  background: url("../assets/image/HomePage/1.png");
+  background-size: 100% 100%;
   padding: 0px;
 }
 .el-main {
@@ -123,7 +134,7 @@ export default {
   bottom: 0px;
   text-align: center;
   width: 99%;
-  background: aqua;
+  color: aliceblue;
 }
 
 

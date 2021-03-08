@@ -1,16 +1,16 @@
 <template>
-  <div>
+  <div class="Bar_Top">
+    <div class="Left_Top"></div><div class="Right_Bottom"></div>
     <div id="chordChart1Bar">
-      <legend style="float:left;color:white;font-size: 18px;border-bottom: 0px solid #e5e5e5;">车站总体情况</legend>
-      <p style="color:white; font-size:12px; float:left;margin-top:5px;margin-left:10px">2015年4月7日数据</p>
+      <legend>车站总体情况</legend>
+      <div id="chordChart1"></div>  
     </div>
-    <div id="chordChart1"></div> 
   </div>
 </template>
 
 <script>
 import echarts from 'echarts' 
-import PRBicycleOverall from '../../../assets/js/PRBicycleOverall/PRBicycleOverall'
+import PRBicycleOverall from '../../../assets/js/PRBicycle_Overall/PRBicycle_Overall'
 
 export default {
   data() {
@@ -31,33 +31,36 @@ export default {
     PRBicycle_Overall_echart11(){
       let PRBicycle_Overall_myChart2 = echarts.init(document.getElementById('chordChart1'));
       let PRBicycle_Overall_option2 = {
-		    backgroundColor: 'rgba(255,255,255,0.1)',
+		    //backgroundColor: 'rgba(255,255,255,0.1)',
 		    title: [{
-		        x: "12%",
+		        x: "10%",
+            y: "75%",
 		        bottom: 40,
 		        text: '车站数量',
 		        textStyle: {
 		            fontWeight: 'normal',
-		            fontSize: 18,
-		            color: "rgba(241,192,73,1.0)"
+		            fontSize: 14,
+		            color: 'white',
 		        },
 		    }, {
-		        x: "40%",
+		        x: "42%",
+            y: "75%",
 		        bottom: 40,
 		        text: '空闲车辆',
 		        textStyle: {
 		            fontWeight: 'normal',
-		            fontSize: 18,
-		            color: "rgba(48,230,142,1.0)"
+		            fontSize: 14,
+		            color: 'white'
 		        },
 		    }, {
-		        x: "65%",
+		        x: "70.8%",
+            y: "75%",
 		        bottom: 40,
 		        text: '锁位使用率%',
 		        textStyle: {
 		            fontWeight: 'normal',
-		            fontSize: 18,
-		            color: "rgba(232,30,135,1.0)"
+		            fontSize: 14,
+		            color: 'white'
 		        },
 		    }],
 		    tooltip: {
@@ -73,13 +76,32 @@ export default {
 		            }
 		        },
 		        clockwise: false,
-		        radius: ['35%', '40%'],
-		        center: ['22%', '50%'],
+            hoverAnimation: false,
+		        radius: ['51%', '55%'], //大小
+		        center: ['18%', '43%'], //位置
 		        data: [{
 		            value: 148 ,
 		            name: '车站数量',
 		            itemStyle: {
-		                color: 'rgba(241,192,73,1.0)'
+		                color: '#8A00E1'
+		            }
+		        }]
+		    }, {
+		        type: 'pie',
+		        label: { //标签的位置
+		            normal: {
+		                show: false,
+		            }
+		        },
+		        clockwise: false,
+            hoverAnimation: false,
+		        radius: ['45%', '49%'],
+		        center: ['18%', '43%'],
+		        data: [{
+		            value: 148 ,
+		            name: '车站数量',
+		            itemStyle: {
+		                color: '#8A00E1'
 		            }
 		        }]
 		    }, {
@@ -88,9 +110,9 @@ export default {
 		        clockwise: false,
 		        silent: true,
 		        minAngle: 20, //最小的扇区角度（0 ~ 360）
-		        center: ['22%', '50%'], //饼图的中心（圆心）坐标
+		        center: ['18%', '45%'], //饼图的中心（圆心）坐标
 		        radius: ['0%', '35%'],
-		        itemStyle: { //图形样式
+            itemStyle: { //图形样式
 		            normal: {
 		                color: {
 		                    type: 'radial',
@@ -99,10 +121,10 @@ export default {
 		                    r: 0.5,
 		                    colorStops: [{
 		                        offset: 0,
-		                        color: 'rgba(241,192,73,0.5)' // 0% 处的颜色
+		                        color: 'rgba(241,192,73,0)' // 0% 处的颜色
 		                    }, {
 		                        offset: 1,
-		                        color: 'rgba(241,192,73,1)' // 100% 处的颜色
+		                        color: 'rgba(241,192,73,0)' // 100% 处的颜色
 		                    }],
 		                    globalCoord: false // 缺省为 false
 		                },
@@ -116,9 +138,9 @@ export default {
 		                align: 'center',
 		                position: 'center', //标签的位置
 		                formatter: "{c}",
-		                fontSize: 30,
+		                fontSize: 22,
 		                textStyle: {
-		                    color: 'rgba(241,192,73,1.0)',
+		                    color: 'white',
 		                }
 		            }
 		        },
@@ -133,13 +155,33 @@ export default {
 		            }
 		        },
 		        clockwise: true,
-		        radius: ['35%', '40%'],
-		        center: ['50%', '50%'],
+            hoverAnimation: false,
+		        radius: ['51%', '55%'], //大小
+		        center: ['50%', '43%'],
 		        data: [{
 		            value: PRBicycleOverall.echart11_num[0],
 		            name: '空闲车辆',
 		            itemStyle: {
-		                color: 'rgba(48,230,142,1.0)'
+		                color: '#00C5FF'
+		            }
+		        }]
+		    }, 
+        {
+		        type: 'pie',
+		        label: { //标签的位置
+		            normal: {
+		                show: false,
+		            }
+		        },
+		        clockwise: true,
+            hoverAnimation: false,
+		        radius: ['45%', '49%'], //大小
+		        center: ['50%', '43%'],
+		        data: [{
+		            value: PRBicycleOverall.echart11_num[0],
+		            name: '空闲车辆',
+		            itemStyle: {
+		                color: '#00C5FF'
 		            }
 		        }]
 		    }, {
@@ -148,9 +190,9 @@ export default {
 		        clockwise: false,
 		        silent: true,
 		        minAngle: 20, //最小的扇区角度（0 ~ 360）
-		        center: ['50%', '50%'], //饼图的中心（圆心）坐标
+		        center: ['50%', '45%'], //饼图的中心（圆心）坐标
 		        radius: ['0%', '35%'],
-		        itemStyle: { //图形样式
+            itemStyle: { //图形样式
 		            normal: {
 		                color: {
 		                    type: 'radial',
@@ -159,10 +201,10 @@ export default {
 		                    r: 0.5,
 		                    colorStops: [{
 		                        offset: 0,
-		                        color: 'rgba(48,230,142,0.1)' // 0% 处的颜色
+		                        color: 'rgba(48,230,142,0)' // 0% 处的颜色
 		                    }, {
 		                        offset: 1,
-		                        color: 'rgba(48,230,142,1)' // 100% 处的颜色
+		                        color: 'rgba(48,230,142,0)' // 100% 处的颜色
 		                    }],
 		                    globalCoord: false // 缺省为 false
 		                },
@@ -176,9 +218,9 @@ export default {
 		                align: 'center',
 		                position: 'center', //标签的位置
 		                formatter: "{c}",
-		                fontSize: 30,
+		                fontSize: 22,
 		                textStyle: {
-		                    color: 'rgba(48,230,142,1.0)',
+		                    color: 'white',
 		                }
 		            }
 		        },
@@ -193,13 +235,33 @@ export default {
 		            }
 		        },
 		        clockwise: false,
-		        radius: ['35%', '40%'],
-		        center: ['77%', '50%'],
+            hoverAnimation: false,
+		        radius: ['51%', '55%'],
+		        center: ['82%', '43%'],
 		        data: [{
 		            value: PRBicycleOverall.echart11_num[1],
 		            name: '锁位使用率%',
 		            itemStyle: {
-		                color: 'rgba(232,30,135,1.0)'
+		                color: '#FF6633'
+		            }
+		        }]
+		    }, 
+        {
+		        type: 'pie',
+		        label: { //标签的位置
+		            normal: {
+		                show: false,
+		            }
+		        },
+		        clockwise: false,
+            hoverAnimation: false,
+		        radius: ['45%', '49%'],
+		        center: ['82%', '43%'],
+		        data: [{
+		            value: PRBicycleOverall.echart11_num[1],
+		            name: '锁位使用率%',
+		            itemStyle: {
+		                color: '#FF6633'
 		            }
 		        }]
 		    }, {
@@ -208,7 +270,7 @@ export default {
 		        clockwise: false,
 		        silent: true,
 		        minAngle: 20, //最小的扇区角度（0 ~ 360）
-		        center: ['77%', '50%'], //饼图的中心（圆心）坐标
+		        center: ['82%', '43%'], //饼图的中心（圆心）坐标
 		        radius: ['0%', '35%'],
 		        itemStyle: { //图形样式
 		            normal: {
@@ -219,10 +281,10 @@ export default {
 		                    r: 0.5,
 		                    colorStops: [{
 		                        offset: 0,
-		                        color: 'rgba(232,30,135,0.1)' // 0% 处的颜色
+		                        color: 'rgba(232,30,135,0)' // 0% 处的颜色
 		                    }, {
 		                        offset: 1,
-		                        color: 'rgba(232,30,135,1)' // 100% 处的颜色
+		                        color: 'rgba(232,30,135,0)' // 100% 处的颜色
 		                    }],
 		                    globalCoord: false // 缺省为 false
 		                },
@@ -236,9 +298,9 @@ export default {
 		                align: 'center',
 		                position: 'center', //标签的位置
 		                formatter: "{c}",
-		                fontSize: 30,
+		                fontSize: 22,
 		                textStyle: {
-		                    color: 'rgba(232,30,135,1.0)',
+		                    color: 'white',
 		                }
 		            }
 		        },
@@ -254,20 +316,74 @@ export default {
 </script>
 
 <style>
-
+.Bar_Top{
+  height: 25%;
+  width: 100%;
+}
 #chordChart1Bar{
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 24%;
+  margin-top: 2%;  
+  margin-left: 2.5%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop2.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   
-  width: 97.5%;
-  height: 24px;
-  
+  z-index: 700; 
+}
+.Left_Top {
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 24%;
+  margin-top: 2.5%;  
+  margin-left: 3%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop3.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+}
+.Right_Bottom{
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 24%;
+  margin-top: 2.2%;  
+  margin-left: 1.5%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop4.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 12%;
+  transform: rotate(180deg);
 }
 #chordChart1{
-    width: 97.5%;
-    height: 250px;
-    margin-bottom: 20px;
-    background-color:rgba(255,255,255,0.1);
-    
-    z-index: 700;
-    
+  width: 89%;
+  height: 78%;
+  margin-left: 5%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop1.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
+#chordChart1:after{
+  opacity: 0.5;
+}
+legend {
+  height: 15%;
+  left: 10%;
+  font-size:125%;
+  line-height: 200%;
+  padding-left: 15%;
+  color:rgb(44, 188, 255);
+  
+}
+#u1699_img {
+    border-width: 0px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 477px;
+    height: 177px;
+}
+
 </style>

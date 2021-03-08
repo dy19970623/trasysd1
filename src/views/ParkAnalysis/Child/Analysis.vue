@@ -1,47 +1,53 @@
+<!--创建日期：2021.3.3-->
+<!--姓名：高翔森-->
+<!--功能：组件-->
 <template>
-  <div>
-   <div  id="a1" >
+  <div id="analysis">
+   <div id="one" >
+    <div  id="a1" >
      <div class="block" id="block1">
-       <el-select v-model="value1" style="width:300px;height:30px;" placeholder="请选择">
-         <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value"></el-option>
+       <el-select v-model="value1" id="time1"  size="small" placeholder="请选择时间范围">
+         <el-option  v-for="item in options1"  :key="item.value" :label="item.label" :value="item.value" style="width:300px"></el-option>
        </el-select>
      </div>
      <div id="button1" >
-      <el-button round style="height:32px" id="selecttime" @click="selectTop">查询</el-button>
+      <el-button  size="small" id="selecttime" @click="selectTop">查询</el-button>
      </div>
-   </div>
-
-   <div id="a2" >
+    </div>
+    <div id="a2" >
      <div id="chart_1" ref="chart_1" >
      </div>
-   </div>
+    </div>
+  </div>
 
-   <div id="a3"  >
+  <div id="two">
+    <div id="a3">
      <div style="height:40px;width: 230px">
-     <el-select v-model="value2" multiple collapse-tags style="margin-left: 20px;" placeholder="请选择">
+     <el-select v-model="value2" multiple collapse-tags style="margin-left:50px;" id="park" size="small" :multiple-limit="3" placeholder="请选择停车场位置">
        <el-option v-for="item in options2" :key="item.value" :label="item.label" :value="item.value"></el-option>
      </el-select>
      </div>
      <div class="block" id="block2">
-       <el-select v-model="value3" style="width:300px;height:30px;" placeholder="请选择">
-         <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value"></el-option>
+       <el-select v-model="value3"  id="time2" size="small" placeholder="请选择时间范围">
+         <el-option v-for="item in options1" :key="item.value" :label="item.label" :value="item.value" style="width:300px;"></el-option>
        </el-select>
      </div>
      <div id="button2"  >
-       <el-button round style="height:32px" id="selectturnover" @click="GetInformation">查询</el-button>
+       <el-button  size="small" id="selectturnover" @click="GetInformation">查询</el-button>
      </div>
-   </div>
-
-   <div id="a4">
+     </div>
+    <div id="a4">
      <div id="chart_2" ref="chart_2" >
      </div>
    </div>
+  </div>
 
   </div>
 </template>
 
 <script>
-  //import {request,dopost} from "../../network/request";
+  import {request,dopost} from "../../../network/request";
+  import { graphic } from 'echarts/lib/export'
   import {data10,data11,data12,data13,data14,data15,data16,data17,data18,data19,data20,data21,data22,data94,data95,data96,data97,data98,data99} from "../../../assets/js/ParkAnalysis/data99";
     export default {
         data(){
@@ -262,6 +268,19 @@
                     show: true
                   }
                 },
+                itemStyle: {
+                  normal: {
+                    barBorderRadius: [0, 5, 5, 0],
+                    color: new graphic.LinearGradient(0, 0, 1,0 , [{
+                      offset: 0,
+                      color: '#990000'
+                    }, {
+                      offset: 1,
+                      color: '#FF9999'
+                    }]),
+
+                  }
+                },
                 data: Object.keys(builderJson.charts).map(function (key) {
                   return builderJson.charts[key];
                 })
@@ -271,7 +290,15 @@
                 silent: true,
                 itemStyle: {
                   normal: {
-                    color: '#eee'
+                    barBorderRadius: [0, 5, 5, 0],
+                    color: new graphic.LinearGradient(0, 0, 1,0 , [{
+                      offset: 0,
+                      color: '#990000'
+                    }, {
+                      offset: 1,
+                      color: '#FF9999'
+                    }]),
+
                   }
                 },
                 data: Object.keys(builderJson.charts).map(function (key) {
@@ -282,11 +309,24 @@
                 stack: 'component',
                 xAxisIndex: 1,
                 yAxisIndex: 1,
-                z: 3,
+               z: 3,
                 label: {
                   normal: {
 
                     show: true
+                  }
+                },
+                itemStyle: {
+                  normal: {
+                    barBorderRadius: [0,5,5,0],
+                    color: new graphic.LinearGradient(0, 0, 1, 0, [{
+                      offset: 0,
+                      color: '#660033'
+                    }, {
+                      offset: 1,
+                      color: '#9933FF'
+                    }]),
+
                   }
                 },
                 data: Object.keys(builderJson.components).map(function (key) {
@@ -300,14 +340,24 @@
                 yAxisIndex: 1,
                 itemStyle: {
                   normal: {
-                    color: '#eee'
+                    barBorderRadius: [0,5,5,0],
+                    color: new graphic.LinearGradient(0, 0, 1, 0, [{
+                      offset: 0,
+                      color: '#660033'
+                    }, {
+                      offset: 1,
+                      color: '#9933FF'
+                    }]),
+
                   }
                 },
                 data: Object.keys(builderJson.components).map(function (key) {
                   return builderJson.all - builderJson.components[key];
                 })
               }] ,
-               color:['#6495ED','#91c7ae']
+
+
+               //color:['#6495ED','#91c7ae']
             };
             chart1.setOption(option1); //到这里
 
@@ -426,25 +476,61 @@
                 {
                   name:Parkingname[0],
                   type:'bar',
-                  data:Parkingzhouzhuan0put
+                  data:Parkingzhouzhuan0put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0,0 , [{
+                        offset: 0,
+                        color: '#990000'
+                      }, {
+                        offset: 1,
+                        color: '#FF9999'
+                      }]),
+                    }
+                  }
                 },
                 {
                   name:Parkingname[1],
                   type:'bar',
-                  data:Parkingzhouzhuan1put
+                  data:Parkingzhouzhuan1put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#660033'
+                      }, {
+                        offset: 1,
+                        color: '#9933FF'
+                      }]),
+                    }
+                  }
                 },
                 {
                   name:Parkingname[2],
                   type:'bar',
-                  data:Parkingzhouzhuan2put
+                  data:Parkingzhouzhuan2put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#845EC2'
+                      }, {
+                        offset: 1,
+                        color: '#00CCFF'
+                      }]),
+                    }
+                  }
                 }
-              ]
-              , color:['#91c7ae', '#61a0a8', '#6495ED']
+              ],
+
             };
             chart2.setOption(option2);
           },
 
-          //************************************** 第一个查询按钮实现的功能**********************************************
+          //************************************** 第一个查询按钮实现的功能 **********************************************
         selectTop(){
           let randomvalue =Math.floor(Math.random()*5);
           let datatestTOP = {};
@@ -618,6 +704,19 @@
                   show: true
                 }
               },
+              itemStyle: {
+                normal: {
+                  barBorderRadius: [0, 5, 5, 0],
+                  color: new graphic.LinearGradient(0, 0, 1,0 , [{
+                    offset: 0,
+                    color: '#990000'
+                  }, {
+                    offset: 1,
+                    color: '#FF9999'
+                  }]),
+
+                }
+              },
               data: Object.keys(builderJson.charts).map(function (key) {
                 return builderJson.charts[key];
               })
@@ -627,7 +726,15 @@
               silent: true,
               itemStyle: {
                 normal: {
-                  color: '#eee'
+                  barBorderRadius: [0, 5, 5, 0],
+                  color: new graphic.LinearGradient(0, 0, 1,0 , [{
+                    offset: 0,
+                    color: '#990000'
+                  }, {
+                    offset: 1,
+                    color: '#FF9999'
+                  }]),
+
                 }
               },
               data: Object.keys(builderJson.charts).map(function (key) {
@@ -645,6 +752,19 @@
                   show: true
                 }
               },
+              itemStyle: {
+                normal: {
+                  barBorderRadius: [0,5,5,0],
+                  color: new graphic.LinearGradient(0, 0, 1, 0, [{
+                    offset: 0,
+                    color: '#660033'
+                  }, {
+                    offset: 1,
+                    color: '#9933FF'
+                  }]),
+
+                }
+              },
               data: Object.keys(builderJson.components).map(function (key) {
                 return builderJson.components[key];
               })
@@ -656,18 +776,25 @@
               yAxisIndex: 1,
               itemStyle: {
                 normal: {
-                  color: '#eee'
+                  barBorderRadius: [0,5,5,0],
+                  color: new graphic.LinearGradient(0, 0, 1, 0, [{
+                    offset: 0,
+                    color: '#660033'
+                  }, {
+                    offset: 1,
+                    color: '#9933FF'
+                  }]),
+
                 }
               },
               data: Object.keys(builderJson.components).map(function (key) {
                 return builderJson.all - builderJson.components[key];
               })
-            }]
-            , color:['#6495ED','#91c7ae']
+            }],
           };
           chart11.setOption(option11,true);
         },
-        //******************************************  第二个查询按钮实现  **********************************************
+        //******************************************  第二个查询按钮功能实现  **********************************************
           GetInformation(){
            // request({
            //   url:'/park/findBynameanddate',
@@ -677,37 +804,38 @@
            // }).catch(err => {
            //   console.log(err);
            // });
+            let parkPlace = {};
+            parkPlace = this.value2;
+            let turnoverratetime = this.value3;
+            let turnoverratetimeMINDATE = turnoverratetime.substring(0,20);
+            let turnoverratetimeMAXDATE = turnoverratetime.substring(22);
+            //分别针对不同情况将不同需求的值插入value中
+            let value = {};
+            value.MINDATE = turnoverratetimeMINDATE;
+            value.MAXDATE = turnoverratetimeMAXDATE;
+            if(parkPlace.length == 1){
+              value.FULLNAME = parkPlace[0];
+            }else if(parkPlace.length == 2){
+              value.FULLNAME = parkPlace[0];
+              value.FULLNAME1 = parkPlace[1];
+            }else{
+              value.FULLNAME = parkPlace[0];
+              value.FULLNAME1 = parkPlace[1];
+              value.FULLNAME2 = parkPlace[2];
+            }
 
            dopost({
              url: '/park/findBynameanddate',
-             data:''
-           }).then(res => {
+             data: value ,
+           }).then( res => {
              console.log(res)
              this.selectAna(res)
            })
           },
 
+
         selectAna(e){
           let chart22 = this.$echarts.init(document.getElementById('chart_2'));
-          let parkPlace = {};
-          parkPlace =this.value2;
-          let turnoverratetime=this.value3;
-          let turnoverratetimeMINDATE=turnoverratetime.substring(0,20);
-          let turnoverratetimeMAXDATE=turnoverratetime.substring(22);
-          //分别针对不同情况将不同需求的值插入value中
-          let value = {};
-          value.MINDATE=turnoverratetimeMINDATE;
-          value.MAXDATE=turnoverratetimeMAXDATE;
-          if(parkPlace.length == 1){
-            value.FULLNAME=parkPlace[0];
-          }else if(parkPlace.length == 2){
-            value.FULLNAME=parkPlace[0];
-            value.FULLNAME1=parkPlace[1];
-          }else{
-            value.FULLNAME=parkPlace[0];
-            value.FULLNAME1=parkPlace[1];
-            value.FULLNAME2=parkPlace[2];
-          }
           for(let i = 0; i<e.msg.length; i++){
             let toTurntime = new Date(e.msg[i].DATETIME);
             let Y = toTurntime.getFullYear() + '-';
@@ -756,7 +884,7 @@
           for(let i=0;i<Parkingtime.length;i++){
             TURNOVERALL.push(0);
           }
-
+             //**********************************    只选择一个位置   *****************************************
           if(Parkingnameput.length == 1) {
             for(let i=0;i<e.msg.length;i++){
               switch(e.msg[i].DATETIME){
@@ -841,13 +969,26 @@
                 {
                   name:Parkingnameput[0],
                   type:'bar',
-                  data:Parkingzhouzhuan0put
+                  data:Parkingzhouzhuan0put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0,0 , [{
+                        offset: 0,
+                        color: '#990000'
+                      }, {
+                        offset: 1,
+                        color: '#FF9999'
+                      }]),
+                    }
+                  }
                 }
               ]
-              , color:['#91c7ae', '#61a0a8', '#6495ED']
+              ,
             };
             chart22.setOption(option22,true);
            }
+            //**************************************  选择两个位置 ******************************
          else if(Parkingnameput.length == 2){
             let TURNOVERALL1=[];
             let TURNOVERALL2=[];
@@ -964,17 +1105,42 @@
                 {
                   name:Parkingnameput[0],
                   type:'bar',
-                  data:Parkingzhouzhuan0put
+                  data:Parkingzhouzhuan0put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0,0 , [{
+                        offset: 0,
+                        color: '#990000'
+                      }, {
+                        offset: 1,
+                        color: '#FF9999'
+                      }]),
+                    }
+                  }
                 },{
                   name:Parkingnameput[1],
                   type:'bar',
-                  data:Parkingzhouzhuan1put
+                  data:Parkingzhouzhuan1put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#660033'
+                      }, {
+                        offset: 1,
+                        color: '#9933FF'
+                      }]),
+                    }
+                  }
                 }
               ]
-              , color:['#91c7ae', '#61a0a8', '#6495ED']
+              ,
             };
             chart22.setOption(option23,true);
           }
+         //******************************************  选择三个位置    ******************************
          else{
             let TURNOVERALL1=[];
             let TURNOVERALL2=[];
@@ -1118,18 +1284,53 @@
                 {
                   name:Parkingnameput[0],
                   type:'bar',
-                  data:Parkingzhouzhuan0put
+                  data:Parkingzhouzhuan0put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0,0 , [{
+                        offset: 0,
+                        color: '#990000'
+                      }, {
+                        offset: 1,
+                        color: '#FF9999'
+                      }]),
+                    }
+                  }
                 },{
                   name:Parkingnameput[1],
                   type:'bar',
-                  data:Parkingzhouzhuan1put
+                  data:Parkingzhouzhuan1put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#660033'
+                      }, {
+                        offset: 1,
+                        color: '#9933FF'
+                      }]),
+                    }
+                  }
                 },{
                   name:Parkingnameput[2],
                   type:'bar',
-                  data:Parkingzhouzhuan2put
+                  data:Parkingzhouzhuan2put,
+                  itemStyle:{
+                    normal:{
+                      barBorderRadius: [7,7,0,0],
+                      color: new graphic.LinearGradient(0, 1, 0, 0, [{
+                        offset: 0,
+                        color: '#845EC2'
+                      }, {
+                        offset: 1,
+                        color: '#00CCFF'
+                      }]),
+                    }
+                  }
                 }
-              ]
-              , color:['#91c7ae', '#61a0a8', '#6495ED']
+              ],
             };
             chart22.setOption(option24,true);
           }
@@ -1145,9 +1346,45 @@
 </script>
 
 <style>
+   #analysis{
+    height:100%;
+  }
+  #one {
+    margin-top:2%;
+    background-size: 100% 100%;
+    background-image: url("../../../assets/image/ParkAnalysis/top.png");
+    height: 48%;
+  }
+  #two{
+    margin-top:10px;
+    background-size: 100% 100%;
+    background-image: url("../../../assets/image/ParkAnalysis/top.png");
+    height: 47%;
+  }
+  #time1{
+    width:300px;
+    background-color: black;
+    color: aliceblue;
+    text-align: center;
+  }
+  #time2{
+    width:300px;
+    background-color: black;
+    color: aliceblue;
+    text-align: center;
+  }
+  #park {
+    margin-top: 5px;
+    background-color: black;
+    color: aliceblue;
+    text-align: center;
+  }
+
   #a1 {
-   margin-top:0;
-   height:40px;
+    padding-top: 20px;
+    padding-left:18px;
+    width: 410px;
+    height:40px;
  }
   .block {
     margin-top:0px;
@@ -1158,24 +1395,29 @@
   #button1 {
     margin-top:0px;
     height:35px;
-    width:100px;
+    width:90px;
     float:right;
   }
   #button2 {
     margin-top:0px;
     height:35px;
-    width:100px;
+    width:85px;
     float:right;
   }
   #chart_1 {
-    width: 435px;
-    height:330px;
+    padding-left: 8px;
+    width: 410px;
+    height:300px;
   }
   #a3 {
-    width:435px;
-    height:100px
+    padding-top:10px;
+    padding-left:10px;
+    width:410px;
+    height:85px
   }
   #chart_2 {
-    width: 435px;height:200px
+    padding-left: 8px;
+    width: 410px;height:190px
   }
+
 </style>

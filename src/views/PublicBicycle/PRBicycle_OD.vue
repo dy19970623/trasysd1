@@ -1,6 +1,8 @@
-<!--创建日期：2021年3月1日-->
-<!--姓名：李江川-->
-<!--功能：公租自行车站位使用分析-->
+<!--
+组件：公租自行车站位分析
+作者：李江川
+时间：2021/3/1
+-->
 <template>
   <div>
     <div id="mapBox">
@@ -17,14 +19,14 @@
   import RightBox from "./Child/RightBox";
   import bikelegend from "./Child/bikelegend";
   import {request, requist} from "../../network/request"
-  import bikesitedata from "../../assets/js/PRBicycle_OD/PRBicycle_siteData.js"
-  import icon30 from "../../assets/image/PublicBicycle/icon30.png"
-  import iconyellow from "../../assets/image/PublicBicycle/iconyellow.png"
-  import icongreen from "../../assets/image/PublicBicycle/icongreen.png"
+  import bikesitedata from "../../assets/js/Bike_Search/PRBicycle_siteData.js"
+  import iconred from "../../assets/image/PublicBicycle/u2026.png"
+  import iconblue_1 from "../../assets/image/PublicBicycle/u2064.png"
+  import iconpurple_1 from "../../assets/image/PublicBicycle/u2020.png"
 
 
   let bike_station=[]
-  //let usenumberdata=[]//这俩变量先留着，后面弄完再封装
+  //let usenumberdata=[]//这俩变量先留着，后续稳定了再封装
 
   export default {
     name: "PRBicycle_OD",
@@ -34,7 +36,7 @@
         echarts11data:[]//图表1的数据
       }
     },
-    components: {
+    components: {//子组件：右侧边框和图例
       RightBox,bikelegend
     },
     methods: {
@@ -182,6 +184,9 @@
         echart21_data[17] = site_LOCKNUMBER2[4];//锁位数
         echart21_data[18] = site_NOWNUMBER2[4];//正在使用数
         echart21_data[19] = site_PERCENT2[4];//百分比
+        self.$nextTick(()=>{
+          self.$refs.RightBox.trans2(echart21_data)
+        })
 
         echart22_data[0] = site_NAME2[147];//站名			倒数第一
         echart22_data[1] = site_LOCKNUMBER2[147];//锁位数
@@ -208,22 +213,26 @@
         echart22_data[18] = site_NOWNUMBER2[143];//正在使用数
         echart22_data[19] = site_PERCENT2[143];//百分比
 
+        self.$nextTick(()=>{
+          self.$refs.RightBox.trans3(echart21_data)
+        })
+
         let blueIcon = L.icon({
-          iconUrl: icon30,
+          iconUrl: iconred,
           iconSize: [20, 20],// size of the icon
 
           shadowAnchor: [0, 0],  // the same for the shadow
           popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
         });
         let violetIcon = L.icon({
-          iconUrl: iconyellow,
+          iconUrl: iconblue_1,
           iconSize: [40, 40],/* // size of the icon
   	    iconAnchor:   [10, 10],*/ // point of the icon which will correspond to marker's location
           shadowAnchor: [0, 0],  // the same for the shadow
           popupAnchor: [0, 0] // point from which the popup should open relative to the iconAnchor
         });
         let greenIcon = L.icon({
-          iconUrl: icongreen,
+          iconUrl: iconpurple_1,
           iconSize: [40, 40],/* // size of the icon
     	    iconAnchor:   [10, 10],*/ // point of the icon which will correspond to marker's location
           shadowAnchor: [0, 0],  // the same for the shadow
@@ -253,7 +262,7 @@
 
           marker.on('mouseover', function(e) {
             markerurl=e.target.options.icon.options.iconUrl;
-            if(markerurl=='../../image/PublicBicycle/icon30.png'){
+            if(markerurl=='../../image/PublicBicycle/iconred.png'){
               markerlength=e.target.options.icon.options.iconSize[0]+5;
               markerwidth=e.target.options.icon.options.iconSize[1]+5;
               var newIcon = L.icon({
@@ -282,7 +291,7 @@
           //鼠标移出特效
           marker.on('mouseout', function (e) {
             markerurl = e.target.options.icon.options.iconUrl;
-            if (markerurl == '../../image/PublicBicycle/icon30.png') {
+            if (markerurl == '../../image/PublicBicycle/iconred.png') {
               markerlength = e.target.options.icon.options.iconSize[0] - 5;
               markerwidth = e.target.options.icon.options.iconSize[1] - 5;
               let newIcon = L.icon({
@@ -306,22 +315,6 @@
               e.target.setIcon(newIcon);
             }
           })
-
-          //计时器
-          function remove_line() {
-
-            route.clearLayers();
-            route2.clearLayers();
-            route3.clearLayers();
-          }
-          function reset_line() {
-            routeline(1, 15);
-            routeline2(6, 15);
-            routeline3(15, 7);
-            setTimeout("remove_line()", 4000);
-          }
-
-
           marker.on('click', function(e) {
             /*openPopup();*/
             /*([39.925021, 116.357607], 13);*/
@@ -347,115 +340,6 @@
                   self.$refs.RightBox.trans(site_NAME,echart_freebike,echart_locknumber,echart_usernumber)
                 })
 
-                //触发前删除轨迹
-                if(findnumber==1){
-                  map.removeLayer(markertext);
-                  map.removeLayer(markertext2);
-                  map.removeLayer(markertext3);
-                  map.removeLayer(markertext4);
-                  route.clearLayers();
-                  route2.clearLayers();
-                  route3.clearLayers();}
-                //触发轨迹
-                if(namesite=="白云路站"){
-                  //leaflet文字标注
-                  findnumber = 1;
-                  let myIcon1 = L.divIcon({
-                    html: "15",
-                    className: 'my-div-icon',
-                    iconSize:30        });
-                  markertext = L.marker([39.899527,116.337686], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);
-
-                  let myIcon2 = L.divIcon({
-                    html: "15",
-                    className: 'my-div-icon2',
-                    iconSize:20        });
-                  markertext2 = L.marker([39.945278,116.366074], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);
-                  let myIcon3 = L.divIcon({
-                    html: "10",
-                    className: 'my-div-icon2',
-                    iconSize:20        });
-                  markertext3 = L.marker([39.924938,116.338807], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);let myIcon = L.divIcon({
-                    html: "10",
-                    className: 'my-div-icon',
-                    iconSize:20        });
-                  markertext4 = L.marker([39.926802,116.343875], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);
-                  //leaflet流动线
-                  routeline(1,15);
-                  routeline2(6,15);
-                  routeline3(15,7);
-                  /*setTimeout("draw()",4000);*/
-
-                }
-                if(namesite=="儿童医院站"){
-                  //leaflet文字标注
-                  findnumber = 1;
-                  let myIcon1 = L.divIcon({
-                    html: "16",
-                    className: 'my-div-icon',
-                    iconSize:30        });
-                  markertext = L.marker([39.911011,116.348517], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);
-
-                  let myIcon2 = L.divIcon({
-                    html: "16",
-                    className: 'my-div-icon2',
-                    iconSize:20        });
-                  markertext2 = L.marker([39.945278,116.366074], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);
-                  let myIcon3= L.divIcon({
-                    html: "10",
-                    className: 'my-div-icon2',
-                    iconSize:20        });
-                  markertext3 = L.marker([39.924938,116.338807], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);let myIcon = L.divIcon({
-                    html: "10",
-                    className: 'my-div-icon',
-                    iconSize:20        });
-                  markertext4 = L.marker([39.926802,116.343875], { icon: myIcon,zIndexOffset: 1000 }).addTo(map);
-                  //leaflet流动线
-                  routeline(1,50);
-                  routeline2(6,50);
-                  routeline3(50,7);
-                  /* setTimeout("remove_line()",4000);*/
-                  //以下为流动线绘制函数
-                  function routeline(a,b){
-                    route = L.layerGroup([
-                      L.polyline([[bike_station[a].LATITUDE, bike_station[a].LONGITUDE], [bike_station[b].LATITUDE, bike_station[b].LONGITUDE]])
-                    ], { snakingPause: 200 });
-                    route.addTo(map).snakeIn();
-                  }
-                  function routeline2(a,b){
-                    route2 = L.layerGroup([
-                      L.polyline([[bike_station[a].LATITUDE, bike_station[a].LONGITUDE], [bike_station[b].LATITUDE, bike_station[b].LONGITUDE]])
-                    ], { snakingPause: 200 });
-                    route2.addTo(map).snakeIn();
-                  }
-                  function routeline3(a,b){
-                    route3 = L.layerGroup([
-                      L.polyline([[bike_station[a].LATITUDE, bike_station[a].LONGITUDE], [bike_station[b].LATITUDE, bike_station[b].LONGITUDE]])
-                    ], { snakingPause: 200 });
-                    route3.addTo(map).snakeIn();
-                  }
-
-                  function remove_line(){
-                    route.clearLayers();
-                    route2.clearLayers();
-                    route3.clearLayers();
-                  }
-                  function reset_line(){
-                    routeline(1,15);
-                    routeline2(6,15);
-                    routeline3(15,7);
-                    setTimeout("remove_line()",4000);
-                  }
-                  function reset_line2(){
-                    routeline(1,50);
-                    routeline2(6,50);
-                    routeline3(50,7);
-                    setTimeout("remove_line()",4000);
-                  }
-
-
-                }
-
                 break;
               }
 
@@ -464,6 +348,10 @@
             }
 
           })
+          self.$nextTick(()=>{
+            self.$refs.RightBox.transmap(map,marker_group,site_NAME2,site_NUMBER2)
+          })
+
         }
 
       }
@@ -489,8 +377,8 @@
       let self=this;
 
       //渲染地图
-      let map1 = L.map('mapBox').setView([39.925021, 116.357607], 13);
-      let tilelayer = L.tileLayer('https://api.mapbox.com/styles/v1/mrmax/cjnn6bltn028r2rnvywtz4yoj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiNjEwNzIzMzc0IiwiYSI6ImNqanFmbXEwZjg3bG0za3AxcHQ3Z3F5dGkifQ.ETMjU9Z6PtN8nR8tPhuzkA', {
+      let map1 = L.map('mapBox',{zoomControl:false}).setView([39.925021, 116.357607], 13);
+      let tilelayer = L.tileLayer('https://api.mapbox.com/styles/v1/litaizeng/cklt2ts8a21u318psl7vdmurq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ', {
         maxZoom: 18,
         foo: 'far',
       }).addTo(map1);

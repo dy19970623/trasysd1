@@ -1,30 +1,42 @@
 <template>
-  <div>
-    <div>
-      <legend id="bikename1" style="margin-bottom:0px;color:white;" v-model="station">{{station}}基本情况</legend>
-      <p style="color:white;font-size: 12px;position: absolute;left: 218px;top: 59px;">2015年4月7日数据</p>
+  <div id="search">
+    <div id="chart1">
+      <div id="chartTitle1">
+        <legend id="bikename1" style="margin-bottom:0px;color:white; font-size: 20px" v-model="station">{{station}}基本情况</legend>
+        <p style="color:white;font-size: 12px;position: absolute;left:70%;top:3%;">2015年4月7日数据</p>
+      </div>
+      <div id="stationChart"></div>
     </div>
-    <div id="stationChart"></div>
-    <div>
-      <div id="dateMid" style="color:white; font-size: 17px;">车站名称：</div>
-      <el-input v-model="input" placeholder="请输入内容"></el-input>
-      <el-date-picker
-        v-model="value1"
-        type="datetimerange"
-        range-separator="至"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期">
-      </el-date-picker>
-      <el-button type="primary" @click="this.find">查询</el-button>
+    <div id="chart2">
+      <div id="chartTitle2" class="chartTitle2">
+        <div id="dateMid" style="color:white; font-size: 20px;">车站名称：</div>
+        <div id="stationName">
+          <el-input v-model="input" placeholder="请输入车站名称"></el-input>
+        </div>
+        <div id="stationTime">
+          <div id="startTime">
+            <el-input v-model="value1" placeholder="请输入开始时间"></el-input>
+          </div>
+          <div id="endTime">
+            <el-input v-model="value2" placeholder="请输入结束时间"></el-input>
+          </div>
+        </div>
+        <div id="searchbutton">
+          <el-button type="primary" @click="this.find">查询</el-button>
+        </div>
+      </div>
+      <div id="bike2">
+        <legend id="bikename2" style="margin-bottom:0px;margin-top:20px;color:white;font-size: 20px"v-model="station">{{station}}历史情况</legend>
+      </div>
+      <div id="stationChart2"></div>
     </div>
-    <div> <legend id="bikename2" style="margin-bottom:0px;margin-top:20px;color:white;"v-model="station">{{station}}历史情况</legend></div>
-    <div id="stationChart2"></div>
+
   </div>
 </template>
 
 <script>
 import echarts from 'echarts';
-import bikesitedata from "../../../assets/js/PRBicycle_OD/PRBicycle_siteData.js"
+import bikesitedata from "../../../assets/js/Bike_Search/PRBicycle_siteData.js"
 export default {
   name: "Bike_Search",
   data() {
@@ -34,34 +46,7 @@ export default {
       echart_locknumber1:"30",
       echart_usernumber1 :"5",
       input: '',
-      pickerOptions: {
-        shortcuts: [{
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-            picker.$emit('pick', [start, end]);
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date();
-            const start = new Date();
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-            picker.$emit('pick', [start, end]);
-          }
-        }]
-      },
-      value1: [new Date(2000, 10, 10, 10, 10), new Date(2000, 10, 11, 10, 10)],
+      value1: '',
       value2: ''
     }
   },
@@ -87,7 +72,6 @@ export default {
        //let echart_usernumber=this.echart_usernumber1
       let PRBicycle_OD_myChart3 = echarts.init(document.getElementById('stationChart'));
       let option3 = {
-        backgroundColor: 'rgba(255,255,255,0.1)',
         title: {
           text: '白云路站使用情况',
           textStyle: {
@@ -98,33 +82,33 @@ export default {
         },
         title: [{
           x: "10%",
-          bottom: 60,
-          left: 63,
+          bottom: 30,
+          left: 25,
           text: '闲置车辆',
           textStyle: {
             fontWeight: 'normal',
             fontSize: 16,
-            color: "rgba(241,192,73,1.0)"
+            color: "#fff"
           },
         }, {
           x: "20%",
-          bottom: 60,
-          left: 171,
+          bottom: 30,
+          left: 165,
           text: '锁位数量',
           textStyle: {
             fontWeight: 'normal',
             fontSize: 16,
-            color: "rgba(48,230,142,1.0)"
+            color: "#fff"
           },
         }, {
           x: "60%",
-          bottom: 60,
-          left: 275,
+          bottom: 30,
+          left: 305,
           text: '流动情况',
           textStyle: {
             fontWeight: 'normal',
             fontSize: 16,
-            color: "rgba(232,30,135,1.0)"
+            color: "#fff"
           },
         }],
         tooltip: {
@@ -140,13 +124,13 @@ export default {
             }
           },
           clockwise: false,
-          radius: ['25%', '30%'],
-          center: ['25%', '50%'],
+          radius: ['40%', '45%'],
+          center: ['15%', '50%'],
           data: [{
             value: echart_freebike,
             name: '当前闲置车辆',
             itemStyle: {
-              color: 'rgba(241,192,73,1.0)'
+              color: '#8A00E1'
             }
           }]
         }, {
@@ -155,22 +139,15 @@ export default {
           clockwise: false,
           silent: true,
           minAngle: 20, //最小的扇区角度（0 ~ 360）
-          center: ['25%', '50%'], //饼图的中心（圆心）坐标
-          radius: ['0%', '25%'],
+          center: ['15%', '50%'], //饼图的中心（圆心）坐标
+          radius: ['0%', '40%'],
           itemStyle: { //图形样式
             normal: {
               color: {
                 type: 'radial',
                 x: 0.5,
                 y: 0.5,
-                r: 0.5,
-                colorStops: [{
-                  offset: 0,
-                  color: 'rgba(241,192,73,0.5)' // 0% 处的颜色
-                }, {
-                  offset: 1,
-                  color: 'rgba(241,192,73,1)' // 100% 处的颜色
-                }],
+                r: 1,
                 globalCoord: false // 缺省为 false
               },
               borderWidth: 1.5,
@@ -185,7 +162,7 @@ export default {
               formatter: "{c}",
               fontSize: 30,
               textStyle: {
-                color: 'rgba(241,192,73,1.0)',
+                color: '#8A00E1',
               }
             }
           },
@@ -200,13 +177,13 @@ export default {
             }
           },
           clockwise: true,
-          radius: ['25%', '30%'],
+          radius: ['40%', '45%'],
           center: ['51%', '50%'],
           data: [{
             value: echart_locknumber,
             name: '车站锁位数量',
             itemStyle: {
-              color: 'rgba(48,230,142,1.0)'
+              color: '#00C6FF'
             }
           }]
         }, {
@@ -216,21 +193,14 @@ export default {
           silent: true,
           minAngle: 20, //最小的扇区角度（0 ~ 360）
           center: ['51%', '50%'], //饼图的中心（圆心）坐标
-          radius: ['0%', '25%'],
+          radius: ['0%', '40%'],
           itemStyle: { //图形样式
             normal: {
               color: {
                 type: 'radial',
                 x: 0.5,
                 y: 0.5,
-                r: 0.5,
-                colorStops: [{
-                  offset: 0,
-                  color: 'rgba(48,230,142,0.1)' // 0% 处的颜色
-                }, {
-                  offset: 1,
-                  color: 'rgba(48,230,142,1)' // 100% 处的颜色
-                }],
+                r: 1,
                 globalCoord: false // 缺省为 false
               },
               borderWidth: 1.5,
@@ -245,7 +215,7 @@ export default {
               formatter: "{c}",
               fontSize: 30,
               textStyle: {
-                color: 'rgba(48,230,142,1.0)',
+                color: '#00C6FF',
               }
             }
           },
@@ -260,13 +230,13 @@ export default {
             }
           },
           clockwise: false,
-          radius: ['25%', '30%'],
-          center: ['77%', '50%'],
+          radius: ['40%', '45%'],
+          center: ['87%', '50%'],
           data: [{
             value: echart_usernumber,
             name: '车辆流动情况',
             itemStyle: {
-              color: 'rgba(232,30,135,1.0)'
+              color: '#FF6633'
             }
           }]
         }, {
@@ -275,22 +245,15 @@ export default {
           clockwise: false,
           silent: true,
           minAngle: 20, //最小的扇区角度（0 ~ 360）
-          center: ['77%', '50%'], //饼图的中心（圆心）坐标
-          radius: ['0%', '25%'],
+          center: ['87%', '50%'], //饼图的中心（圆心）坐标
+          radius: ['0%', '40%'],
           itemStyle: { //图形样式
             normal: {
               color: {
                 type: 'radial',
                 x: 0.5,
                 y: 0.5,
-                r: 0.5,
-                colorStops: [{
-                  offset: 0,
-                  color: 'rgba(232,30,135,0.1)' // 0% 处的颜色
-                }, {
-                  offset: 1,
-                  color: 'rgba(232,30,135,1)' // 100% 处的颜色
-                }],
+                r: 1,
                 globalCoord: false // 缺省为 false
               },
               borderWidth: 1.5,
@@ -305,7 +268,7 @@ export default {
               formatter: "{c}",
               fontSize: 30,
               textStyle: {
-                color: 'rgba(232,30,135,1.0)',
+                color: '#FF6633',
               }
             }
           },
@@ -332,8 +295,6 @@ export default {
       }
 
       let PRBicycle_OD_option4 = {
-        backgroundColor: 'rgba(255,255,255,0.1)',
-
         legend: {
           data: ['租', '还'],
           align: 'left',
@@ -381,6 +342,25 @@ export default {
           name: '租',
           type: 'bar',
           barGap: '-100%',
+          itemStyle:{
+            normal:{
+              barBorderRadius:[5, 5, 5, 5],
+            }
+          },
+          color: {
+            type: 'linear', // 线性渐变
+            x: 0,
+            y: 0,
+            x2: 0,
+            y2: 1,
+            colorStops: [{
+              offset: 0,
+              color: '#FF9999' // 0%处的颜色为红色
+            }, {
+              offset: 1,
+              color: '#990000' // 100%处的颜色为蓝
+            }]
+          },
           data: data1,
           animationDelay: function (idx) {
             return idx * 10;
@@ -391,13 +371,31 @@ export default {
           data: data2,
           animationDelay: function (idx) {
             return idx * 10 + 100;
-          }
+          },
+          itemStyle:{
+            normal:{
+              barBorderRadius:[5, 5, 5, 5],
+            }
+          },
+          color: {
+            type: 'linear', // 线性渐变
+            x: 0,
+            y: 1,
+            x2: 0,
+            y2: 0,
+            colorStops: [{
+              offset: 0,
+              color: '#9933FF' // 0%处的颜色为红色
+            }, {
+              offset: 1,
+              color: '#660033' // 100%处的颜色为蓝
+            }]
+          },
         }],
         animationEasing: 'elasticOut',
         animationDelayUpdate: function (idx) {
           return idx * 5;
         },
-        color:['#6495ED','#91c7ae']
       };
       PRBicycle_OD_myChart4.setOption(PRBicycle_OD_option4);
     },
@@ -412,8 +410,8 @@ export default {
       let findendtime=0;
       let findnumber = 0;
       console.log("啊啊啊")
-      let starttime = this.value1[0];
-      let endtime = this.value1[1];
+      let starttime = this.value1;
+      let endtime = this.value2;
       let testtime = "2018-09-30 00:00:00";
       let date1 = new Date(starttime);
       let date2 = new Date(endtime);
@@ -483,25 +481,124 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+#search{
+  position: absolute;
+  top:0.1%;
+  left:0.1%;
+  height:100%;
+  width: 100%;
+}
+#chart1{
+  position:absolute;
+  top:5%;
+  width: 82%;
+  height: 24%;
+  border:40px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border1.png") 45 stretch;
+}
+#chart2{
+  position: absolute;
+  top:40%;
+  width: 83%;
+  height: 47%;
+  border:40px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border2.png") 45 stretch;
+}
+#chartTitle1{
+  position: relative;
+  top:-8%;
+  height: 3%;
+  width: 100%;
+}
+#chartTitle2{
+  position: relative;
+  top: 1%;
+  height: 10%;
+  width: 116%;
+  left: -4%;
+}
+#stationName{
+  position: relative;
+  margin-top: -5%;
+  left: -7%;
+  width: 126%;
+}
+#stationTime{
+  position: relative;
+  margin-top: -1%;
+  left: 1%;
+  width: 98%;
+}
+#startTime{
+  position: relative;
+  margin-top: 2%;
+  margin-left: -11%;
+  width: 60%;
+}
+#endTime{
+  position: relative;
+  margin-top: -7.7%;
+  margin-left: 21%;
+  width: 60%;
+}
+#dateMid{
+  position: relative;
+  top: 13%;
+  width: 24%;
+  left: 5%;
+}
+#searchbutton{
+  position: relative;
+  top:-91%;
+  left:70%;
+  width:30%
+}
 #stationChart {
-  width: 400px;
-  height: 265px;
+  position: relative;
+  top:-8%;
+  width: 90%;
+  height:95%;
   padding: 0 0;
   color: #ddd;
   z-index: 700;
-  right: 0px;
   margin-top: 5px;
 }
 #stationChart2 {
-  top: 0px;
-  width: 400px;
-  height: 330px;
+  position: relative;
+  top: 5%;
+  width: 95%;
+  height: 70%;
   padding: 0 0;
   color: #ddd;
   z-index: 700;
   right: 0px;
   margin-top: 5px;
 }
+#bike2{
+  position: relative;
+  top: 7%;
+  width: 50%;
+  height: 10%;
+}
+.chartTitle2 .el-button--primary{
+  color: #303133;
+  background-color: #fff;
+  border-color: #f5f7fa;
+}
+.chartTitle2 .el-input{
+  width: 48%;
+  left: 25%;
+}
+.chartTitle2 .el-input__inner{
+  border-radius: 4px;
+  border: 2px solid #409eff;
+  background-color: #606266;
+  color: #fff;
+  width:100%
+}
+
+
+
 
 </style>

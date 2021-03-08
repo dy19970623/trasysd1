@@ -35,12 +35,11 @@ export default {
   }
 #Sub_inputBox{
   position: absolute;
-  top: 5px;
-  right: 0px;
-  width: 420px;
+  width: 30%;
   height:100%;
   z-index:600;
-  background-color:#031a51;
+  background-color:#08080D;
+  opacity: 95%;
 }
 
 </style>

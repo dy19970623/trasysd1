@@ -7,7 +7,7 @@
   <div id="PRBicycle_Shared">
     <div id="PRBicycleShared_container" class="container"></div>
     <input id="domain4" class="button blue" type="button" @click="changeRentOverlay();" value="切换借车点/还车点位置" />
-    <rightdomain></rightdomain>
+    <rightdomain ref="rightdomain"></rightdomain>
     <SharedLengend></SharedLengend>
   </div>
 </template>
@@ -16,8 +16,8 @@
 import stylejson from "../../assets/js/PRBicycle_Shared/StyleJson"
 import BMap from 'BMap'
 import {request} from "../../network/request";
-import rightdomain from "./Child/rightdomain";
-import SharedLengend from "./Child/SharedLengend";
+import rightdomain from "../PublicBicycle/Child/rightdomain";
+import SharedLengend from "../PublicBicycle/Child/SharedLengend";
 
 let map
 let returnoptions1
@@ -27,8 +27,8 @@ let rentoptions1
 export default {
   name: "PRBicycle_Shared",
   components:{
-    rightdomain,//右侧echarts
-    SharedLengend//左侧图例
+    rightdomain,//echarts
+    SharedLengend//图例
   },
   data(){
     return{
@@ -49,18 +49,21 @@ export default {
 
     //后台获取数据
     request({
-      url:'/TraSysC/get/rentlatandrentlng',
+      url:'get/getall',
       method:'get'
     }).then(res=>{
       console.log(res)
-      // for(let i=0;i<res.msg.length;i++){
-      //   that.rentLatLng.push([res.msg[i].rentlng,res.msg[i].rentlat]);
-      //   that.returnLatLng.push([res.msg[i].returnlng,res.msg[i].returnlat])
-      //   //console.log(this.rentLatLng)
-      //};
+      for(let i=0;i<res.data.msg.length;i++){
+        that.rentLatLng.push([res.data.msg[i].rentlng,res.data.msg[i].rentlat]);
+        that.returnLatLng.push([res.data.msg[i].returnlng,res.data.msg[i].returnlat])
+        //console.log(this.rentLatLng)
+      };
+      that.$nextTick(()=>{
+        that.$refs.rightdomain.getchartdata(res.data)//传递到子组件方法
+      })
       //console.log(this);
       //console.log(that);
-      //this.initdata(map)
+      this.initdata(map)
     }).catch(err=>{
       console.log(err);
     })
@@ -96,7 +99,7 @@ export default {
       let rentoptions = {
         size: BMAP_POINT_SIZE_TINY,
         shape: BMAP_POINT_SHAPE_CIRCLE,
-        color: '#33CCFF'
+        color: '#FF9900'
       }
       rentoptions1=rentoptions
       let rentpointCollection = new BMap.PointCollection(this.rentpoints, rentoptions);
@@ -116,7 +119,7 @@ export default {
       let returnoptions = {
         size: BMAP_POINT_SIZE_TINY,
         shape: BMAP_POINT_SHAPE_CIRCLE,
-        color: '#FFFF00'
+        color: '#9900CC'
       }
       returnoptions1=returnoptions
       //let returnpointCollection = new BMap.PointCollection(this.returnpoints, returnoptions);
@@ -152,9 +155,10 @@ export default {
   }
 </script>
 
-<style scoped>
+<style>
 #PRBicycle_Shared{
-  height:100vh;
+  position: absolute;
+  height:100%;
   width:100%
 }
 .container{
@@ -162,12 +166,25 @@ export default {
 }
 #domain4 {
   width:12%;
-  height:4%;
+  height:7%;
   top:92%;
   left:43%;
   position:absolute;
   z-index:9999;
   border:0px;
+  box-shadow: 2px 2px 5px rgba(153, 153, 153, 1);
+  font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
+  font-weight: 700;
+  font-style: normal;
+  font-size: 20px;
+  color: #1E1E1E;
+}
+
+.container .BMap_cpyCtrl{
+  display: none;
+}
+.container .anchorBL{
+  display: none;
 }
 
 </style>

@@ -1,50 +1,54 @@
 /*
  * 邹瑞萌 2021-2-28
- * 出租车位置分布
+ * 公交车位置分布
  * */
 <template>
-  <div id="BusStationNum">
+  <div class="BusStationNum">
     <div id="BSNumLeftBox">
-      <div ref="chart1" id="chordChart1"></div>
-      <div id="inputBox">
-        <!--查询模块-->
-        <div class="layui-form-item">
-            <div id="searchBox" class="layui-inline">
-                <input id="stationName" class="layui-input-inline layui-input" v-model="searchVal" type="text" name="word" autocomplete="off" maxlength="256" placeholder="请输入站位名称" style="" value="">
-                <button id="searchBtn" class="layui-btn" ref="searchBtn" @click="search">查询</button>
-                <button id="recover" ref="recover" class="layui-btn" @click="recover">还原</button>
-                <!--下拉菜单-->
-                <div id="queryresult">
-                    <ul id="list" style="display:none"></ul>
-                </div>
-            </div>
+      <!--公交客流Top20-->
+      <div class="BSNumLeftBox_Top">
+        <div class="BSNLeft_Top1"></div><div class="BSNRight_Bottom1"></div>
+        <legend class="BSNum_TopTitle">公交客流TOP20</legend>
+        <div ref="BSN_Chart1" class="BSN_Chart1"></div>
+      </div>
+      <!--公交客流查询定位-->
+      <div class="BSNumLeftBox_Bottom">
+        <div class="BSNLeft_Top2"></div><div class="BSNRight_Bottom2"></div>
+        <div id="searchBox" class="layui-inline">
+          <!--输入-->
+          <input id="stationName" class="input_inline" v-model="searchVal" type="text" name="word" autocomplete="off" maxlength="256" placeholder="请输入站位名称" style="" value="">
+          <button id="searchBtn" class="layui-btn" ref="searchBtn" @click="search">查询</button>
+          <button id="recover" ref="recover" class="layui-btn" @click="recover">还原</button>
         </div>
-    </div>
-       <!--表格  -->
-    <div id="info_Table">
-        <table class="layui-table">
-            <thead>
+        <!--表格  -->
+        <div class="info_Table">
+            <table class="layui-table">
+              <thead>
                 <tr>
-                    <th>公交站名</th>
-                    <th>登量</th>
+                  <th>公交站名</th><th>登量</th>
                 </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
                 <tr>
-                    <td id="info_station">{{info_station}}</td>
-                    <td id="info_num">{{info_num}}</td>
+                  <td id="info_station">{{info_station}}</td><td id="info_num">{{info_num}}</td>
                 </tr>
-            </tbody>
-        </table>
-    </div>
-    <div id="chordChart2"></div>
-    </div>
+              </tbody>
+            </table>
+        </div>
 
-    <div ref="map" id="map" style="height:900px;width:100%;overflow: hidden;"></div>
-    <div id="charts">
-      <div ref="nums" id="nums">
+
+          <div id="BSN_Chart2">
+            <div id="charts">
+              <div ref="nums" id="nums"></div>
+            </div>
+          </div>
+
+
       </div>
     </div>
+
+    <div ref="map" class="map"></div>
+
   </div>
 </template>
 
@@ -52,15 +56,15 @@
 import echarts from 'echarts'
 import 'echarts-gl'
 import BSNum from '../../assets/js/BusStationNum/BusStationNum'
-//import checi from '../../assets/js/BusStationNum/checi'
+//import checi from '../assets/js/BusStationNum/checi'
 import BSNumLeftBox from '../../components/content/BusStationNum/BusStationNum_LeftBox'
 
 export default {
   data() {
     return {
       searchVal: '',
-      info_station: '',
-      info_num: '',
+      info_station: '无',
+      info_num: '无',
       //echarts-gl 3d柱状图
       BusStationNum_option1:{
 	      tooltip: {
@@ -95,7 +99,7 @@ export default {
 	        pitch: 60,
 	        bearing: -10,
           renderOnMoving:false,
-	        style: 'mapbox://styles/mrmax/cjnn6bltn028r2rnvywtz4yoj',
+	        style: 'mapbox://styles/litaizeng/cklt2ts8a21u318psl7vdmurq',
 	        boxHeight: 35,
 	        postEffect: {
 	            enable: true,
@@ -175,11 +179,11 @@ export default {
 	 	            axisTick: {
 	 	                alignWithLabel: true
 	 	            },
-	                 axisLine:{
-	                 	lineStyle:{
-	                 		color:"white",
-	                 	}
-	                 }
+	              axisLine:{
+	               	lineStyle:{
+	               		color:"white",
+	               	}
+	               }
 	 	        }
 	 	    ],
 	 	    yAxis : [
@@ -208,7 +212,7 @@ export default {
       //左上表格
       echartbarTop20_option: {
 		    title: {
-	          text: '公交客流TOP20',
+	          //text: '公交客流TOP20',
 	          left: 'left',
 	          textStyle: {
 	                fontSize: 20,
@@ -217,7 +221,7 @@ export default {
 	              },
 	      },
 	      color: ['#b0e0e6'],
-	      backgroundColor:['rgba(1,19,66,0.5)'],
+	      //backgroundColor:['rgba(1,19,66,0.5)'],
 	      tooltip : {
 	        trigger: 'axis',
 	        formatter: '{a0}:{c0}人',
@@ -226,64 +230,106 @@ export default {
 	        }
 	      },
 	      grid: {
-	        left: '3%',
-	        right: '4%',
-	        bottom: '5%',
+          top: '10%',
+	        left: '0%',
+	        right: '0%',
+	        bottom: '-5%',
 	        containLabel: true
 	      },
-	      xAxis : [
-	        {
-	            type : 'category',
-	            data : BSNum.titledata3,
-	            axisLabel: {
-                    interval: 0,
-                    formatter:function(value)
-                    {
-                        return value.split("").join("\n");
-                    }
-                },
-	            axisTick: {
-	                alignWithLabel: true
-	            },
-                axisLine:{
-                	lineStyle:{
-                		color:"white",
-                	}
-                }
-	        }
+	      xAxis: [{
+	        type : 'category',
+	        data : BSNum.titledata3,
+	        axisLabel: {
+            interval: 0,
+            textStyle: {
+              color: "white",  //更改坐标轴文字颜色
+              fontSize : 13,      //更改坐标轴文字大小
+            },
+            formatter:function(value){
+              return value.split("").join("\n");
+            }
+          },
+	        axisTick: {
+            show:false,
+	          alignWithLabel: true,
+          },
+          axisLine:{
+          	lineStyle:{
+              color: "rgba(105,105,105, 0.5)",
+              width: 1
+          	}
+          }
+        }
 	    ],
-	    yAxis : [
-	        {
-	            type : 'value',
-	            name: '人次',
-		        nameTextStyle:{
-	            	color:"white"
-	            	},
-	            axisLine: {
-	                lineStyle: {
-	                    color: "white"
-                    }
-	            }
-	        }
-	    ],
+	    yAxis : [{
+        //max:45000,
+	      type : 'value',
+	      name: '人次',
+		    nameTextStyle:{
+	        color:"white",
+          fontSize:14,
+	      },
+        axisLabel: {
+          interval: 0,
+          textStyle: {
+            color: "white",  //更改坐标轴文字颜色
+            fontSize : 12,      //更改坐标轴文字大小
+          },
+        },
+	      axisLine: {
+	        lineStyle: {
+	          color: "rgba(105,105,105, 0.5)",
+            width: 1
+          }
+	      },
+        splitLine: {
+          show: true,
+          lineStyle: {
+            color: "rgba(105,105,105, 0.5)",
+            width: 1
+          }
+        },
+        axisTick: {
+          show:false,
+	        alignWithLabel: true,
+	      },
+	    }],
 	    series : [
 	        {
 	            name:'今日登量',
 	            type:'bar',
-	            barWidth: '50%',
+	            //barWidth: '50%',
+              itemStyle: {
+            //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+            normal: {
+              //柱形图圆角，初始化效果
+              barBorderRadius:[4, 4, 0, 0],
+              color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+                offset: 0,
+                color: '#990000'
+              },{
+                offset: 0.6,
+                color: '#ff7a7a'
+              },{
+                offset: 0.9,
+                color: '#FF9999  '
+              }]),
+            }
+          },
 	            data:BSNum.bartop20
 	        }
 	    ]
 		  },
       //左下表格
       optionBottom: {
-		title: {
+		  title: {
 	          text: '登录情况',
 	          left: 'left',
+            padding:  [5, 0, 0, 11],
 	          textStyle: {
-	                fontSize: 20,
+	                fontSize: 15,
 	                color: 'white',
-	                fontWeight:"normal",
+	                fontWeight:"bolder"
 	              },
 	      },
 	    color: ['#b0e0e6'],
@@ -294,56 +340,86 @@ export default {
 	        }
 	    },
 	    grid: {
-	        left: '3%',
-	        right: '4%',
-	        bottom: '3%',
+          show:'true',
+	        left: '0%',
+	        right: '1%',
+	        bottom: '2%',
+          borderWidth:'0.5',
+          borderColor:'rgba(105,105,105, 0.5)',
 	        containLabel: true
 	    },
-	    xAxis : [
-	        {
-	            type : 'category',
-	            data : [0,0,0,0],
-	            axisLabel:{
+	    xAxis: [{
+	      type: 'category',
+	      data: [0,0,0,0],
+	      axisLabel:{
 					interval:0,
-					margin:20
-	            	},
-	            axisTick: {
-	                alignWithLabel: true
-	            },
-                axisLine:{
-                	lineStyle:{
-                		color:"white",
-                	}
-                }
-	        }
-	    ],
-	    yAxis : [
-	        {
-	            type : 'value',
-	            name: '人次',
-		        nameTextStyle:{
-	            	color:"white"
-	            	},
-	            axisLine: {
-	                lineStyle: {
-	                    color: "white"
-                    }
-	            }
-	        }
-	    ],
-	    series : [
-	        {
-	            name:'今日登量',
-	            type:'bar',
-	            barWidth: '50%',
-	            data:[0,0,0,0,0]
-	        }
-	    ]
-	    }
+					margin:10,
+          textStyle: {
+            color: "white",  //更改坐标轴文字颜色
+            fontSize : 11,      //更改坐标轴文字大小
+          },
+        	formatter: function (value) {
+        	  //x轴的文字改为竖版显示
+        	  var str = value.split("");
+        	  return str.join("\n");
+        	}
+	      },
+	      axisTick: {
+          show:false,
+	        alignWithLabel: true
+	      },
+        axisLine:{
+          lineStyle:{
+            color:"rgba(105,105,105, 0.5)",
+        }}
+	    }],
+	    yAxis: [{
+	      type : 'value',
+	      name: '人次',
+		    nameTextStyle:{
+	        color:"white"
+	      },
+        axisTick: {
+          show:false,
+	        alignWithLabel: true
+	      },
+        splitLine: {
+            show: true,
+            lineStyle: {
+              color: "rgba(105,105,105, 0.5)",
+              width: 1
+            }
+          },
+	      axisLine: {
+          show:false,
+	        lineStyle: {
+	          color: "white"
+          }
+	      },
+	    }],
+	    series : [{
+	      name:'今日登量',
+	      type:'bar',
+	      barWidth: '50%',
+        itemStyle: {
+          //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+          normal: {
+            color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
+              offset: 0,
+              color: '#19344B'
+            },{
+              offset: 0.9,
+              color: '#4AB3DF  '
+            }]),
+          }
+        },
+	      data:[0,0,0,0,0]
+	    }]
+	  }
     }
   },
   components: {
-    BSNumLeftBox
+
   },
   mounted() {
     this.getmap()
@@ -352,7 +428,7 @@ export default {
     getmap() {
       let _this=this;
       //echarts-gl 3d柱状图
-      mapboxgl.accessToken = 'pk.eyJ1IjoiNjEwNzIzMzc0IiwiYSI6ImNqanFmbXEwZjg3bG0za3AxcHQ3Z3F5dGkifQ.ETMjU9Z6PtN8nR8tPhuzkA'
+      mapboxgl.accessToken = 'pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ'
       let BusStationNum = echarts.init(this.$refs.map)
 
       // 指定图表的配置项和数据
@@ -369,7 +445,7 @@ export default {
       map.addControl(nav, 'top-right');
       map.on('zoomend', function() {});
       //左上表格
-      let echartbarTop20 = echarts.init(this.$refs.chart1);
+      let echartbarTop20 = echarts.init(this.$refs.BSN_Chart1);
       echartbarTop20.setOption(this.echartbarTop20_option)
 
       //点击图标定位
@@ -421,7 +497,7 @@ export default {
       tips.setOption(this.option);
 
       //左下表格
-      let echartbarBottom = echarts.init(document.getElementById('chordChart2'))
+      let echartbarBottom = echarts.init(document.getElementById('BSN_Chart2'))
       echartbarBottom.setOption(this.optionBottom);
 
       //查询框
@@ -570,7 +646,7 @@ export default {
        	    dengLiangsreachNew[i]=dengLiangsreach[i]
 	        }
 			    //数据在图表中显示
-          let echartbarBottom = echarts.init(document.getElementById('chordChart2'))
+          let echartbarBottom = echarts.init(document.getElementById('BSN_Chart2'))
 	    	  this.optionBottom.title.text=keyWord+'各路公交车人数登量情况';
           this.optionBottom.xAxis[0].data=linesreachNew;
           this.optionBottom.series[0].data=	dengLiangsreachNew;
@@ -598,37 +674,195 @@ export default {
 }
 </script>
 
-<style scoped>
-@import '../../assets/css/BusStationNum/3D_bar.css';
-#chordChart1{
-    width: 97.5%;
-    height: 350px;
-    background-color:rgba(255,255,255,0.1);
-
-    z-index: 700;
-
+<style>
+/*@import '../assets/css/BusStationNum/3D_bar.css';*/
+.BusStationNum{
+  height: 25%;
+  width: 100%;
 }
+body, html,.map {
+   width:100%;
+   height:100%;
+   overflow: hidden;
+   margin:0;
+   font-family:"微软雅黑";
+   position:absolute;
+}
+/*LeftBox */
 #BSNumLeftBox{
     float:right;
     position: absolute;
-    left: 7px;
-    height: 790px;
-    width: 25%;
-    padding-top:5px;
-    padding-left: 10px;
-    padding-bottom:5px;
+    height: 100%;
+    width: 31.5%;
     z-index: 600;
-    background-color:rgba(1,19,66,0.6);
+    background-color:rgba(8, 8, 13, 0.949019607843137);
+}
+/*Top20图表 */
+.BSNumLeftBox_Top{
+  width: 95%;
+  height: 45%;
+  margin-top: 2%;
+  margin-left: 2.5%;
+  background:url(../../assets/image/BusStationNum/BarBorder.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+/*内边框左上角样式*/
+.BSNLeft_Top1 {
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 92%;
+  margin-top: 1%;
+  margin-left: 0.7%;
+  background:url(../../assets/image/BusStationNum/Bar_LeftTop2.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 12% 10%;
+}
+/*内边框右下角样式*/
+.BSNRight_Bottom1{
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 45%;
+  margin-top: 0.4%;
+  margin-left: -1%;
+  background:url(../../assets/image/BusStationNum/Bar_RightBottom.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 12% 19%;
+  transform: rotate(180deg);
+}
+.BSN_Chart1{
+  width: 89%;
+  height: 78%;
+  margin-top: 2%;
+  margin-left: 5%;
+}
+.BSNum_TopTitle {
+  height: 8%;
+  left: 10%;
+  font-size:125%;
+  font-weight:600;
+  line-height: 200%;
+  padding-top: 2%;
+  padding-left: 15%;
+  color:rgb(44, 188, 255);
+}
+/*查询定位 */
+.BSNumLeftBox_Bottom{
+  width: 95%;
+  height: 48%;
+  margin-top: 3%;
+  margin-left: 2.5%;
+  background:url(../../assets/image/BusStationNum/BarBorder.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+/*内边框左上角样式*/
+.BSNLeft_Top2 {
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 92%;
+  margin-top: 1%;
+  margin-left: 0.7%;
+  background:url(../../assets/image/BusStationNum/Bar_LeftTop2.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 12% 10%;
+}
+/*内边框右下角样式*/
+.BSNRight_Bottom2{
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 45%;
+  margin-top: 6%;
+  margin-left: -1%;
+  background:url(../../assets/image/BusStationNum/Bar_RightBottom.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 12% 19%;
+  transform: rotate(180deg);
 }
 
-#chordChart2{
-    width: 97.5%;
-    height: 350px;
-    padding: 0 0;
-    background-color:rgba(255,255,255,0.1);
-
-    z-index: 700;
-
+/*搜索*/
+#searchBox{
+  float:right;
+  position: absolute;
+  width: 80%;
+  height: 4%;
+  margin-top: 6%;
+  margin-left: 8%;
+}
+/*输入框*/
+input::-webkit-input-placeholder {
+	color: white; /* placeholder颜色  */
+	font-size: 12px; /* placeholder字体大小  */
+	text-align: center; /* placeholder位置  */
+}
+.input_inline{
+  width: 60%;
+  height: 80%;
+  margin-right: 2%;
+  border: 2px solid rgb(44, 188, 255);
+  border-radius: 9px;
+  background-color:DimGrey;
+}
+.layui-btn:hover {background-color:rgb(201, 201, 201)}
+.layui-btn:active{background-color:white}
+.layui-btn{
+  width: 14%;
+  height: 70%;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-left: 2%;
+  box-shadow: 2px 2px 4px rgb(201, 201, 201,0.7);
+}
+/*表格*/
+.info_Table{
+  float:right;
+  position: absolute;
+  height:auto;
+  width: 80%;
+  left:10%;
+  color: white;
+  margin-top: 16%;
+}
+.layui-table {/*table */
+  width: 100%;
+  border-collapse:collapse;
+  color: #FFFFFF;
+}
+.layui-table td, .layui-table th {
+    position: relative;
+    width: 50%;
+    padding: 9px 15px;
+    min-height: 20px;
+    line-height: 10px;
+    font-size: 12px;
+    text-align: center;
+    font-weight:300;
+    border: 0.5px solid rgb(87, 87, 160);
+}
+tr{
+  text-align: center;
+  line-height: 2.5em;
+  font-size: 10px;
+}
+th{background-color: rgba(21, 21, 65);}
+td{background-color:#3b3b3b;}
+/*各路口等量 */
+#BSN_Chart2{
+  float:right;
+  position: absolute;
+  width: 84%;
+  height: 30%;
+  padding: 0 0;
+  margin-top: 30%;
+  margin-left:5%;
 }
 /*隐藏水印 */
 .mapboxgl-ctrl {

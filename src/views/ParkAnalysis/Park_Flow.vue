@@ -3,14 +3,13 @@
 <!--功能：停车流量分析-->
 <template>
 <div id=""app>
-  <div id="map" style="height: 100vh; width: 100%"></div>
+  <div id="map" style="height:100vh; width: 100%"></div>
   <RightBox/>
 </div>
 </template>
 
 <script>
     import mapboxgl from 'mapbox-gl'
-    //import echarts from "leaflet-echarts/dist/leaflet-echarts.js"
     import '../../assets/css/ParkAnalysis/icon.css'
     import L from "leaflet";
     import "leaflet/dist/leaflet.css";
@@ -41,8 +40,8 @@
           //创建底图
           let map = L.map("map", {
             minZoom: 3,
-            maxZoom: 14,
-            center: [39.91, 116.4],
+            maxZoom: 18,
+            center: [39.91, 116.35],
             zoom: 12,
             zoomControl: false,
             attributionControl: false,
@@ -52,7 +51,7 @@
           this.map = map; //data上需要挂载
           window.map = map;
           L.tileLayer(
-            "https://api.mapbox.com/styles/v1/mrmax/cjnn6bltn028r2rnvywtz4yoj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiNjEwNzIzMzc0IiwiYSI6ImNqanFmbXEwZjg3bG0za3AxcHQ3Z3F5dGkifQ.ETMjU9Z6PtN8nR8tPhuzkA"
+            "https://api.mapbox.com/styles/v1/litaizeng/cklt2ts8a21u318psl7vdmurq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ"
           ).addTo(map);
 
           //leaflet部分
@@ -225,25 +224,17 @@
                 }));
             }
           };
-
           //表示质疑????
           L.featureGroup(test_click).on('mouseover', function(place){
-            let  placeName =''
-            let  placeAddress =''
-            let  buliderCompany =''
-            let  allNumber =''
-            let  contactPerson =''
-            let  freeParking=''
-            let  parkId = ''
             for(let i = 0; i<data.length; i++){
               if(data[i][20] ==place.latlng.lat &&data[i][21] ==place.latlng.lng){
-                  placeName =data[i][4];
-                  placeAddress =data[i][5];
-                  buliderCompany =data[i][6];
-                  allNumber =data[i][13];3
-                  contactPerson =data[i][17];
-                  freeParking=data[i][8];
-                  parkId = data[i][0];
+                var placeName =data[i][4];
+                var placeAddress =data[i][5];
+                var buliderCompany =data[i][6];
+                var allNumber =data[i][13];3
+                var contactPerson =data[i][17];
+                var freeParking=data[i][8];
+                var parkId = data[i][0];
               }
             }
             let  poi_click = place.propagatedFrom;
@@ -254,14 +245,14 @@
             poi_click.on('popupopen', function(e) {
               // 基于准备好的dom，初始化echarts实例
               let  a_num = e.popup._latlng.lat +e.popup._latlng.lng;
-
-              //let myChart = this.$echarts.init(document.getElementById('markerguomao' + parkId));
-              eval("const myChart" +  a_num.toFixed(0) + "= echarts.init(document.getElementById('markerguomao"+ parkId+"\'))");
-              //myChart= echarts.init(document.getElementById('markerguomao'));
+              let echarts =require('echarts')
+              let mychart1
+              eval("var myChart" +  a_num.toFixed(0) + "= echarts.init(document.getElementById('markerguomao"+ parkId+"\'));mychart1=myChart"+a_num.toFixed(0));
+              //eval("const myChart" +  a_num.toFixed(0) + "= echarts.init(document.getElementById('markerguomao"+ parkId+"\'))");
               // 指定图表的配置项和数据
-              option = {
+              let option = {
                 textStyle:{
-                  color:'#FFFFFF'
+                  color:'black'
                 },
                 tooltip: {
                   trigger: 'axis'
@@ -269,7 +260,7 @@
                 xAxis: [{
                   axisLine: {
                     lineStyle: {
-                      color: "white"
+                      color: "black"
                     }
                   },
                   type: 'category',
@@ -280,7 +271,7 @@
                 yAxis : [{
                   axisLine: {
                     lineStyle: {
-                      color: "white"
+                      color: "black"
                     }
                   },
                   type : 'value',
@@ -298,11 +289,13 @@
                 }]
               };
               // 使用刚指定的配置项和数据显示图表。
-              eval("myChart"+a_num.toFixed(0)+".setOption(option)");
-              //myChart.setOption(option);
+              eval("mychart1.setOption(option)");
+              //eval("myChart"+a_num.toFixed(0)+".setOption(option)");
             });
           });
           map.addLayer(cities);
+
+
 
 
           //不知道这是干什么用的，视图看起来很别扭
@@ -353,10 +346,27 @@
             max: 1000,
             data: heatArray
           }
-          this.heatmapLayer = new HeatmapOverlay(cfg)
+
+          let heat = this.heatmapLayer = new HeatmapOverlay(cfg)
           this.heatmapLayer.addTo(map)
           this.heatmapLayer.setData(testData)
 
+
+          let baseLayers = {
+            "底图": map
+          };
+          let overlays = {
+            "热力图" : heat,
+            "停车点位": cities,
+            "一级诱导屏":Screen1,
+            "二级诱导屏":Screen2,
+            "三级诱导屏":Screen3,
+          };
+          L.control.zoom({zoomInTitle:'放大', zoomOutTitle:'缩小',position: 'topright',}).addTo(map);
+          L.control.layers(baseLayers,overlays, {
+            position: 'topright',
+            collapsed: true
+          }).addTo(map);
 
 
 

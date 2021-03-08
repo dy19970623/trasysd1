@@ -29,10 +29,10 @@ export default {
     this.max =  Math.max.apply(null, this.perNum);
     //console.log(this.max);
     let mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-    mapboxgl.accessToken = 'pk.eyJ1IjoiOTYzNTU3OTg2IiwiYSI6ImNqamgwcWZmOTAzem8za21sc3VnanhhaXoifQ.l_bPenTRU9xzL2klZ6JgzQ';
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ';
     map = new mapboxgl.Map({
       container: 'TaxiZone_MAP',
-      style: 'mapbox://styles/mrmax/cjnn6bltn028r2rnvywtz4yoj',
+      style: 'mapbox://styles/litaizeng/cklrhlip10ib717qkkr26fm1t',
       center: [116.38027588,39.95429443],
       zoom: 9.8
     });//
@@ -95,7 +95,7 @@ export default {
         }
       })
     },
-    rgbaToHex(color) {
+    rgbaToHex(color) {//255,0,0 #ff00ff
       let values = color
         .replace(/rgba?\(/, '')
         .replace(/\)/, '')
@@ -117,10 +117,11 @@ export default {
 
       let r = 0,g = 0,b = 0;
 
-      if(n<(max*0.1))           { g = (one*n*10)+60>200?200:(one * n)*10+40;b = 255};
-      if((max*0.1)<=n && n<(max*0.2))   { g = 255; b=255-(one*n)*3.3<0?0:(255-(one*n)*3.3)};
-      if(n>=(max*0.2)&&n<=(max*0.3))    { g = 255; r = one * n*3};
-      if(n>(max*0.3))           { g = 255-(one*n);r=255};
+      if(n<(max*0.05))          {r=130; g=57; b=53}; //砖红色，占得区域小
+      if((max*0.05)<=n && n<(max*0.1))    { r=137 ;g = 190; b=178};
+      if(n>=(max*0.1)&&n<=(max*0.2))   { r=201 ;g = 186; b=131};
+      if(n>=(max*0.2)&&n<=(max*0.3))    { r=222 ;g = 156; b= 83};
+      if(n>(max*0.3))           {r=222; g = 211 ;b = 140};
 
       r = parseInt(r);// 取整
       g = parseInt(g);// 取整

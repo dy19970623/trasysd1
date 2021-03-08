@@ -5,22 +5,31 @@
   <div id="Taxi3dTrace" >
     <div id="Taxi3dTrace_Map" class="container" ></div>
     <div id='Taxi3dTrace_taxiQuery'>
-      <div>出租车时空轨迹查询</div>
-      &nbsp&nbsp&nbsp<select id="Taxi3dTrace_taxiID">
-      <option value="13301104001">13301104001</option>
-      <option value="13301104002">13301104002</option>
-      <option value="13301104003">13301104003</option>
-      <option value="13301104004">13301104004</option>
-    </select>
-      &nbsp&nbsp&nbsp <div id='Taxi3dTrace_imageInfo'>
-      &nbsp&nbsp&nbsp<img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zaike.png"> <span>载客</span><br>
-      &nbsp&nbsp&nbsp<img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_kongzai.png"> <span>空载</span><br>
-      &nbsp&nbsp&nbsp<img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zhuche.png"> <span>驻车</span><br>
-      &nbsp&nbsp&nbsp<img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_kai.png"> <span>上车</span><br>
-      &nbsp&nbsp&nbsp<img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_qita.png"> <span>其他</span><br>
-    </div>
-      &nbsp&nbsp&nbsp<input type="button" @click="Taxi3dTrace_addTrace" value="查询" />
-     &nbsp&nbsp&nbsp<input type="button" @click="Taxi3dTrace_removeTrace" value="清空" /><br><br>
+      <div style="font-size:26px;margin-left: 5%;">出&nbsp;租&nbsp;车&nbsp;时&nbsp;空&nbsp;轨&nbsp;迹&nbsp;查&nbsp;询</div>
+      &nbsp&nbsp&nbsp
+      <select id="Taxi3dTrace_taxiID">
+          <option value="13301104001" >13301104001</option>
+          <option value="13301104002" class="taxi_Id">13301104002</option>
+          <option value="13301104003" class="taxi_Id">13301104003</option>
+          <option value="13301104004" class="taxi_Id">13301104004</option>
+      </select>
+      <input type="button" @click="Taxi3dTrace_addTrace" value="查询" />
+      <input type="button" @click="Taxi3dTrace_removeTrace" value="清空" /><br><br>
+      <div id='Taxi3dTrace_imageInfo'>
+          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zaike.png">&nbsp;&nbsp;&nbsp;&nbsp;
+          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_kongzai.png">&nbsp;&nbsp;&nbsp;&nbsp;
+          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zhuche.png">&nbsp;&nbsp;&nbsp;&nbsp;
+          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_kai.png">&nbsp;&nbsp;&nbsp;&nbsp;
+          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_qita.png"><br>
+      </div>
+      <div id="Taxi3dTrace_text">
+        <span>载客</span>&nbsp;&nbsp;&nbsp;
+        <span>空载</span>&nbsp;&nbsp;&nbsp;
+        <span>驻车</span>&nbsp;&nbsp;&nbsp;
+        <span>上车</span>&nbsp;&nbsp;&nbsp;
+        <span>其他</span>&nbsp;&nbsp;&nbsp;
+      </div>
+
 
     </div>
   </div>
@@ -49,7 +58,7 @@
               bearing : 30,  // 旋转角
               dragRotatePitch: true,
               baseLayer: new maptalks.TileLayer('base', {
-                urlTemplate:'https://api.mapbox.com/styles/v1/mrmax/cjnn6bltn028r2rnvywtz4yoj/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoiNjEwNzIzMzc0IiwiYSI6ImNqanFmbXEwZjg3bG0za3AxcHQ3Z3F5dGkifQ.ETMjU9Z6PtN8nR8tPhuzkA',
+                urlTemplate:'https://api.mapbox.com/styles/v1/litaizeng/cklt2ts8a21u318psl7vdmurq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
                 subdomains: ['a','b','c','d'],
                 attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
               })
@@ -87,7 +96,6 @@
               };
             };
             function Taxi3dTrace_removeTrace(){
-              alert('来这了嘛？')
               global.times = 0;
               clearInterval(global.Taxi3dTrace_timePiece);
               global.map.removeLayer(global.Taxi3dTrace_rem);
@@ -132,7 +140,7 @@
 #Taxi3dTrace_taxiQuery{
   position:absolute;
   top:26px;
-  right:15px;
+  left:25px;
   z-index:100;
   font-size:20px;
   font-weight:700;
@@ -148,5 +156,34 @@
 #Taxi3dTrace{width:100%;height:100%}
 
 .container{width:100%;height:100%}
+#Taxi3dTrace_taxiID{
+  width: 159px;
+  height: 33px;
+  margin-top: 22px;
+  color: white;
+  background: transparent;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+}
+.taxi_Id{
+  width: 159px;
+  height: 33px;
+  background: transparent;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+}
+input{
+  width: 52px;
+  height: 28px;
+}
+#Taxi3dTrace_imageInfo{
 
+  margin-bottom: 3%;
+}
+
+#Taxi3dTrace_text{
+  margin-top: 1px;
+
+  font-size:16px;
+}
 </style>

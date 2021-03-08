@@ -1,16 +1,18 @@
 <template>
-  <div>
+  <div class="Bar_Bottom">
+    <div class="Left_Top3"></div><div class="Right_Bottom3"></div>
     <div id="chordChart3Bar">
-      <legend style="float:left;color:white;font-size: 18px;border-bottom: 0px solid #e5e5e5;">自行车周内租还情况</legend>
+      <legend class="title2">自行车周内租还情况</legend>
+      <div id="chordChart3"></div> 
     </div>
-    <div id="chordChart3"></div> 
+    
   </div>
   
 </template>
 
 <script>
 import echarts from 'echarts' 
-import PRBicycleOverall from '../../../assets/js/PRBicycleOverall/PRBicycleOverall'
+import PRBicycleOverall from '../../../assets/js/PRBicycle_Overall/PRBicycle_Overall'
 
 export default {
   data() {
@@ -25,28 +27,30 @@ export default {
   methods: {
     remove_line(){
     this.j = this.j+7;
+    
     this.PRBicycle_Overall_echart12();
     },
     PRBicycle_Overall_echart12(){
       //请更改成html div名字
       let PRBicycle_Overall_myChart4 = echarts.init(document.getElementById('chordChart3'));
-      let xAxisData = [];
+     
       let data1 = [3.2*20*148/1000,5*20*148/1000,4.7*20*148/1000,4.8*20*148/1000,3*20*148/1000,4.2*20*148/1000,[2*20*148+this.j*parseInt(Math.random()*1+9)]/1000];
       let data2 = [-3*20*148/1000,-3.2*20*148/1000,-4.8*20*148/1000,-3.9*18*148/1000,-3.5*20*148/1000,-4.3*20*148/1000,[-1*20*148-this.j*parseInt(Math.random()*1+8)]/1000];
-      for (let i = 0; i < PRBicycleOverall.echart12_day.length; i++) {
-          xAxisData.push(PRBicycleOverall.echart12_day[i]);
-      }
+    
       let PRBicycle_Overall_option4 = {
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        //backgroundColor: 'rgba(255,255,255,0.1)',
         legend: {
-          data: ['租', '还'],
+          data: ['还','租'],
           align: 'left',
+          padding:[10,0,0,0],   //可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
           textStyle: {
-            fontSize: 18,
+            fontSize: 15,
             fontWeight: 500,
-            color: 'white'
+            color: 'white',
+            
           },
         },
+        /* 
         toolbox: {
         // y: 'bottom',
           feature: {
@@ -58,33 +62,180 @@ export default {
               pixelRatio: 2
             }
           }
-        },
+        },*/
         tooltip: {},
-        xAxis: {
-          data: xAxisData,
+        grid: {
+          show:'true',
+          left: '3%',
+          right:'3%',
+          top:'15%',
+          bottom:'12%',
+          borderWidth:'0.5',
+          borderColor:'rgba(105,105,105, 0.5)',
+          containLabel: 'true'
+        },
+        xAxis: [{
+          type: 'value',
+          max:15, 
+          //min:-20,        
+          data: PRBicycleOverall.xAxisData,
           silent: false,
           splitLine: {
             show: false
           }, 
-          axisLine: {
-            lineStyle: {
-              color: "white"
+          axisLabel: {
+            show: true,
+            margin: 10,
+            textStyle: {
+              color: "white",  //更改坐标轴文字颜色
+              fontSize : 11      //更改坐标轴文字大小
             }
           },
-        },  
-        yAxis: {
-          type: 'value',
+          axisTick: {//设置地名分割线颜色
+            show:false,          
+            lineStyle: {
+              color: "rgba(105,105,105, 0.5)"
+            }
+          },
+          axisLine: {
+            lineStyle: {
+              color: "rgba(105,105,105, 0.5)"
+            }
+          },
+        }, ],  
+        yAxis: [{
+          name: ' ',
+          type: 'category',
+          axisLabel: {
+            show: true,
+            textStyle: {
+              color: "white",  //更改坐标轴文字颜色
+              fontSize : 11      //更改坐标轴文字大小
+            }
+          },
+          splitLine: { 
+            show: true,
+            lineStyle: {
+              color: "rgba(105,105,105, 0.5)",
+              width: 1
+            }
+          },
+          axisTick: {//设置地名分割线颜色
+            show:false,          
+            lineStyle: {
+              color: "rgba(105,105,105, 0.5)"
+            }
+          },
+          axisLine: {
+            show: true,
+            onZero: true,
+            lineStyle: {
+              color: "rgba(105,105,105, 0.5)",
+              width: 1
+            }
+          },
+          axisLabel: {
+            show: true,
+            margin: 10,
+            textStyle: {
+              color: "white",  //更改坐标轴文字颜色
+              fontSize : 11,      //更改坐标轴文字大小
+            }
+          },
+          data:[PRBicycleOverall.xAxisData[0],PRBicycleOverall.xAxisData[1],PRBicycleOverall.xAxisData[2],PRBicycleOverall.xAxisData[3],PRBicycleOverall.xAxisData[4],PRBicycleOverall.xAxisData[5],PRBicycleOverall.xAxisData[6]]
+        }, {
           name: '次数（千辆）',
-          axisLine: {
+          type: 'category',
+          nameTextStyle:{
+            color:"white", 
+            fontSize:12,  
+            padding:[0,60,0,0]   //可设定图例[距上方距离，距右方距离，距下方距离，距左方距离]
+          },
+          splitLine: { 
+            show: true,
             lineStyle: {
-              color: "white"
+              color: "rgba(105,105,105, 0.5)",
+              width: 1
             }
           },
-        },
-        series: [{
+          axisTick: {//设置地名分割线颜色
+              show:false,          
+              lineStyle: {
+                color: "rgba(105,105,105, 0.5)"
+              }
+          },
+          axisLine: {
+            show: true,
+            onZero: true,
+            lineStyle: {
+              color: "rgba(105,105,105, 0.5)",
+              width: 1
+            }
+          },
+         },],
+        series: [ 
+          
+          {
+            name:'辅助',
+            type:'bar',
+            stack: 'total',
+            itemStyle:{
+              normal:{
+                barBorderColor:'rgba(0,0,0,0)',
+                color:'rgba(0,0,0,0)'
+              },
+              emphasis:{
+                barBorderColor:'rgba(0,0,0,0)',
+                color:'rgba(0,0,0,0)'
+              }
+            },
+            data:[0.25,0.25,0.25,0.25,0.25,0.25,0.25]
+          },{
+            name:'辅助',
+            type:'bar',
+            stack: 'total',           
+            itemStyle:{
+              normal:{
+                barBorderColor:'rgba(0,0,0,0)',
+                color:'rgba(0,0,0,0)'
+              },
+              emphasis:{
+                barBorderColor:'rgba(0,0,0,0)',
+                color:'rgba(0,0,0,0)'
+              }
+            },
+            data:[-0.25,-0.25,-0.25,-0.25,-0.25,-0.25,-0.25]
+          },
+          
+          {
           name: '租',
           type: 'bar',
+          stack: 'total',
           barGap: '-100%',
+          barWidth: '55%',
+          itemStyle: {
+            //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+            normal: {
+              //柱形图圆角，初始化效果
+              barBorderRadius:[4, 4, 4, 4],
+              color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                offset: 0,
+                color: '#6D214F'
+              },{
+                offset: 0.5,
+                color: '#FF99CC'
+              }]),
+              label: {
+                  show: true, //是否显示
+                  position: 'insideLeft',//显示在顶部
+                  textStyle: {
+                    color: 'white', //字体颜色
+                    fontSize: 11, //字体大小
+                    align: 'left'
+                  }
+                }
+            }
+          },
           data: data1,
           animationDelay: function (idx) {
             return idx * 10;
@@ -92,6 +243,30 @@ export default {
         }, {
           name: '还',
           type: 'bar',
+          stack: 'total',
+          barWidth: '55%',
+          itemStyle: {
+            //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
+            normal: {
+              //柱形图圆角，初始化效果
+              barBorderRadius:[4, 4, 4, 4],
+              color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
+                offset: 0,
+                color: '#30CFD0'
+              },{
+                offset: 0.9,
+                color: '#330867'
+              }]),
+               label: {
+                  show: true, //是否显示
+                  position: 'insideRight',//显示在顶部
+                  textStyle: {
+                    color: 'white', //字体颜色
+                    fontSize: 11 //字体大小
+                  }
+                }
+            }
+          },
           data: data2,
           animationDelay: function (idx) {
             return idx * 10 + 100;
@@ -101,7 +276,7 @@ export default {
         animationDelayUpdate: function (idx) {
           return idx * 5;
         },
-        color:['#6495ED','#91c7ae']
+        //color:['#6495ED','#91c7ae']
       };
       PRBicycle_Overall_myChart4.setOption(PRBicycle_Overall_option4);
     }
@@ -110,19 +285,67 @@ export default {
 </script>
 
 <style>
+.Bar_Bottom{
+  height: 38%;
+  width: 100%;
+}
 #chordChart3Bar{
- 
-  width: 97.5%;
-  height: 24px;
-  padding-top:5px;
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 36%;
+  margin-top: 2%;  
+  margin-left: 2.5%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop2.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
 }
 #chordChart3{
-    width: 97.5%;
-    height: 250px;
-    padding: 0 0;
-    background-color:rgba(255,255,255,0.1);
+  width: 89%;
+  height: 83%;
+  margin-left: 5%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop1.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
     
-    z-index: 700;
-    
+}
+#chordChart3:after{
+  opacity: 0.5;
+}
+/*内边框左上角样式*/
+.Left_Top3 {
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 32%;
+  margin-top: 2.9%;  
+  margin-left: 3%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop5.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 14% 22%;
+}
+/*内边框右下角样式*/
+.Right_Bottom3{
+  float:right;
+  position: absolute;
+  width: 95%;
+  height: 36%;
+  margin-top: 2.4%;  
+  margin-left: 1.5%;
+  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop5.png);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-size: 12% 19%;
+  transform: rotate(180deg);
+}
+.title2 {
+  height: 10%;
+  left: 10%;
+  font-size:125%;
+  line-height: 200%;
+  padding-left: 15%;
+  color:rgb(44, 188, 255);
+  
 }
 </style>

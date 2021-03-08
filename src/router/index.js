@@ -12,14 +12,14 @@ const Park_Flow = () =>import('../views/ParkAnalysis/Park_Flow')
 //公共自行车
 const PRBicycle_OD =() =>import('../views/PublicBicycle/PRBicycle_OD')
 const PRBicycle_Shared =() =>import('../views/PublicBicycle/PRBicycle_Shared')
-const PRBicycleOverall =() =>import('../views/PublicBicycle/PRBicycleOverall')
+const PRBicycle_Overall =() =>import('../views/PublicBicycle/PRBicycle_Overall')
 //地铁分析
 const Subway_Flow =() =>import('../views/SubwayAnalysis/Subway_Flow')
 //出租车分析
 const Taxi_3dTrace =() =>import('../views/TaxiAnalysis/Taxi_3dTrace')
 const Taxi_DPoint =() =>import('../views/TaxiAnalysis/Taxi_DPoint')
 const Taxi_OPoint =() =>import('../views/TaxiAnalysis/Taxi_OPoint')
-//const Taxi_RidingService =() =>import('../views/TaxiAnalysis/Taxi_RidingService')
+const Taxi_RidingService =() =>import('../views/TaxiAnalysis/Taxi_RidingService')
 const Taxi_Trace = () =>import('../views/TaxiAnalysis/Taxi_Trace')
 const Taxi_Distribution =() =>import('../views/TaxiAnalysis/Taxi_Distribution' )
 const Taxi_Grid =() =>import('../views/TaxiAnalysis/Taxi_Grid')
@@ -52,6 +52,10 @@ const routes=[
     path: '/bus_station_num',
     component:BusStationNum,
   },
+  {
+    path: '/bus_station_od',
+    component:BusStationNum,
+  },
   //主页
   {
     path: '/homepage',
@@ -73,7 +77,7 @@ const routes=[
   },
   {
     path: '/pr_bicycle_overall',
-    component:PRBicycleOverall,
+    component:PRBicycle_Overall,
   },
   //地铁分析
   {
@@ -93,10 +97,10 @@ const routes=[
     path: '/taxi_o_point',
     component:Taxi_OPoint,
   },
-  // {
-  //   path: '/taxi_riding_service',
-  //   component:Taxi_RidingService,
-  // },
+  {
+    path: '/taxi_riding_service',
+    component:Taxi_RidingService,
+  },
   {
     path: '/taxi_trace',
     component:Taxi_Trace,

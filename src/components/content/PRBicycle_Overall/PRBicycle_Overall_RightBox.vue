@@ -30,13 +30,10 @@ export default {
 #rightBox{
     float:right;
     position: absolute;
-    right: 7px;
-    height: 890px;
-    width: 25%;
-    padding-top:5px;
-    padding-left: 10px;
-    padding-bottom:5px;
+    height: 100%;
+    width: 31.5%;
     z-index: 600;
-    background-color:rgba(1,19,66,0.6);
+    background-color:rgba(8, 8, 13, 0.949019607843137);
+    /*background-color:rgba(1,19,66,0.6);*/
 }
 </style>
