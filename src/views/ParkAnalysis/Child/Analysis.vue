@@ -817,7 +817,7 @@
           value.FULLNAME2 = parkPlace[2];
         }
 
-        axios.post('http://10.100.54.135:8080/TraSysC/park/findBynameanddate',value)
+        axios.post('http://10.100.54.135:8080/TraSys/park/findBynameanddate',value)
           .then( res => {
             let e=JSON.parse(JSON.stringify(res.data))
             console.log(e)

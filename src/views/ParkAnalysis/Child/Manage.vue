@@ -25,39 +25,39 @@
       }
     },
     mounted() {
-      // request({
-      //   url:'/park/findAll',
-      // }).then(res =>{
-      //   console.log(res)
-      //   for(let i=0;i<=res.data.msg.length;i++){
-      //      if(res.data.msg[i].TYPE === "0"){
-      //        res.data.msg[i].TYPE ="户外停车场";
-      //       let b={
-      //         FULLNAME: res.data.msg[i].ABBRNAME,
-      //         TYPE: res.data.msg[i].TYPE,
-      //         SPACE: res.data.msg[i].SPACE,
-      //         OFFSET:res.data.msg[i].OFFSET
-      //       }
-      //       this.tableData.push(b)
-      //     }
-      //   }
-      // }).catch(err => {
-      //   console.log(err);
-      // })
-      for(let i=0;i<=res.msg.length;i++){
-        if(res.msg[i].TYPE === "0"){
-          res.msg[i].TYPE ="户外停车场";
-          let b={
-            FULLNAME: res.msg[i].ABBRNAME,
-            TYPE: res.msg[i].TYPE,
-            SPACE: res.msg[i].SPACE,
-            OFFSET:res.msg[i].OFFSET
+      request({
+        url:'/park/findAll',
+      }).then(res =>{
+        console.log(res)
+        for(let i=0;i<=res.data.msg.length;i++){
+           if(res.data.msg[i].TYPE === "0"){
+             res.data.msg[i].TYPE ="户外停车场";
+            let b={
+              FULLNAME: res.data.msg[i].ABBRNAME,
+              TYPE: res.data.msg[i].TYPE,
+              SPACE: res.data.msg[i].SPACE,
+              OFFSET:res.data.msg[i].OFFSET
+            }
+            this.tableData.push(b)
           }
-          this.tableData.push(b)
-
         }
-        //console.log(this.tableData)
-      }
+      }).catch(err => {
+        console.log(err);
+      })
+      // for(let i=0;i<=res.msg.length;i++){
+      //   if(res.msg[i].TYPE === "0"){
+      //     res.msg[i].TYPE ="户外停车场";
+      //     let b={
+      //       FULLNAME: res.msg[i].ABBRNAME,
+      //       TYPE: res.msg[i].TYPE,
+      //       SPACE: res.msg[i].SPACE,
+      //       OFFSET:res.msg[i].OFFSET
+      //     }
+      //     this.tableData.push(b)
+      //
+      //   }
+      //   //console.log(this.tableData)
+      // }
 
 
     },

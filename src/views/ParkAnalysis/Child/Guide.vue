@@ -44,90 +44,90 @@
       };
     },
     mounted(){
-      // request({
-      //   url:'/park/findAllScreen1',
-      // }).then(res =>{
-      //   console.log(res)
-      //   for(let i=0;i <=res.data.msg.length;i++){
-      //     let c = [];
-      //     let a = JSON.parse(res.data.msg[i].INFO);
-      //     c.push(a);
-      //     //console.log(c)
-      //     let d = '';
-      //     for(let j=0; j < c[0].length;j++){
-      //       d= d + c[0][j].fullname +"："+c[0][j].num+'  '
-      //     }
-      //     let b={
-      //       屏号:res.data.msg[i].屏号,
-      //       Parkingmessage:d,
-      //     }
-      //     this.tableData1.push(b)
-      //   }
-      // }).catch(err => {
-      //   console.log(err);
-      // })
-      //
-      // request({
-      //   url:'/park/findAllScreen2',
-      // }).then(res =>{
-      //   console.log(res)
-      //   for(let i=0;i <=res.data.msg.length;i++){
-      //     let c = [];
-      //     let a = JSON.parse(res.data.msg[i].INFO);
-      //     c.push(a);
-      //     //console.log(c)
-      //     let d = '';
-      //     for(let j=0; j < c[0].length;j++){
-      //       d= d + c[0][j].fullname +"："+c[0][j].num+'  '
-      //     }
-      //     let b={
-      //       屏号:res.data.msg[i].屏号,
-      //       Parkingmessage:d,
-      //     }
-      //     this.tableData2.push(b)
-      //   }
-      // }).catch(err => {
-      //   console.log(err);
-      // })
-      //
-      // request({
-      //   url:'/park/findAllScreen3',
-      // }).then(res =>{
-      //   console.log(res)
-      //   for(let i=0;i <=res.data.msg.length;i++){
-      //     let c = [];
-      //     let a = JSON.parse(res.data.msg[i].INFO);
-      //     c.push(a);
-      //     //console.log(c)
-      //     let d = '';
-      //     for(let j=0; j < c[0].length;j++){
-      //       d= d + c[0][j].fullname +"："+c[0][j].num+'  '
-      //     }
-      //     let b={
-      //       屏号:res.data.msg[i].屏号,
-      //       Parkingmessage:d,
-      //     }
-      //     this.tableData3.push(b)
-      //   }
-      // }).catch(err => {
-      //   console.log(err);
-      // })
+      request({
+        url:'/park/findAllScreen1',
+      }).then(res =>{
+        console.log(res)
+        for(let i=0;i <=res.data.msg.length;i++){
+          let c = [];
+          let a = JSON.parse(res.data.msg[i].INFO);
+          c.push(a);
+          //console.log(c)
+          let d = '';
+          for(let j=0; j < c[0].length;j++){
+            d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+          }
+          let b={
+            屏号:res.data.msg[i].屏号,
+            Parkingmessage:d,
+          }
+          this.tableData1.push(b)
+        }
+      }).catch(err => {
+        console.log(err);
+      })
 
-      for(let i=0;i <= res.msg.length;i++){
-        let c = [];
-        let a = JSON.parse(res.msg[i].INFO);
-        c.push(a);
-        //console.log(c)
-        let d = '';
-        for(let j=0; j < c[0].length;j++){
-          d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+      request({
+        url:'/park/findAllScreen2',
+      }).then(res =>{
+        console.log(res)
+        for(let i=0;i <=res.data.msg.length;i++){
+          let c = [];
+          let a = JSON.parse(res.data.msg[i].INFO);
+          c.push(a);
+          //console.log(c)
+          let d = '';
+          for(let j=0; j < c[0].length;j++){
+            d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+          }
+          let b={
+            屏号:res.data.msg[i].屏号,
+            Parkingmessage:d,
+          }
+          this.tableData2.push(b)
         }
-        let b={
-          屏号:res.msg[i].屏号,
-          Parkingmessage:d,
+      }).catch(err => {
+        console.log(err);
+      })
+
+      request({
+        url:'/park/findAllScreen3',
+      }).then(res =>{
+        console.log(res)
+        for(let i=0;i <=res.data.msg.length;i++){
+          let c = [];
+          let a = JSON.parse(res.data.msg[i].INFO);
+          c.push(a);
+          //console.log(c)
+          let d = '';
+          for(let j=0; j < c[0].length;j++){
+            d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+          }
+          let b={
+            屏号:res.data.msg[i].屏号,
+            Parkingmessage:d,
+          }
+          this.tableData3.push(b)
         }
-        this.tableData1.push(b)
-      };
+      }).catch(err => {
+        console.log(err);
+      })
+
+      // for(let i=0;i <= res.msg.length;i++){
+      //   let c = [];
+      //   let a = JSON.parse(res.msg[i].INFO);
+      //   c.push(a);
+      //   //console.log(c)
+      //   let d = '';
+      //   for(let j=0; j < c[0].length;j++){
+      //     d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+      //   }
+      //   let b={
+      //     屏号:res.msg[i].屏号,
+      //     Parkingmessage:d,
+      //   }
+      //   this.tableData1.push(b)
+      // };
 
 
 
