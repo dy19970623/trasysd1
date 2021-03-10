@@ -2,14 +2,14 @@
 <!--姓名：高翔森-->
 <!--功能：组件-->
 <template>
-  <div id="app">
-   <div id="RightBox" >
-     <el-tabs style="height: 100% "  v-model="activeName">
-       <el-tab-pane label="统计分析" name="first"  :key="'first'"  ><Analysis/></el-tab-pane>
-       <el-tab-pane label="停车场信息管理" name="second" :key="'second'"><Manage/> </el-tab-pane>
-       <el-tab-pane label="停车诱导" name="third"  :key="'third'"><Guide/></el-tab-pane>
-     </el-tabs>
-   </div>
+  <div id="box">
+    <div id="RightBox" >
+      <el-tabs style="height: 100% "  v-model="activeName">
+        <el-tab-pane label="统计分析" name="first"  :key="'first'"  ><Analysis/></el-tab-pane>
+        <el-tab-pane label="停车场信息管理" name="second" :key="'second'"><Manage/> </el-tab-pane>
+        <el-tab-pane label="停车诱导" name="third"  :key="'third'"><Guide/></el-tab-pane>
+      </el-tabs>
+    </div>
   </div>
 </template>
 
@@ -17,28 +17,28 @@
   import Analysis from "./Analysis";
   import Manage from "./Manage";
   import Guide from "./Guide";
-    export default {
-      name: "RightBox",
-      data(){
-        return {
-          activeName:'first',
-        }
-      },
-      components:{
-        Analysis,
-        Manage,
-        Guide
-      },
-      mounted() {
-
-      },
-      methods:{
-
-
+  export default {
+    name: "RightBox",
+    data(){
+      return {
+        activeName:'first',
       }
+    },
+    components:{
+      Analysis,
+      Manage,
+      Guide
+    },
+    mounted() {
+
+    },
+    methods:{
 
 
     }
+
+
+  }
 </script>
 
 <style>
@@ -55,7 +55,7 @@
     height:100%;
     z-index:600;
     /*background-color:#031a51;*/
-    background-color: rgba(0,0,0,0.95)
+    background-color: rgba(0,0,0,0.7)
   }
 
   .el-tabs__header {
