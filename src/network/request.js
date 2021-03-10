@@ -11,8 +11,8 @@ export function request(config) {
 
 export function dopost(config) {
   const instance = axios.create({
-    baseURL:'http://192.168.1.8:8080/TraSys',
-    timeout:50000000
+     baseURL:'http://192.168.1.8:8080/TraSys',
+     timeout:50000000
   })
   return instance.post(config)
 }
