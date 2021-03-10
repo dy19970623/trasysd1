@@ -28,11 +28,14 @@ name: "bikelegend"
 <style scoped>
 #legend{
   position: absolute;
-  height: 10%;
+  height: 13%;
   width: 10%;
-  left: 90%;
-  bottom: 21%;
+  left: 88%;
+  bottom: 5%;
   z-index: 600;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(40, 176, 213, 1);
 
 }
 .bike_img{
@@ -41,22 +44,22 @@ name: "bikelegend"
 }
 .bike_legendtxt1{
   position: absolute;
-  top:10%;
-  left:33%;
+  top:6%;
+  left:34%;
   float: right;
   font-size: 15px;
 }
 .bike_legendtxt2{
   position: absolute;
-  top:44%;
-  left:33%;
+  top:36%;
+  left:34%;
   float: right;
   font-size: 15px;
 }
 .bike_legendtxt3{
   position: absolute;
-  top:76%;
-  left:33%;
+  top:69%;
+  left:34%;
   float: right;
   font-size: 15px;
 }

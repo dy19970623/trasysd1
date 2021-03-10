@@ -413,7 +413,7 @@ export default {
         value2.STATIONNAME2=stationPlace[2];
       }
       //axios后台返回数据
-      axios.post('http://10.100.54.135:8080/TraSysC/subway/findBynameanddate',value2)
+      axios.post('http://192.168.1.8:8080/TraSysC/subway/findBynameanddate',value2)
         .then(res=>{
           let e=JSON.parse(JSON.stringify(res.data))
           console.log(e)
@@ -875,7 +875,7 @@ export default {
       };
       //let value=JSON.stringify(value1)
       //此处由于直接连的服务器后台，因此测试过程中可能会出现跨域问题，后期测试时可修改url成本地后台或者其他地址。
-      axios.post('http://10.100.54.135:8080/TraSysC/subway/findBynameanddate',value1)
+      axios.post('http://192.168.1.8:8080/TraSysC/subway/findBynameanddate',value1)
         .then(res=>{
           let e=JSON.parse(JSON.stringify(res.data))
           console.log(e)
@@ -1099,7 +1099,7 @@ export default {
 <style>
 #MutiStation{
   position: absolute;
-  height: 37%;
+  height: 43%;
   width:86%;
   top:0.1%;
   left:3%;
@@ -1107,10 +1107,10 @@ export default {
   -webkit-border-image: url("../../../assets/image/public_resource/border_new1.png") 27 stretch;
 }
 #SimpleStation{
-  height: 40%;
+  height: 45%;
   width: 86%;
   position: absolute;
-  top: 42%;
+  top: 50%;
   left: 3%;
   border:16px solid transparent;
   -webkit-border-image: url("../../../assets/image/public_resource/border_new1.png") 27 stretch;
@@ -1200,10 +1200,11 @@ export default {
 }
 .MutiStation .el-input__inner{
   border-radius: 4px;
-  border: 2px solid #fff;
-  padding-right: 47%;
-  background: none;
-  color: #fff;
+  border: 2px solid #3d97f6;
+  padding-right: 5%;
+  background: #19344b;
+  opacity: 70%;
+  color:#bcd4e8;
   width:100%
 }
 .SimpleStation .el-button--primary{
@@ -1215,10 +1216,11 @@ export default {
 }
 .SimpleStation .el-input__inner{
   border-radius: 4px;
-  border: 2px solid #fff;
-  padding-right: 47%;
-  background: none;
-  color: #fff;
+  border: 2px solid #3d97f6;
+  padding-right: 5%;
+  background: #19344b;
+  opacity: 70%;
+  color:#bcd4e8;
   width:100%
 }
 .MutiStation .el-scrollbar__wrap{

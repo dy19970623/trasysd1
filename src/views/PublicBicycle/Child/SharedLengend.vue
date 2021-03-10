@@ -25,6 +25,9 @@ name: "SharedLengend"
   left: 93%;
   position: absolute;
   z-index: 1000;
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(40, 176, 213, 1);
 }
 .share_icon{
   width: 20px;

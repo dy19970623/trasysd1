@@ -191,12 +191,16 @@ export default {
 
 <style>
 #mapid{
+  position: absolute;
   width:100%;
-  height: 100vh;
+  height: 100%;
 }
 .leaflet-popup-content-wrapper, .leaflet-popup-tip {
   color: rgba(255, 255, 255, 1);
   box-shadow: rgba(0, 0, 0, 0.4) 0px 3px 14px;
   background: rgba(40, 49, 58, 0.9);
+}
+.leaflet-touch .leaflet-control-attribution, .leaflet-touch .leaflet-control-layers, .leaflet-touch .leaflet-bar {
+  display: none;
 }
 </style>

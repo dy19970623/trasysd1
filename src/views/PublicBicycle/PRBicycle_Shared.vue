@@ -158,7 +158,7 @@ export default {
 <style>
 #PRBicycle_Shared{
   position: absolute;
-  height:100%;
+  height:99.93%;
   width:100%
 }
 .container{

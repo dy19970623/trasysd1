@@ -375,7 +375,7 @@ export default {
   position: relative;
   top:1%;
   left:1%;
-  height: 35%;
+  height: 40%;
   width: 80%;
   border:15px solid transparent;
   -webkit-border-image: url("../../../assets/image/public_resource/border_new.png") 45 stretch;
@@ -383,7 +383,7 @@ export default {
 #chordChart{
   position: relative;
   top:3%;
-  height: 35%;
+  height: 40%;
   width: 80%;
   left:1%;
   border:15px solid transparent;

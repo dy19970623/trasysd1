@@ -578,7 +578,7 @@ export default {
   position: absolute;
   top: 36%;
   width: 83%;
-  height: 41%;
+  height: 49%;
   border: 40px solid transparent;
   -webkit-border-image: url("../../../assets/image/public_resource/border_new1.png") 45 stretch;
 }
@@ -670,9 +670,11 @@ export default {
 }
 .chartTitle2 .el-input__inner{
   border-radius: 4px;
-  border: 2px solid #fff;
-  background:none;
-  color: #fff;
+  border: 2px solid #3d97f6;
+  padding-right: 5%;
+  background: #19344b;
+  opacity: 70%;
+  color:#bcd4e8;
   width:100%
 }
 

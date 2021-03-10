@@ -5,8 +5,8 @@
 */
 <template>
   <div id="map" style="height:100%; width:100%">
-    <div ref="map"  id="Bmap" ></div>
     <div ref="TaxiOPoint_container" id="chart" ></div>
+    <div ref="map"  id="Bmap" ></div>
     <div id="legend"><img src="../../assets/image/TaxiAnalysis/legend.png" ></div>
   </div>
 </template>
@@ -1880,7 +1880,6 @@ export default {
   position: absolute;
   z-index:999;
   padding: 30px 15px 5px 25px;
-
 }
 #legend{
   right: 3%;
