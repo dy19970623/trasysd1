@@ -27,7 +27,6 @@ export default {
       let fenpeijine = [echart21_data[18],echart21_data[14],echart21_data[10],echart21_data[6],echart21_data[2]];
       let city = [echart21_data[16], echart21_data[12], echart21_data[8], echart21_data[4], echart21_data[0]];
       let PRBicycle_OD_option2 = {
-        backgroundColor:'rgba(255,255,255,0.1)',
         title: {
           text: '车站锁位使用率 TOP 5',
           left: 20,
@@ -213,7 +212,6 @@ export default {
       let fenpeijine = [echart22_data[18],echart22_data[14],echart22_data[10],echart22_data[6],echart22_data[2]];
       let city = [echart22_data[16], echart22_data[12], echart22_data[8], echart22_data[4], echart22_data[0]];
       let PRBicycle_OD_option3 = {
-        backgroundColor:'rgba(255,255,255,0.1)',
         title: {
           text: '车站锁位使用率 BOTTOM 5',
           left: 20,
@@ -375,21 +373,21 @@ export default {
 }
 #chordChart2{
   position: relative;
-  top:3%;
+  top:1%;
   left:1%;
   height: 35%;
   width: 80%;
-  border:40px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border1.png") 45 stretch;
+  border:15px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new.png") 45 stretch;
 }
 #chordChart{
   position: relative;
-  top:5%;
+  top:3%;
   height: 35%;
   width: 80%;
   left:1%;
-  border:40px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border1.png") 45 stretch;
+  border:15px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new.png") 45 stretch;
 }
 
 </style>

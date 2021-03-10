@@ -12,19 +12,19 @@
 <!--      margin-left="10%"-->
 
       <el-submenu  index="1">
-        <template slot="title" style="background:transparent"><div class="plabel">地铁客流分析</div></template>
-        <el-menu-item index="1-1"><router-link to="/subway_flow"><div class="plabel" style="color:white">地铁客流分析</div></router-link></el-menu-item>
+        <template slot="title" style="background:transparent"><div class="plabel">地铁客流</div></template>
+        <el-menu-item index="1-1"><router-link to="/subway_flow"><div class="plabel1" >地铁客流</div></router-link></el-menu-item>
       </el-submenu>
       <el-submenu  index="2">
-        <template slot="title" style="background:transparent"><div class="plabel">公交数据分析</div></template>
-            <el-menu-item index="2-1"><router-link to="/bus_overall"><div class="plabel1">整体客流情况</div></router-link></el-menu-item>
+        <template slot="title" style="background:transparent"><div class="plabel">公交客流</div></template>
+            <el-menu-item index="2-1"><router-link to="/bus_overall"><div class="plabel1">整体客流分析</div></router-link></el-menu-item>
             <el-menu-item index="2-2"><router-link to="/bus_station_num"><div class="plabel1">站位登量分析</div></router-link></el-menu-item>
-            <el-menu-item index="2-3"><router-link to="/bus_track"><div class="plabel1">公交时空轨迹</div></router-link></el-menu-item>
-            <el-menu-item index="2-4"><router-link to="/bus_station_top"><div class="plabel1">公交时空日历图</div></router-link></el-menu-item>
+            <el-menu-item index="2-3"><router-link to="/bus_track"><div class="plabel1">时空轨迹分析</div></router-link></el-menu-item>
+            <el-menu-item index="2-4"><router-link to="/bus_station_top"><div class="plabel1">交时空日历图</div></router-link></el-menu-item>
       </el-submenu>
       <el-submenu  index="3">
-        <template slot="title" style="background:transparent"><div class="plabel">公租自行车分析</div></template>
-             <el-menu-item index="3-1"><router-link to="/pr_bicycle_overall"><div class="plabel1">整体使用情况</div></router-link></el-menu-item>
+        <template slot="title" style="background:transparent"><div class="plabel">公租自行车</div></template>
+             <el-menu-item index="3-1"><router-link to="/pr_bicycle_overall"><div class="plabel1">整体使用分析</div></router-link></el-menu-item>
             <el-menu-item index="3-2"><router-link to="/pr_bicycle_od"><div class="plabel1">站位使用分析</div></router-link></el-menu-item>
             <el-menu-item index="3-2"><router-link to="/pr_bicycle_shared"><div class="plabel1">共享单车分析</div></router-link></el-menu-item>
       </el-submenu>
@@ -67,14 +67,23 @@ a{
 
 .plabel {
   position: relative;
-  width:98%;
-  height: 55px;
-  font-size:13px;
-  font-weight:bold;
+  width:100%;
+  font-size:17px;
+  background: linear-gradient(to left,#1a95be, #0be9f4);
+  -webkit-background-clip: text;
+  font-weight: bold;
+  color: transparent;
 }
-/*.el-submenu {*/
-/*  background-color: transparent;*/
-/*}*/
+.plabel1 {
+  position: relative;
+  width:100%;
+  font-size:16px;
+  background: linear-gradient(to left,#1a95be, #0be9f4);
+  -webkit-background-clip: text;
+  font-weight: bold;
+  color: transparent;
+}
+
 .el-submenu .el-submenu__title{
   background: url("../../assets/image/HomePage/LeftMenu1.png");
   background-size: 98% 100%;

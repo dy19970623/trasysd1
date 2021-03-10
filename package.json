@@ -27,6 +27,7 @@
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^2.1.1",
     "maptalks": "^0.49.1",
+    "maptalks.heatmap": "^0.6.1",
     "maptalks.three": "^0.15.0",
     "three": "^0.126.0",
     "vue": "^2.5.2",

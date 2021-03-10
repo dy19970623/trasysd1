@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 const Bus_StationTop = () => import('../views/BusAnalysis/Bus_StationTop')
 const Bus_Track =() =>import('../views/BusAnalysis/Bus_Track')
 const Bus_Overall =() =>import('../views/BusAnalysis/Bus_Overall')
-const BusStationNum =() => import('../views/BusAnalysis/Bus_StationNum.vue')
+const BusStationNum =() => import('../views/BusAnalysis/Bus_StationNum')
 //主页
 const HomePage = () =>import('../views/HomePage/HomePage')
 //停车分析
@@ -14,7 +14,7 @@ const PRBicycle_OD =() =>import('../views/PublicBicycle/PRBicycle_OD')
 const PRBicycle_Shared =() =>import('../views/PublicBicycle/PRBicycle_Shared')
 const PRBicycle_Overall =() =>import('../views/PublicBicycle/PRBicycle_Overall')
 //地铁分析
-const Subway_Flow =() =>import('../views/SubwayAnalysis/Subway_Flow')
+const SubwayAnalysis =() =>import('../views/SubwayAnalysis/SubwayAnalysis')
 //出租车分析
 const Taxi_3dTrace =() =>import('../views/TaxiAnalysis/Taxi_3dTrace')
 const Taxi_DPoint =() =>import('../views/TaxiAnalysis/Taxi_DPoint')
@@ -25,6 +25,9 @@ const Taxi_Distribution =() =>import('../views/TaxiAnalysis/Taxi_Distribution' )
 const Taxi_Grid =() =>import('../views/TaxiAnalysis/Taxi_Grid')
 const Taxi_ODLine =() =>import('../views/TaxiAnalysis/Taxi_ODLine')
 const Taxi_Zone =() =>import('../views/TaxiAnalysis/Taxi_Zone')
+
+//数据融合
+const TaxiBusFusion =() =>import('../views/TaxiBusAnalysis/TaxiBusFusion')
 //自己加上自己的懒加载
 Vue.use(VueRouter)
 //创建router
@@ -82,7 +85,7 @@ const routes=[
   //地铁分析
   {
     path: '/subway_flow',
-    component:Subway_Flow,
+    component:SubwayAnalysis,
   },
   //出租车分析
   {
@@ -120,6 +123,10 @@ const routes=[
   {
     path: '/taxi_zone',
     component:Taxi_Zone,
+  },
+  {
+    path: '/taxi_bus',
+    component:TaxiBusFusion,
   }
 ]
 

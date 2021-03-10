@@ -1598,7 +1598,7 @@ export default {
 </script>
 
 <style>
-body, html,.map {
+body, html,#Taxi_mainMap {
    width:100%;
    height:100%;
    overflow: hidden;
@@ -1606,5 +1606,7 @@ body, html,.map {
    font-family:"微软雅黑";
    position:absolute;
 }
-
+.anchorBL{
+  display: none;
+}
 </style>

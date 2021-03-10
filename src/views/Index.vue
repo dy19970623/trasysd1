@@ -6,11 +6,24 @@
            <el-col :sm="3">
              <div class="grid-content bg-purple">
              <el-col :span="10">
-               <div style="font-size: 24px;text-align: center;padding-top: 20px;">{{nowTime}}</div>
+               <div style="font-size: 24px;text-align: center;padding-top: 20px;
+                  background: linear-gradient(to left,#1a95be, #0be9f4);
+                  -webkit-background-clip: text;
+                  font-weight: bold;
+                   color: transparent;
+               ">{{nowTime}}</div>
              </el-col>
              <el-col :span="14">
-               <div style="height: 60%;">{{nowWeek}}</div>
-               <div style="height: 40%;margin-top: 7px;font-size: 15px;">{{nowDate}}</div>
+               <div style="height: 60%;margin-top: 2%; background: linear-gradient(to left,#1a95be, #0be9f4);
+                    -webkit-background-clip: text;
+                    font-weight: bold;
+                    color: transparent;"
+               >{{nowWeek}}</div>
+               <div style="height: 40%;margin-top:1%;font-size: 15px;background: linear-gradient(to left,#1a95be, #0be9f4);
+                      -webkit-background-clip: text;
+                      font-weight: bold;
+                      color: transparent;"
+               >{{nowDate}}</div>
              </el-col>
 <!--             <el-col :span="4">
                &lt;!&ndash;<div>{{nowWeek}}</div>&ndash;&gt;
@@ -18,14 +31,22 @@
            </div>
            </el-col>
            <el-col :sm="5"><div class="grid-content bg-purple"><menu-left/></div></el-col>
-           <el-col :sm="8">
-             <div class="grid-content bg-purple-light">
+           <el-col :sm="8" style="border-color: fuchsia ">
                <router-link to="/homepage">
-                 <p style="vertical-align: middle;line-height: 100%;cursor: pointer;text-align: center;font-size: 28px; font-weight:bold;padding-top: -8px">
-                   交&nbsp;&nbsp;&nbsp;通&nbsp;&nbsp;&nbsp;大&nbsp;&nbsp;&nbsp;数&nbsp;&nbsp;&nbsp;据&nbsp;&nbsp;&nbsp;可&nbsp;&nbsp;&nbsp;视&nbsp;&nbsp;&nbsp;化&nbsp;&nbsp;&nbsp;平&nbsp;&nbsp;&nbsp;台
-                 </p>
+                 <div style="vertical-align: middle;
+                      padding-top: 4%;
+                      height: 50px;
+                      line-height: 50%;cursor: pointer;
+                      font-family: '微软雅黑 ';
+                 text-align: center;font-size: 30px;
+                 background: linear-gradient(to left,#1a95be, #0be9f4);
+                 -webkit-background-clip: text;
+                 color: transparent;
+                 ">
+                     交&nbsp;&nbsp;通&nbsp;&nbsp;大&nbsp;&nbsp;数&nbsp;&nbsp;据&nbsp;&nbsp;可&nbsp;&nbsp;视&nbsp;&nbsp;化&nbsp;&nbsp;平&nbsp;&nbsp;台
+
+                 </div>
                </router-link>
-             </div>
            </el-col>
            <el-col :sm="5"><div class="grid-content bg-purple"><menu-right/></div></el-col>
            <el-col :sm="3"><div class="grid-content bg-purple"></div></el-col>

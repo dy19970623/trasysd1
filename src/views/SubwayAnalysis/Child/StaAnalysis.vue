@@ -76,92 +76,92 @@ export default {
       //站点选择控件数据
       options: [
         {
-        value: '东单',
-        label: '东单'
-      }, {
-        value: '西单',
-        label: '西单'
-      }, {
-        value: '五棵松',
-        label: '五棵松'
-      }, {
-        value: '五道口',
-        label: '五道口'
-      }, {
-        value: '建国门',
-        label: '建国门'
-      },
-      {
-        value: '宣武门',
-        label: '宣武门'
-      }, {
-        value: '公主坟',
-        label: '公主坟'
-      }, {
-        value: '上地',
-        label: '上地'
-      }, {
-        value: '军事博物馆',
-        label: '军事博物馆'
-      }, {
-        value: '北宫门',
-        label: '北宫门'
-      },
-      {
-        value: '中关村',
-        label: '中关村'
-      }, {
-        value: '海淀黄庄',
-        label: '海淀黄庄'
-      }, {
-        value: '复兴门',
-        label: '复兴门'
-      }, {
-        value: '国家图书馆',
-        label: '国家图书馆'
-      }, {
-        value: '慈寿寺',
-        label: '慈寿寺'
-      },
-      {
-        value: '动物园',
-        label: '动物园'
-      }, {
-        value: '白石桥南',
-        label: '白石桥南'
-      }, {
-        value: '西直门',
-        label: '西直门'
-      }, {
-        value: '车公庄',
-        label: '车公庄'
-      }, {
-        value: '平安里',
-        label: '平安里'
-      },
-      {
-        value: '鼓楼大街',
-        label: '鼓楼大街'
-      }, {
-        value: '雍和宫',
-        label: '雍和宫'
-      }, {
-        value: '东直门',
-        label: '东直门'
-      }, {
-        value: '朝阳门',
-        label: '朝阳门'
-      }, {
-        value: '东四',
-        label: '东四'
-      },
-      {
-        value: '北京站',
-        label: '北京站'
-      }, {
-        value: '崇文门',
-        label: '崇文门'
-      }
+          value: '东单',
+          label: '东单'
+        }, {
+          value: '西单',
+          label: '西单'
+        }, {
+          value: '五棵松',
+          label: '五棵松'
+        }, {
+          value: '五道口',
+          label: '五道口'
+        }, {
+          value: '建国门',
+          label: '建国门'
+        },
+        {
+          value: '宣武门',
+          label: '宣武门'
+        }, {
+          value: '公主坟',
+          label: '公主坟'
+        }, {
+          value: '上地',
+          label: '上地'
+        }, {
+          value: '军事博物馆',
+          label: '军事博物馆'
+        }, {
+          value: '北宫门',
+          label: '北宫门'
+        },
+        {
+          value: '中关村',
+          label: '中关村'
+        }, {
+          value: '海淀黄庄',
+          label: '海淀黄庄'
+        }, {
+          value: '复兴门',
+          label: '复兴门'
+        }, {
+          value: '国家图书馆',
+          label: '国家图书馆'
+        }, {
+          value: '慈寿寺',
+          label: '慈寿寺'
+        },
+        {
+          value: '动物园',
+          label: '动物园'
+        }, {
+          value: '白石桥南',
+          label: '白石桥南'
+        }, {
+          value: '西直门',
+          label: '西直门'
+        }, {
+          value: '车公庄',
+          label: '车公庄'
+        }, {
+          value: '平安里',
+          label: '平安里'
+        },
+        {
+          value: '鼓楼大街',
+          label: '鼓楼大街'
+        }, {
+          value: '雍和宫',
+          label: '雍和宫'
+        }, {
+          value: '东直门',
+          label: '东直门'
+        }, {
+          value: '朝阳门',
+          label: '朝阳门'
+        }, {
+          value: '东四',
+          label: '东四'
+        },
+        {
+          value: '北京站',
+          label: '北京站'
+        }, {
+          value: '崇文门',
+          label: '崇文门'
+        }
       ],
       options1:[
         {
@@ -269,7 +269,7 @@ export default {
             data:[16749, 18126, 23357]
           }
         ]
-        , color:['#ff0033', '#0c8c9a']
+        , color:['#FF6633','#00f8cc']
       };
       Subway_Flow_chart2.setOption(Subway_Flow_option2);
     },
@@ -306,7 +306,7 @@ export default {
           left: '3%',
           right: '4%',
           bottom: '3%',
-          containLabel: true
+          containLabel: true,
         },
         xAxis : [
           {
@@ -316,7 +316,10 @@ export default {
                 color: "white"
               }
             },
-            type : 'value'
+            type : 'value',
+            splitLine:{
+              show:false
+            },
           }
         ],
         yAxis : [
@@ -326,10 +329,12 @@ export default {
                 color: "white"
               }
             },
-
+            splitLine:{
+              show:false
+            },
             type : 'category',
             axisTick : {show: false},
-            //data : ['2018-09-1','2018-09-2','2018-09-3','2018-09-4']
+            data : ['2018-09-1','2018-09-2','2018-09-3','2018-09-4']
           }
         ],
         series : [
@@ -337,6 +342,11 @@ export default {
             name:'进站人数',
             type:'bar',
             stack: '总量',
+            itemStyle:{
+              normal:{
+                barBorderRadius:[5, 5, 5, 5],
+              }
+            },
             color: new graphic.LinearGradient(0, 0, 1, 0, [{
               offset: 0,
               color: '#689EA9'
@@ -355,6 +365,11 @@ export default {
             name:'出站人数',
             type:'bar',
             stack: '总量',
+            itemStyle:{
+              normal:{
+                barBorderRadius:[5, 5, 5, 5],
+              }
+            },
             color: new graphic.LinearGradient(0, 0, 1, 0, [{
               offset: 0,
               color: '#4AB3DF'
@@ -534,7 +549,7 @@ export default {
                   data:residuePeople1
                 }
               ]
-              , color:['#ff0033', '#0c8c9a', '#FF6633']
+              , color:['#FF6633','#00f8cc','#ff0033']
             };
 
 
@@ -669,7 +684,7 @@ export default {
                   data:residuePeople2
                 }
               ]
-              , color:['#ff0033', '#0c8c9a', '#e81e87']
+              , color:['#FF6633','#00f8cc','#ff0033']
             };
             Subway_Flow_chart2.setOption(Subway_Flow_option2,true);
           }else{
@@ -833,7 +848,7 @@ export default {
                   data:residuePeople3
                 }
               ]
-              , color:['#ff0033', '#0c8c9a', '#FF6633']
+              , color:['#FF6633','#00f8cc','#ff0033']
             };
 
 
@@ -859,6 +874,7 @@ export default {
         MAXDATE : turnoverRatetimeMAXDATE
       };
       //let value=JSON.stringify(value1)
+      //此处由于直接连的服务器后台，因此测试过程中可能会出现跨域问题，后期测试时可修改url成本地后台或者其他地址。
       axios.post('http://10.100.54.135:8080/TraSysC/subway/findBynameanddate',value1)
         .then(res=>{
           let e=JSON.parse(JSON.stringify(res.data))
@@ -991,12 +1007,15 @@ export default {
               containLabel: true
             },
             xAxis : [
-              { axisLine: {
+              {
+                axisLine: {
                   lineStyle: {
                     color: "white"
                   }
                 },
-
+                splitLine:{
+                  show:false
+                },
                 type : 'value'
               }
             ],
@@ -1006,7 +1025,9 @@ export default {
                     color: "white"
                   }
                 },
-
+                splitLine:{
+                  show:false
+                },
                 type : 'category',
                 axisTick : {show: false},
                 data : stationTimeput
@@ -1017,6 +1038,11 @@ export default {
                 name:'进站人数',
                 type:'bar',
                 stack: '总量',
+                itemStyle:{
+                  normal:{
+                    barBorderRadius:[5, 5, 5, 5],
+                  }
+                },
                 color: new graphic.LinearGradient(0, 0, 1, 0, [{
                   offset: 0,
                   color: '#689EA9'
@@ -1035,6 +1061,11 @@ export default {
                 name:'出站人数',
                 type:'bar',
                 stack: '总量',
+                itemStyle:{
+                  normal:{
+                    barBorderRadius:[5, 5, 5, 5],
+                  }
+                },
                 color: new graphic.LinearGradient(0, 0, 1, 0, [{
                   offset: 0,
                   color: '#4AB3DF'
@@ -1053,7 +1084,7 @@ export default {
             ]
           };
           Subway_Flow_chart1.setOption(Subway_Flow_option1,true);
-      })
+        })
 
 
     }
@@ -1068,52 +1099,56 @@ export default {
 <style>
 #MutiStation{
   position: absolute;
-  height: 40%;
-  width:80%;
-  top:1%;
-  left:5%;
-  border:40px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border2.png") 45 stretch;
+  height: 37%;
+  width:86%;
+  top:0.1%;
+  left:3%;
+  border:16px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new1.png") 27 stretch;
 }
 #SimpleStation{
   height: 40%;
-  width: 80%;
+  width: 86%;
   position: absolute;
-  top: 50%;
-  left: 5%;
-  border:40px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border2.png") 45 stretch;
+  top: 42%;
+  left: 3%;
+  border:16px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new1.png") 27 stretch;
 }
 #biaodan1{
   position: relative;
-  top:0.1%;
+  top:4.1%;
   height:40%;
   width: 100%;
 }
 #biaodan2{
   position: relative;
-  top:0.1%;
+  top:4.1%;
   height:40%;
   width: 100%;
 }
 #m1{
   position: relative;
-  width: 100%;
+  width: 70%;
+  left: 11%;
 }
 .m1 .el-select{
   width:100%
 }
 #m2{
   position: relative;
-  width: 80%;
+  width: 47%;
   top: 5%;
+  left: 11%;
 }
+
 .m2 .el-select{
   width: 100%;
 }
 #s1{
   position: relative;
-  width: 100%;
+  width: 70%;
+  left: 11%;
 }
 .s1 .el-select{
   width:100%
@@ -1121,8 +1156,9 @@ export default {
 
 #s2{
   position: relative;
-  width: 80%;
+  width: 47%;
   top: 5%;
+  left: 11%;
 }
 .s2 .el-select{
   width: 100%;
@@ -1131,14 +1167,16 @@ export default {
 #button1{
   position: relative;
   margin-top:-7%;
-  left:82%;
+  left:65%;
   width: 10%;
+  height: 40px;
 }
 #button2{
   position: relative;
   margin-top:-7%;
-  left:82%;
+  left:65%;
   width: 10%;
+  height: 40px;
 }
 #Subway_Flow_chart1{
   position: relative;
@@ -1159,13 +1197,12 @@ export default {
   border:0px;
   box-shadow: 2px 2px 5px rgba(153, 153, 153, 1);
   font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
-  font-size: 17px;
 }
 .MutiStation .el-input__inner{
   border-radius: 4px;
-  border: 2px solid #409eff;
+  border: 2px solid #fff;
   padding-right: 47%;
-  background-color: #606266;
+  background: none;
   color: #fff;
   width:100%
 }
@@ -1175,13 +1212,12 @@ export default {
   border:0px;
   box-shadow: 2px 2px 5px rgba(153, 153, 153, 1);
   font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
-  font-size: 17px;
 }
 .SimpleStation .el-input__inner{
   border-radius: 4px;
-  border: 2px solid #409eff;
+  border: 2px solid #fff;
   padding-right: 47%;
-  background-color: #606266;
+  background: none;
   color: #fff;
   width:100%
 }

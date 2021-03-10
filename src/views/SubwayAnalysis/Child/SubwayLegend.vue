@@ -104,7 +104,7 @@ export default {
 
 <style scoped>
 #rightPane {
-  top: 51%;
+  top: 40%;
   left: 92%;
   position: absolute;
   z-index: 1000;

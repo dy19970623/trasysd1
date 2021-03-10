@@ -12,25 +12,24 @@
       <!--      margin-left="10%"-->
 
       <el-submenu  index="1">
-        <template slot="title" style="background:transparent"><div class="plabel">停车流量分析</div></template>
-        <el-menu-item index="1-1"><router-link to="/park_flow"><div class="plabel" style="color:white">停车流量分析</div></router-link></el-menu-item>
+        <template slot="title" style="background:transparent"><div class="plabel">停车流量</div></template>
+        <el-menu-item index="1-1"><router-link to="/park_flow"><div class="plabel1" >停车流量分析</div></router-link></el-menu-item>
       </el-submenu>
       <el-submenu  index="2">
-        <template slot="title" style="background:transparent"><div class="plabel">出租车分析</div></template>
-        <el-menu-item index="2-1"><router-link to="/taxi_distribution"><div class="plabel1">出租车位置分布</div></router-link></el-menu-item>
-        <el-menu-item index="2-2"><router-link to="/taxi_riding_service"><div class="plabel1">空车位置分布</div></router-link></el-menu-item>
-        <el-menu-item index="2-3"><router-link to="/taxi_o_point"><div class="plabel1">出租车O聚类</div></router-link></el-menu-item>
-        <el-menu-item index="2-4"><router-link to="/taxi_d_point"><div class="plabel1">出租车D聚类</div></router-link></el-menu-item>
-        <el-menu-item index="2-5"><router-link to="/taxi_trace"><div class="plabel1">出租车轨迹查询</div></router-link></el-menu-item>
-        <el-menu-item index="2-2"><router-link to="/taxi_3dtrace"><div class="plabel1">出租车时空轨迹</div></router-link></el-menu-item>
+        <template slot="title" style="background:transparent"><div class="plabel">出租车客流</div></template>
+        <el-menu-item index="2-1"><router-link to="/taxi_distribution"><div class="plabel1">整体位置分析</div></router-link></el-menu-item>
+        <el-menu-item index="2-2"><router-link to="/taxi_riding_service"><div class="plabel1">空车位置分析</div></router-link></el-menu-item>
+        <el-menu-item index="2-3"><router-link to="/taxi_o_point"><div class="plabel1">O聚类分析</div></router-link></el-menu-item>
+        <el-menu-item index="2-4"><router-link to="/taxi_d_point"><div class="plabel1">D聚类分析</div></router-link></el-menu-item>
+        <el-menu-item index="2-5"><router-link to="/taxi_trace"><div class="plabel1">轨迹查询</div></router-link></el-menu-item>
+        <el-menu-item index="2-2"><router-link to="/taxi_3dtrace"><div class="plabel1">时空轨迹</div></router-link></el-menu-item>
         <el-menu-item index="2-3"><router-link to="/taxi_grid"><div class="plabel1">OD网格分析</div></router-link></el-menu-item>
-        <el-menu-item index="2-4"><router-link to="/taxi_zone"><div class="plabel1">交通小区热力图</div></router-link></el-menu-item>
-        <el-menu-item index="2-5"><router-link to="/taxi_odline"><div class="plabel1">出租车OD分析</div></router-link></el-menu-item>
+        <el-menu-item index="2-4"><router-link to="/taxi_zone"><div class="plabel1">交通小区</div></router-link></el-menu-item>
+        <el-menu-item index="2-5"><router-link to="/taxi_odline"><div class="plabel1">OD分析</div></router-link></el-menu-item>
       </el-submenu>
       <el-submenu  index="3">
-        <template slot="title" style="background:transparent"><div class="plabel">数据融合分析</div></template>
-        <el-menu-item index="3-1"><router-link to="/"><div class="plabel1">整体使用情况</div></router-link></el-menu-item>
-        <el-menu-item index="3-2"><router-link to="/"><div class="plabel1">站位使用分析</div></router-link></el-menu-item>
+        <template slot="title" style="background:transparent"><div class="plabel">数据融合</div></template>
+        <el-menu-item index="3-1"><router-link to="/taxi_bus"><div class="plabel1">交通热点分析</div></router-link></el-menu-item>
 
       </el-submenu>
     </el-menu>
@@ -70,13 +69,6 @@ a{
   color:#FFFFFF;
 }
 
-.plabel {
-  position: relative;
-  width:98%;
-  height: 55px;
-  font-size:13px;
-  font-weight:bold;
-}
 /*.el-submenu {*/
 /*  background-color: transparent;*/
 /*}*/
@@ -112,7 +104,6 @@ a{
   line-height:50px;
   color:#FFFFFF;
   text-align: center;
-  color:#FFFFFF;
 }
 
 .el-menu--horizontal>.el-submenu.is-active .el-submenu__title {

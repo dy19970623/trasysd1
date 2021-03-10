@@ -25,7 +25,7 @@
         <img class="image" src="../../assets/image/TaxiAnalysis/qita.png">
         <img class="image" src="../../assets/image/TaxiAnalysis/kongzai.png">
         <img class="image"  src="../../assets/image/TaxiAnalysis/zhongdian.png"><br>
-        <span>起点</span><span>&nbsp;载客</span><span>&nbsp;空载</span><span>&nbsp;其他</span><span>&nbsp;驻车</span>
+        <span>起点</span><span>&nbsp&nbsp载客</span><span>&nbsp下车</span><span>&nbsp其他</span><span>&nbsp;空载</span><span>&nbsp;终点</span>
       </div>
     </div>
 
@@ -1002,7 +1002,7 @@
      top: 55%;
      left: 9%;
      font-weight: 300;
-     font-size: 15px;
+     font-size: 12px;
      color: #FFFFFF;
   }
   .image{
