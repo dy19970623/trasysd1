@@ -3,7 +3,7 @@
     <el-collapse v-model="activeNames"  accordion>
       <el-collapse-item title="一级诱导屏" name="1" >
         <div  id="a">
-          <el-table :data="tableData1"  height="400"   @row-click="fly1">
+          <el-table :data="tableData1"  height="400"   @row-click="fly1" >
             <el-table-column prop="屏号" label="屏号" width="65px"></el-table-column>
             <el-table-column prop="Parkingmessage" label="停车场情况（停车场名称：空余车位)" ></el-table-column>
           </el-table>
