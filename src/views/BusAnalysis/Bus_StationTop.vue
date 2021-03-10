@@ -1734,6 +1734,6 @@
     top:0%;
     left:2%;
     z-index: 999;
-    background-color: rgba(0,0,0,0.7);
+    background-color: transparent;
   }
 </style>

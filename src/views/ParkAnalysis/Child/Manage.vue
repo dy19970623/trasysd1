@@ -4,7 +4,7 @@
 <template>
   <div  id="manage11">
     <div id="chart" >
-      <el-table :data="tableData"  style="width:100%;height:100%" height="730" @row-click="mfly">
+      <el-table :data="tableData"  style="width:100%;height:100%" stripe height="780" @row-click="mfly">
         <el-table-column prop="FULLNAME" label="停车场名称" width="100"></el-table-column>
         <el-table-column prop="TYPE" label="类型" width="100"></el-table-column>
         <el-table-column prop="SPACE" label="总车位"></el-table-column>
@@ -25,39 +25,39 @@
       }
     },
     mounted() {
-      request({
-        url:'/park/findAll',
-      }).then(res =>{
-        console.log(res)
-        for(let i=0;i<=res.data.msg.length;i++){
-           if(res.data.msg[i].TYPE === "0"){
-             res.data.msg[i].TYPE ="户外停车场";
-            let b={
-              FULLNAME: res.data.msg[i].ABBRNAME,
-              TYPE: res.data.msg[i].TYPE,
-              SPACE: res.data.msg[i].SPACE,
-              OFFSET:res.data.msg[i].OFFSET
-            }
-            this.tableData.push(b)
-          }
-        }
-      }).catch(err => {
-        console.log(err);
-      })
-      // for(let i=0;i<=res.msg.length;i++){
-      //   if(res.msg[i].TYPE === "0"){
-      //     res.msg[i].TYPE ="户外停车场";
-      //     let b={
-      //       FULLNAME: res.msg[i].ABBRNAME,
-      //       TYPE: res.msg[i].TYPE,
-      //       SPACE: res.msg[i].SPACE,
-      //       OFFSET:res.msg[i].OFFSET
+      // request({
+      //   url:'/park/findAll',
+      // }).then(res =>{
+      //   console.log(res)
+      //   for(let i=0;i<=res.data.msg.length;i++){
+      //      if(res.data.msg[i].TYPE === "0"){
+      //        res.data.msg[i].TYPE ="户外停车场";
+      //       let b={
+      //         FULLNAME: res.data.msg[i].ABBRNAME,
+      //         TYPE: res.data.msg[i].TYPE,
+      //         SPACE: res.data.msg[i].SPACE,
+      //         OFFSET:res.data.msg[i].OFFSET
+      //       }
+      //       this.tableData.push(b)
       //     }
-      //     this.tableData.push(b)
-      //
       //   }
-      //   //console.log(this.tableData)
-      // }
+      // }).catch(err => {
+      //   console.log(err);
+      // })
+      for(let i=0;i<=res.msg.length;i++){
+        if(res.msg[i].TYPE === "0"){
+          res.msg[i].TYPE ="户外停车场";
+          let b={
+            FULLNAME: res.msg[i].ABBRNAME,
+            TYPE: res.msg[i].TYPE,
+            SPACE: res.msg[i].SPACE,
+            OFFSET:res.msg[i].OFFSET
+          }
+          this.tableData.push(b)
+
+        }
+        //console.log(this.tableData)
+      }
 
 
     },
@@ -91,26 +91,52 @@
 
   #chart .el-table{
     background-color: transparent;
+    color:white;
   }
   #chart .el-table__expanded-cell{
     background-color: transparent;
+    color:white;
   }
   /* 表格内背景颜色 */
+
   #chart .el-table th{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
+    color: orange;
+    font-weight: 700;
+    background-color: rgba(42, 91, 132, 0.7);
+    font-size: 16px;
+    text-align: center;
+    border: 0;
   }
   #chart .el-table tr{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
+    text-align: center;
+    font-size: 15px;
+    border: 0;
+    background-color: transparent;
   }
   #chart .el-table td {
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
+    text-align: center;
+    font-size: 15px;
+    border: 0;
+    background-color: transparent;
+  }
+  #chart .el-table--striped .el-table__body tr.el-table__row--striped td {
+    background-color:#00063a;
+    background-color:rgba(43,81,113,0.7);
   }
   #chart .el-table--enable-row-hover .el-table__body tr:hover>td {
     background: rgba(128,138,135,0.8);
   }
+  .el-table::before{
+    width: 0;
+  }
 
+  #chart .el-table__body-wrapper::-webkit-scrollbar {
+      width: 14px;
+      height: 10px;
+    }
+  #chart .el-table__body-wrapper::-webkit-scrollbar-thumb {
+      background-color:rgba(43,81,113,0.7);
+      border-radius: 3px;
+    }
 
 </style>

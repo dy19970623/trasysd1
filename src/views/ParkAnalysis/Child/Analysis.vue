@@ -1366,15 +1366,18 @@
   }
   #time1{
     width:300px;
-    background-color: black;
     color: aliceblue;
     text-align: center;
+    border: 2px solid #409eff;
+    background-color: #606266;
   }
   #time2{
     width:300px;
     background-color: black;
     color: aliceblue;
     text-align: center;
+    border: 2px solid #409eff;
+    background-color: #606266;
   }
   #position{
     padding-top: 2%;
@@ -1386,7 +1389,9 @@
     background-color: black;
     color: aliceblue;
     text-align: center;
-    width: 375px
+    width: 375px;
+    border: 2px solid #409eff;
+    background-color: #606266;
   }
 
   #a1 {

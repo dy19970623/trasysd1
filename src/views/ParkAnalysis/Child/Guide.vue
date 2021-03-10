@@ -1,9 +1,9 @@
 <template>
-  <div>
+  <div id="abc">
     <el-collapse v-model="activeNames"  accordion>
-      <el-collapse-item title="一级诱导屏" name="1" >
+      <el-collapse-item title="一级诱导屏"  name="1" >
         <div  id="a">
-          <el-table :data="tableData1"  height="400"   @row-click="fly1" >
+          <el-table :data="tableData1" stripe height="400"   @row-click="fly1" >
             <el-table-column prop="屏号" label="屏号" width="65px"></el-table-column>
             <el-table-column prop="Parkingmessage" label="停车场情况（停车场名称：空余车位)" ></el-table-column>
           </el-table>
@@ -11,7 +11,7 @@
       </el-collapse-item>
       <el-collapse-item title="二级诱导屏" name="2">
         <div id="b">
-          <el-table :data="tableData2"  height="400" @row-click="fly2">
+          <el-table :data="tableData2" stripe height="400" @row-click="fly2">
             <el-table-column prop="屏号" label="屏号" width="65px"></el-table-column>
             <el-table-column prop="Parkingmessage" label="停车场情况（停车场名称：空余车位)" ></el-table-column>
           </el-table>
@@ -19,7 +19,7 @@
       </el-collapse-item>
       <el-collapse-item title="三级诱导屏" name="3">
         <div id="c">
-          <el-table :data="tableData3"   height="400"   @row-click="fly3">
+          <el-table :data="tableData3"  stripe height="400"   @row-click="fly3">
             <el-table-column prop="屏号" label="屏号" width="65px"></el-table-column>
             <el-table-column prop="Parkingmessage" label="停车场情况（停车场名称：空余车位)" ></el-table-column>
           </el-table>
@@ -44,90 +44,90 @@
       };
     },
     mounted(){
-      request({
-        url:'/park/findAllScreen1',
-      }).then(res =>{
-        console.log(res)
-        for(let i=0;i <=res.data.msg.length;i++){
-          let c = [];
-          let a = JSON.parse(res.data.msg[i].INFO);
-          c.push(a);
-          //console.log(c)
-          let d = '';
-          for(let j=0; j < c[0].length;j++){
-            d= d + c[0][j].fullname +"："+c[0][j].num+'  '
-          }
-          let b={
-            屏号:res.data.msg[i].屏号,
-            Parkingmessage:d,
-          }
-          this.tableData1.push(b)
-        }
-      }).catch(err => {
-        console.log(err);
-      })
-
-      request({
-        url:'/park/findAllScreen2',
-      }).then(res =>{
-        console.log(res)
-        for(let i=0;i <=res.data.msg.length;i++){
-          let c = [];
-          let a = JSON.parse(res.data.msg[i].INFO);
-          c.push(a);
-          //console.log(c)
-          let d = '';
-          for(let j=0; j < c[0].length;j++){
-            d= d + c[0][j].fullname +"："+c[0][j].num+'  '
-          }
-          let b={
-            屏号:res.data.msg[i].屏号,
-            Parkingmessage:d,
-          }
-          this.tableData2.push(b)
-        }
-      }).catch(err => {
-        console.log(err);
-      })
-
-      request({
-        url:'/park/findAllScreen3',
-      }).then(res =>{
-        console.log(res)
-        for(let i=0;i <=res.data.msg.length;i++){
-          let c = [];
-          let a = JSON.parse(res.data.msg[i].INFO);
-          c.push(a);
-          //console.log(c)
-          let d = '';
-          for(let j=0; j < c[0].length;j++){
-            d= d + c[0][j].fullname +"："+c[0][j].num+'  '
-          }
-          let b={
-            屏号:res.data.msg[i].屏号,
-            Parkingmessage:d,
-          }
-          this.tableData3.push(b)
-        }
-      }).catch(err => {
-        console.log(err);
-      })
-
-      // for(let i=0;i <= res.msg.length;i++){
-      //   let c = [];
-      //   let a = JSON.parse(res.msg[i].INFO);
-      //   c.push(a);
-      //   //console.log(c)
-      //   let d = '';
-      //   for(let j=0; j < c[0].length;j++){
-      //     d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+      // request({
+      //   url:'/park/findAllScreen1',
+      // }).then(res =>{
+      //   console.log(res)
+      //   for(let i=0;i <=res.data.msg.length;i++){
+      //     let c = [];
+      //     let a = JSON.parse(res.data.msg[i].INFO);
+      //     c.push(a);
+      //     //console.log(c)
+      //     let d = '';
+      //     for(let j=0; j < c[0].length;j++){
+      //       d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+      //     }
+      //     let b={
+      //       屏号:res.data.msg[i].屏号,
+      //       Parkingmessage:d,
+      //     }
+      //     this.tableData1.push(b)
       //   }
-      //   let b={
-      //     屏号:res.msg[i].屏号,
-      //     Parkingmessage:d,
+      // }).catch(err => {
+      //   console.log(err);
+      // })
+      //
+      // request({
+      //   url:'/park/findAllScreen2',
+      // }).then(res =>{
+      //   console.log(res)
+      //   for(let i=0;i <=res.data.msg.length;i++){
+      //     let c = [];
+      //     let a = JSON.parse(res.data.msg[i].INFO);
+      //     c.push(a);
+      //     //console.log(c)
+      //     let d = '';
+      //     for(let j=0; j < c[0].length;j++){
+      //       d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+      //     }
+      //     let b={
+      //       屏号:res.data.msg[i].屏号,
+      //       Parkingmessage:d,
+      //     }
+      //     this.tableData2.push(b)
       //   }
-      //   this.tableData1.push(b)
-      // };
+      // }).catch(err => {
+      //   console.log(err);
+      // })
+      //
+      // request({
+      //   url:'/park/findAllScreen3',
+      // }).then(res =>{
+      //   console.log(res)
+      //   for(let i=0;i <=res.data.msg.length;i++){
+      //     let c = [];
+      //     let a = JSON.parse(res.data.msg[i].INFO);
+      //     c.push(a);
+      //     //console.log(c)
+      //     let d = '';
+      //     for(let j=0; j < c[0].length;j++){
+      //       d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+      //     }
+      //     let b={
+      //       屏号:res.data.msg[i].屏号,
+      //       Parkingmessage:d,
+      //     }
+      //     this.tableData3.push(b)
+      //   }
+      // }).catch(err => {
+      //   console.log(err);
+      // })
+
+      for(let i=0;i <= res.msg.length;i++){
+        let c = [];
+        let a = JSON.parse(res.msg[i].INFO);
+        c.push(a);
+        //console.log(c)
+        let d = '';
+        for(let j=0; j < c[0].length;j++){
+          d= d + c[0][j].fullname +"："+c[0][j].num+'  '
+        }
+        let b={
+          屏号:res.msg[i].屏号,
+          Parkingmessage:d,
+        }
+        this.tableData1.push(b)
+      };
 
 
 
@@ -179,6 +179,7 @@
   .el-collapse-item__header{
     background-color:rgba(0,0,0,0.2) ;
     color:#f5f7fa;
+    font-size: 18px;
   }
   .el-tabs__content{
     background-color:rgba(0,0,0,0.2) ;
@@ -196,81 +197,56 @@
     box-sizing: border-box;
     border-bottom: 1px solid #EBEEF5;
   }
-  #a .el-table{
+  #abc .el-table{
     background-color: transparent;
+    color:white;
   }
-  #a .el-table__expanded-cell{
+  #abc .el-table__expanded-cell{
     background-color: transparent;
+    color:white;
   }
   /* 表格内背景颜色 */
-  #a .el-table th{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
+
+  #abc .el-table th{
+    color: orange;
+    font-weight: 700;
+    background-color:rgba(43,81,113,0.7);
+    font-size: 16px;
+    text-align: center;
+    border: 0;
   }
-  #a .el-table tr{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
+  #abc .el-table tr{
+    text-align: center;
+    font-size: 15px;
+    border: 0;
+    background-color: transparent;
   }
-  #a .el-table td {
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
+  #abc .el-table td {
+    text-align: center;
+    font-size: 15px;
+    border: 0;
+    background-color: transparent;
   }
-  #a .el-table--enable-row-hover .el-table__body tr:hover>td {
+  #abc .el-table--striped .el-table__body tr.el-table__row--striped td {
+    background-color:#00063a;
+    background-color:rgba(43,81,113,0.7);
+  }
+  #abc .el-table--enable-row-hover .el-table__body tr:hover>td {
     background: rgba(128,138,135,0.8);
   }
-  #a{
-    background-color:rgba(0,0,0,0.2) ;
+  .el-table::before{
+    width: 0;
   }
 
-  #b .el-table{
-    background-color: transparent;
+  #abc .el-table__body-wrapper::-webkit-scrollbar {
+    width: 14px;
+    height: 10px;
   }
-  #b .el-table__expanded-cell{
-    background-color: transparent;
-  }
-  /* 表格内背景颜色 */
-  #b .el-table th{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
-  }
-  #b .el-table tr{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
-  }
-  #b .el-table td {
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
-  }
-  #b .el-table--enable-row-hover .el-table__body tr:hover>td {
-    background: rgba(128,138,135,0.8);
-  }
-  #b{
-    background-color:rgba(0,0,0,0.2) ;
+  #abc .el-table__body-wrapper::-webkit-scrollbar-thumb {
+    background-color:rgba(43,81,113,0.7);
+    border-radius: 3px;
   }
 
-  #c .el-table{
-    background-color: transparent;
-  }
-  #c .el-table__expanded-cell{
-    background-color: transparent;
-  }
-  /* 表格内背景颜色 */
-  #c .el-table th{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
-  }
-  #c .el-table tr{
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
-  }
-  #c .el-table td {
-    background-color:rgba(0,0,0,0.2) ;
-    color: white;
-  }
-  #c .el-table--enable-row-hover .el-table__body tr:hover>td {
-    background: rgba(128,138,135,0.8);
-  }
-  #c{
-    background-color:rgba(0,0,0,0.2) ;
-  }
+
+
 </style>
