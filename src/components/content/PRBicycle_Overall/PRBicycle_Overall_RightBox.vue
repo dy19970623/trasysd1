@@ -31,9 +31,9 @@ export default {
     float:right;
     position: absolute;
     height: 100%;
-    width: 31.5%;
+    width: 28%;
     z-index: 600;
-    background-color:rgba(8, 8, 13, 0.949019607843137);
+    background-color:rgba(8, 8, 13, 0.7);
     /*background-color:rgba(1,19,66,0.6);*/
 }
 </style>

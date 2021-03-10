@@ -58,7 +58,8 @@ export default {
             bottom:"10%",
             padding:5,
             inRange: {
-              color: ['#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+              //color: ['#e0f3f8', '#ffffbf', '#fee090', '#fdae61', '#f46d43', '#d73027', '#a50026']
+              color: ['#1710c0', '#61bdff', '#1dbcb8', '#38b81f', '#f5f811', '#c75f01', '#a50026']
             },
             outOfRange: {
               colorAlpha: 0.1
@@ -75,21 +76,28 @@ export default {
             },
             pieces: [
               {
-				        min: 0, max: linedata[1]*1/7, label:'0-'+linedata[1]*1/7, color: '#e0f3f8'
+				        min: 0, max: linedata[1]*1/7, label:'0-'+linedata[1]*1/7, 
+                color: '#1710c0'
 			        },
               {
-				        min: linedata[1]*1/7, max: linedata[1]*2/7, label:linedata[1]*1/7+'-'+linedata[1]*2/7, color: '#ffffbf'
+				        min: linedata[1]*1/7, max: linedata[1]*2/7, label:linedata[1]*1/7+'-'+linedata[1]*2/7,
+                color: '#61bdff'
 			        },
 				      {
-				        min: linedata[1]*2/7, max: linedata[1]*3/7, label:linedata[1]*2/7+'-'+linedata[1]*3/7, color: '#fee090'
+				        min: linedata[1]*2/7, max: linedata[1]*3/7, label:linedata[1]*2/7+'-'+linedata[1]*3/7, 
+                color: '#1dbcb8'
 			        }, {
-				        min: linedata[1]*3/7, max: linedata[1]*4/7, label:linedata[1]*3/7+'-'+linedata[1]*4/7, color: '#fdae61'
+				        min: linedata[1]*3/7, max: linedata[1]*4/7, label:linedata[1]*3/7+'-'+linedata[1]*4/7, 
+                color: '#38b81f'
 			        }, {
-				        min: linedata[1]*4/7, max: linedata[1]*5/7, label:linedata[1]*4/7+'-'+linedata[1]*5/7, color: '#f46d43'
+				        min: linedata[1]*4/7, max: linedata[1]*5/7, label:linedata[1]*4/7+'-'+linedata[1]*5/7, 
+                color: '#f5f811'
 				      }, {
-					      min: linedata[1]*5/7,max: linedata[1]*6/7, label:linedata[1]*5/7+'-'+linedata[1]*6/7, color: '#d73027'
+					      min: linedata[1]*5/7,max: linedata[1]*6/7, label:linedata[1]*5/7+'-'+linedata[1]*6/7, 
+                color: '#c75f01'
               }, {
-				        min: linedata[1]*6/7,max: linedata[1], label:linedata[1]*6/7+'-'+linedata[1], color: '#a50026'
+				        min: linedata[1]*6/7,max: linedata[1], label:linedata[1]*6/7+'-'+linedata[1], 
+                color: '#a50026'
 			      }],
         },
         mapbox: {

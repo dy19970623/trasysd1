@@ -1,8 +1,7 @@
 <template>
   <div class="Bar_Top">
-    <div class="Left_Top"></div><div class="Right_Bottom"></div>
     <div id="chordChart1Bar">
-      <legend>车站总体情况</legend>
+      <legend class="title1">车站总体情况</legend>
       <div id="chordChart1"></div>  
     </div>
   </div>
@@ -41,6 +40,7 @@ export default {
 		            fontWeight: 'normal',
 		            fontSize: 14,
 		            color: 'white',
+                backgroundColor: 'red',
 		        },
 		    }, {
 		        x: "42%",
@@ -140,7 +140,7 @@ export default {
 		                formatter: "{c}",
 		                fontSize: 22,
 		                textStyle: {
-		                    color: 'white',
+		                    color: '#8A00E1',
 		                }
 		            }
 		        },
@@ -220,7 +220,7 @@ export default {
 		                formatter: "{c}",
 		                fontSize: 22,
 		                textStyle: {
-		                    color: 'white',
+		                    color: '#00C5FF',
 		                }
 		            }
 		        },
@@ -300,7 +300,7 @@ export default {
 		                formatter: "{c}",
 		                fontSize: 22,
 		                textStyle: {
-		                    color: 'white',
+		                    color: '#FF6633',
 		                }
 		            }
 		        },
@@ -317,49 +317,25 @@ export default {
 
 <style>
 .Bar_Top{
-  height: 25%;
+  height: 26%;
   width: 100%;
 }
 #chordChart1Bar{
   float:right;
   position: absolute;
-  width: 95%;
-  height: 24%;
-  margin-top: 2%;  
-  margin-left: 2.5%;
+  width: 100%;
+  height: 25%;
+  margin-top: 1%;  
   background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop2.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   
   z-index: 700; 
 }
-.Left_Top {
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 24%;
-  margin-top: 2.5%;  
-  margin-left: 3%;
-  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop3.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-}
-.Right_Bottom{
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 24%;
-  margin-top: 2.2%;  
-  margin-left: 1.5%;
-  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop4.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 12%;
-  transform: rotate(180deg);
-}
 #chordChart1{
-  width: 89%;
+  width: 90%;
   height: 78%;
+  margin-top: 1%;
   margin-left: 5%;
   background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop1.png);
   background-repeat: no-repeat;
@@ -368,22 +344,10 @@ export default {
 #chordChart1:after{
   opacity: 0.5;
 }
-legend {
+.title1 {
   height: 15%;
-  left: 10%;
   font-size:125%;
   line-height: 200%;
-  padding-left: 15%;
   color:rgb(44, 188, 255);
-  
 }
-#u1699_img {
-    border-width: 0px;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    width: 477px;
-    height: 177px;
-}
-
 </style>

@@ -7,20 +7,18 @@
     <div id="BSNumLeftBox">
       <!--公交客流Top20-->
       <div class="BSNumLeftBox_Top">
-        <div class="BSNLeft_Top1"></div><div class="BSNRight_Bottom1"></div>
         <legend class="BSNum_TopTitle">公交客流TOP20</legend>
         <div ref="BSN_Chart1" class="BSN_Chart1"></div>
       </div>
       <!--公交客流查询定位-->
       <div class="BSNumLeftBox_Bottom">
-        <div class="BSNLeft_Top2"></div><div class="BSNRight_Bottom2"></div>
         <div id="searchBox" class="layui-inline">
           <!--输入-->
           <input id="stationName" class="input_inline" v-model="searchVal" type="text" name="word" autocomplete="off" maxlength="256" placeholder="请输入站位名称" style="" value="" >
           <button id="searchBtn" class="layui-btn" ref="searchBtn" @click="search">查询</button>
           <button id="recover" ref="recover" class="layui-btn" @click="recover">还原</button>
           <!--下拉菜单-->
-          <div id="queryresult"><ul id="list" style="display:none;background-color:white;"></ul></div>
+          <div id="queryresult"><ul id="list" style="display:none;background-color:white;height:200px;overflow-y:auto;"></ul></div>
         </div>
         <!--表格  -->
         <div class="info_Table">
@@ -42,7 +40,7 @@
 import echarts from 'echarts'
 import 'echarts-gl'
 import BSNum from '../../assets/js/BusStationNum/Bus_StationNum'
-import checi from '../../assets/js/BusStationNum/checi.js'
+import checi from '../../assets/js/BusStationNum/checi'
 //import BSNumLeftBox from '../components/content/BusStationNum/BusStationNum_LeftBox'
 
 export default {
@@ -135,9 +133,9 @@ export default {
       //展示不同时间段该站位乘客乘坐各公交线路的数量
       option: {
 		title: {
-	          text: "",
-	          left: "left",
-	          padding:  [5, 0, 0, 11],
+	          text: '登录情况',
+	          left: 'left',
+            padding:  [8, 0, 0, 2],
 	          textStyle: {
 	                fontSize: 15,
 	                color: 'white',
@@ -154,18 +152,18 @@ export default {
 	    grid: {
 	        show:'true',
 	        left: '0%',
-	        right: '1%',
+	        right: '2%',
 	        bottom: '2%',
           borderWidth:'0.5',
           borderColor:'rgba(105,105,105, 0.5)',
 	        containLabel: true
 	    },
 	    xAxis : [
-	 	        {
-	 	            type : 'category',
-	 	            name: '车次',
-	 	             data :[0,0,0,0,0],
-		            axisLabel:{
+	 	    {
+	 	      type : 'category',
+	 	      name: '车次',
+	 	      data :[113,28,348,402,421,57,806,807,808,809,814,846,91,976,98,766],
+		      axisLabel:{
 						interval:0,
 						rotate:45,
             margin:20,
@@ -180,7 +178,8 @@ export default {
 	      },
         axisLine:{
           lineStyle:{
-            color:"rgba(105,105,105, 0.5)",
+	          color: "rgba(105,105,105, 0.5)",
+
         }}
 	 	        }
 	 	    ],
@@ -227,7 +226,7 @@ export default {
             }]),
           }
         },
-	      data:[0,0,0,0,0]
+	      data:[527,1244,900,1766,1,850,446,5986,1913,982,11544,269,575,66,766,1]
 	        }
 	    ]
 	    },
@@ -372,7 +371,7 @@ export default {
 	    },
 	    xAxis: [{
 	      type: 'category',
-	      data: [0,0,0,0],
+	      data: [0,0,0,0,0],
 	      axisLabel:{
 					interval:0,
 					margin:20,
@@ -719,47 +718,21 @@ body, html,.map {
     float:right;
     position: absolute;
     height: 100%;
-    width: 31.5%;
-    background-color:rgba(8, 8, 13, 0.949019607843137);
+    width: 28%;
+    /* background-color:red; */
+    background-color:rgba(8, 8, 13,0.7);
     z-index: 1;
 }
 /*Top20图表 */
 .BSNumLeftBox_Top{
-  width: 95%;
+  width: 100%;
   height: 45%;
   margin-top: 2%;
-  margin-left: 2.5%;
-  background:url(../assets/image/BusStationNum/BarBorder.png);
+  background:url(../../assets/image/BusStationNum/BarBorder.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-/*内边框左上角样式*/
-.BSNLeft_Top1 {
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 92%;
-  margin-top: 1%;
-  margin-left: 0.7%;
-  background:url(../assets/image/BusStationNum/Bar_LeftTop2.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 12% 10%;
-}
-/*内边框右下角样式*/
-.BSNRight_Bottom1{
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 45%;
-  margin-top: 0.4%;
-  margin-left: -1%;
-  background:url(../assets/image/BusStationNum/Bar_RightBottom.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 12% 19%;
-  transform: rotate(180deg);
-}
+
 .BSN_Chart1{
   width: 89%;
   height: 78%;
@@ -773,57 +746,27 @@ body, html,.map {
   font-weight:600;
   line-height: 200%;
   padding-top: 2%;
-  padding-left: 15%;
   color:rgb(44, 188, 255);
 }
 
 /*查询定位 */
 .BSNumLeftBox_Bottom{
-  width: 95%;
-  height: 48%;
-  margin-top: 3%;
-  margin-left: 2.5%;
-  background:url(../assets/image/BusStationNum/BarBorder.png);
+  width: 100%;
+  height: 52%;
+  margin-top: 2%;
+  background:url(../../assets/image/BusStationNum/BarBorder.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-/*内边框左上角样式*/
-.BSNLeft_Top2 {
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 92%;
-  margin-top: 1%;
-  margin-left: 0.7%;
-  background:url(../assets/image/BusStationNum/Bar_LeftTop2.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 12% 10%;
-  z-index: -10;
-}
-/*内边框右下角样式*/
-.BSNRight_Bottom2{
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 45%;
-  margin-top: 6%;
-  margin-left: -1%;
-  background:url(../assets/image/BusStationNum/Bar_RightBottom.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 12% 19%;
-  transform: rotate(180deg);;
-}
+
 
 /*搜索*/
 #searchBox{
   float:right;
   position: absolute;
-  width: 80%;
+  width: 100%;
   height: 4%;
   margin-top: 6%;
-  margin-left: 8%;
 }
 /*输入框*/
 input::-webkit-input-placeholder {
@@ -831,18 +774,21 @@ input::-webkit-input-placeholder {
 	font-size: 12px; /* placeholder字体大小  */
 	text-align: center; /* placeholder位置  */
 }
+/*输入框 */
 .input_inline{
-  width: 60%;
+  width: 45%;
   height: 80%;
   margin-right: 2%;
-  border: 2px solid rgb(44, 188, 255);
+  text-align:center;
+  border: 1px solid white;
   border-radius: 9px;
   background-color:DimGrey;
 }
+/*按钮 */
 .layui-btn:hover {background-color:rgb(201, 201, 201)}
 .layui-btn:active{background-color:white}
 .layui-btn{
-  width: 14%;
+  width: 70px;
   height: 70%;
   border: 1px solid black;
   border-radius: 4px;
@@ -852,7 +798,8 @@ input::-webkit-input-placeholder {
 #queryresult{
   float:right;
   position: absolute;
-  width: 62%;
+  width: 45%;
+  left: 8%;
   margin-top: -4%;
   font-size: 14px;
   z-index: 900;
@@ -895,8 +842,8 @@ td{background-color:#3b3b3b;}
 #BSN_Chart2{
   float:right;
   position: absolute;
-  width: 84%;
-  height: 30%;
+  width: 90%;
+  height: 34%;
   padding: 0 0;
   margin-top: 30%;
   margin-left:5%;
@@ -909,7 +856,7 @@ td{background-color:#3b3b3b;}
   height: 30%;
   padding: 0 0;
   margin-top: 30%;
-  margin-left:5%;
+  margin-left:5%;;
 }
 /*隐藏水印 */
 .mapboxgl-ctrl {

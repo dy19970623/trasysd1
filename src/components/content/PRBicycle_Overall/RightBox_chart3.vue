@@ -1,8 +1,7 @@
 <template>
   <div class="Bar_Bottom">
-    <div class="Left_Top3"></div><div class="Right_Bottom3"></div>
     <div id="chordChart3Bar">
-      <legend class="title2">自行车周内租还情况</legend>
+      <legend class="title3">自行车周内租还情况</legend>
       <div id="chordChart3"></div> 
     </div>
     
@@ -69,7 +68,7 @@ export default {
           left: '3%',
           right:'3%',
           top:'15%',
-          bottom:'12%',
+          bottom:'10%',
           borderWidth:'0.5',
           borderColor:'rgba(105,105,105, 0.5)',
           containLabel: 'true'
@@ -220,10 +219,10 @@ export default {
               barBorderRadius:[4, 4, 4, 4],
               color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
                 offset: 0,
-                color: '#6D214F'
+                color: '#0c5649'
               },{
                 offset: 0.5,
-                color: '#FF99CC'
+                color: '#1accac'
               }]),
               label: {
                   show: true, //是否显示
@@ -252,10 +251,10 @@ export default {
               barBorderRadius:[4, 4, 4, 4],
               color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{
                 offset: 0,
-                color: '#30CFD0'
+                color: '#40bdf2'
               },{
                 offset: 0.9,
-                color: '#330867'
+                color: '#19344B'
               }]),
                label: {
                   show: true, //是否显示
@@ -286,16 +285,15 @@ export default {
 
 <style>
 .Bar_Bottom{
-  height: 38%;
+  height: 39%;
   width: 100%;
 }
 #chordChart3Bar{
   float:right;
   position: absolute;
-  width: 95%;
-  height: 36%;
-  margin-top: 2%;  
-  margin-left: 2.5%;
+  width: 100%;
+  height: 38%;
+  margin-top: 1%;  
   background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop2.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
@@ -312,40 +310,10 @@ export default {
 #chordChart3:after{
   opacity: 0.5;
 }
-/*内边框左上角样式*/
-.Left_Top3 {
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 32%;
-  margin-top: 2.9%;  
-  margin-left: 3%;
-  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop5.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 14% 22%;
-}
-/*内边框右下角样式*/
-.Right_Bottom3{
-  float:right;
-  position: absolute;
-  width: 95%;
-  height: 36%;
-  margin-top: 2.4%;  
-  margin-left: 1.5%;
-  background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop5.png);
-  background-repeat: no-repeat;
-  background-position: left top;
-  background-size: 12% 19%;
-  transform: rotate(180deg);
-}
-.title2 {
-  height: 10%;
-  left: 10%;
+.title3 {
+  height: 12%;
   font-size:125%;
   line-height: 200%;
-  padding-left: 15%;
   color:rgb(44, 188, 255);
-  
 }
 </style>

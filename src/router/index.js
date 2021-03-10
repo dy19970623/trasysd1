@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 const Bus_StationTop = () => import('../views/BusAnalysis/Bus_StationTop')
 const Bus_Track =() =>import('../views/BusAnalysis/Bus_Track')
 const Bus_Overall =() =>import('../views/BusAnalysis/Bus_Overall')
-const BusStationNum =() => import('../views/BusAnalysis/BusStationNum')
+const BusStationNum =() => import('../views/BusAnalysis/Bus_StationNum.vue')
 //主页
 const HomePage = () =>import('../views/HomePage/HomePage')
 //停车分析
