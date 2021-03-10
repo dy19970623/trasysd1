@@ -1419,7 +1419,7 @@ export default {
   },
   mounted () {
     request({
-      url:'TraSysC/Taxi/getData',
+      url:'Taxi/getData',
       method:'get'
     }).then(res=>{
 

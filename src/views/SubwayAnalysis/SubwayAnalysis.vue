@@ -15,7 +15,7 @@ import SubwayLegend from "./Child/SubwayLegend";
 
 import transportPoint from "../../assets/js/SubwayAnalysis/dataResourse/Subway_Flow_transportPoint"
 import linetransport from "../../assets/js/SubwayAnalysis/dataResourse/Subway_Flow_linetransportPoint"
-import subwaypng from "../../assets/image/SubwayAnalysis/subway.png"
+import subwaypng from "../../assets/image/SubwayAnalysis/u1992.png"
 import subwaympng from "../../assets/image/SubwayAnalysis/subwaym.png"
 
 export default {
@@ -108,7 +108,7 @@ export default {
         let placeName;
         for(let i = 0; i<sitestation.length; i++){
           if(sitestation[i].xsite ==place.latlng.lat &&sitestation[i].ysite ==place.latlng.lng){
-             placeName =sitestation[i].name;
+            placeName =sitestation[i].name;
           }
         }
         let poi_click = place.propagatedFrom;

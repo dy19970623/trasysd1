@@ -3,7 +3,7 @@
     <div id="chart1">
       <div id="chartTitle1">
         <legend id="bikename1" style="margin-bottom:0px;color:white; font-size: 20px" v-model="station">{{station}}基本情况</legend>
-        <p style="color:white;font-size: 12px;position: absolute;left:70%;top:3%;">2015年4月7日数据</p>
+        <p style="color:white;font-size: 12px;position: absolute;left:76%;top:52%;">2015年4月7日数据</p>
       </div>
       <div id="stationChart"></div>
     </div>
@@ -82,7 +82,7 @@ export default {
         },
         title: [{
           x: "10%",
-          bottom: 30,
+          bottom: 10,
           left: 25,
           text: '闲置车辆',
           textStyle: {
@@ -92,7 +92,7 @@ export default {
           },
         }, {
           x: "20%",
-          bottom: 30,
+          bottom: 10,
           left: 165,
           text: '锁位数量',
           textStyle: {
@@ -102,7 +102,7 @@ export default {
           },
         }, {
           x: "60%",
-          bottom: 30,
+          bottom: 10,
           left: 305,
           text: '流动情况',
           textStyle: {
@@ -124,7 +124,26 @@ export default {
             }
           },
           clockwise: false,
+          hoverAnimation: false,
           radius: ['40%', '45%'],
+          center: ['15%', '50%'],
+          data: [{
+            value: echart_freebike,
+            name: '当前闲置车辆',
+            itemStyle: {
+              color: '#8A00E1'
+            }
+          }]
+        }, {
+          type: 'pie',
+          label: { //标签的位置
+            normal: {
+              show: false,
+            }
+          },
+          clockwise: false,
+          hoverAnimation: false,
+          radius: ['47%', '51%'],
           center: ['15%', '50%'],
           data: [{
             value: echart_freebike,
@@ -147,7 +166,14 @@ export default {
                 type: 'radial',
                 x: 0.5,
                 y: 0.5,
-                r: 1,
+                r: 0.5,
+                colorStops: [{
+                  offset: 0,
+                  color: 'rgba(241,192,73,0)' // 0% 处的颜色
+                }, {
+                  offset: 1,
+                  color: 'rgba(241,192,73,0)' // 100% 处的颜色
+                }],
                 globalCoord: false // 缺省为 false
               },
               borderWidth: 1.5,
@@ -162,7 +188,7 @@ export default {
               formatter: "{c}",
               fontSize: 30,
               textStyle: {
-                color: '#8A00E1',
+                color: '#FFF',
               }
             }
           },
@@ -177,7 +203,26 @@ export default {
             }
           },
           clockwise: true,
+          hoverAnimation: false,
           radius: ['40%', '45%'],
+          center: ['51%', '50%'],
+          data: [{
+            value: echart_locknumber,
+            name: '车站锁位数量',
+            itemStyle: {
+              color: '#00C6FF'
+            }
+          }]
+        },{
+          type: 'pie',
+          label: { //标签的位置
+            normal: {
+              show: false,
+            }
+          },
+          clockwise: false,
+          hoverAnimation: false,
+          radius: ['47%', '51%'],
           center: ['51%', '50%'],
           data: [{
             value: echart_locknumber,
@@ -200,7 +245,14 @@ export default {
                 type: 'radial',
                 x: 0.5,
                 y: 0.5,
-                r: 1,
+                r: 0.5,
+                colorStops: [{
+                  offset: 0,
+                  color: 'rgba(48,230,142,0)' // 0% 处的颜色
+                }, {
+                  offset: 1,
+                  color: 'rgba(48,230,142,0)' // 100% 处的颜色
+                }],
                 globalCoord: false // 缺省为 false
               },
               borderWidth: 1.5,
@@ -215,7 +267,7 @@ export default {
               formatter: "{c}",
               fontSize: 30,
               textStyle: {
-                color: '#00C6FF',
+                color: '#FFF',
               }
             }
           },
@@ -240,6 +292,24 @@ export default {
             }
           }]
         }, {
+          type: 'pie',
+          label: { //标签的位置
+            normal: {
+              show: false,
+            }
+          },
+          clockwise: true,
+          hoverAnimation: false,
+          radius: ['47%', '51%'],
+          center: ['87%', '50%'],
+          data: [{
+            value: echart_usernumber,
+            name: '车辆流动情况',
+            itemStyle: {
+              color: '#FF6633'
+            }
+          }]
+        }, {
           name: '',
           type: 'pie',
           clockwise: false,
@@ -253,7 +323,14 @@ export default {
                 type: 'radial',
                 x: 0.5,
                 y: 0.5,
-                r: 1,
+                r: 0.5,
+                colorStops: [{
+                  offset: 0,
+                  color: 'rgba(232,30,135,0)' // 0% 处的颜色
+                }, {
+                  offset: 1,
+                  color: 'rgba(232,30,135,0)' // 100% 处的颜色
+                }],
                 globalCoord: false // 缺省为 false
               },
               borderWidth: 1.5,
@@ -268,7 +345,7 @@ export default {
               formatter: "{c}",
               fontSize: 30,
               textStyle: {
-                color: '#FF6633',
+                color: '#FFF',
               }
             }
           },
@@ -355,10 +432,10 @@ export default {
             y2: 1,
             colorStops: [{
               offset: 0,
-              color: '#FF9999' // 0%处的颜色为红色
+              color: '#1accac' // 0%处的颜色为红色
             }, {
               offset: 1,
-              color: '#990000' // 100%处的颜色为蓝
+              color: '#0c5649' // 100%处的颜色为蓝
             }]
           },
           data: data1,
@@ -385,10 +462,10 @@ export default {
             y2: 0,
             colorStops: [{
               offset: 0,
-              color: '#9933FF' // 0%处的颜色为红色
+              color: '#40bdf2' // 0%处的颜色为红色
             }, {
               offset: 1,
-              color: '#660033' // 100%处的颜色为蓝
+              color: '#19344B' // 100%处的颜色为蓝
             }]
           },
         }],
@@ -493,53 +570,54 @@ export default {
   position:absolute;
   top:5%;
   width: 82%;
-  height: 24%;
+  height: 20%;
   border:40px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border1.png") 45 stretch;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new.png") 45 stretch;
 }
 #chart2{
   position: absolute;
-  top:40%;
+  top: 36%;
   width: 83%;
-  height: 47%;
-  border:40px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border2.png") 45 stretch;
+  height: 41%;
+  border: 40px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new1.png") 45 stretch;
 }
 #chartTitle1{
   position: relative;
-  top:-8%;
-  height: 3%;
+  top: -8%;
+  height: 15%;
   width: 100%;
 }
 #chartTitle2{
   position: relative;
-  top: 1%;
+  top: -3%;
   height: 10%;
   width: 116%;
   left: -4%;
 }
 #stationName{
-  position: relative;
-  margin-top: -5%;
-  left: -7%;
-  width: 126%;
+  position: absolute;
+  top: 4%;
+  left: -2%;
+  width: 113%;
 }
 #stationTime{
   position: relative;
-  margin-top: -1%;
-  left: 1%;
+  top: 44%;
+  left: -12%;
   width: 98%;
+  height: 10%;
 }
 #startTime{
   position: relative;
   margin-top: 2%;
-  margin-left: -11%;
+  margin-left: 2%;
   width: 60%;
 }
 #endTime{
   position: relative;
   margin-top: -7.7%;
-  margin-left: 21%;
+  margin-left: 33%;
   width: 60%;
 }
 #dateMid{
@@ -550,25 +628,25 @@ export default {
 }
 #searchbutton{
   position: relative;
-  top:-91%;
-  left:70%;
+  top:37%;
+  left:60%;
   width:30%
 }
 #stationChart {
   position: relative;
-  top:-8%;
+  top: -8%;
   width: 90%;
-  height:95%;
-  padding: 0 0;
+  height: 95%;
+  padding: 0px 21px;
   color: #ddd;
   z-index: 700;
   margin-top: 5px;
 }
 #stationChart2 {
   position: relative;
-  top: 5%;
-  width: 95%;
-  height: 70%;
+  top: 8%;
+  width: 101%;
+  height: 79%;
   padding: 0 0;
   color: #ddd;
   z-index: 700;
@@ -588,12 +666,12 @@ export default {
 }
 .chartTitle2 .el-input{
   width: 48%;
-  left: 25%;
+  left: 0%;
 }
 .chartTitle2 .el-input__inner{
   border-radius: 4px;
-  border: 2px solid #409eff;
-  background-color: #606266;
+  border: 2px solid #fff;
+  background:none;
   color: #fff;
   width:100%
 }

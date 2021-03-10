@@ -76,7 +76,7 @@ export default {
       let PRBicycleShared_myChart = echarts.init(document.getElementById('domain'));
       let option1 = {
        /* backgroundColor:' rgba(255,255,255,0.1)',*/
-        color: new graphic.LinearGradient(0, 0, 1,0 , [{
+        color: new graphic.LinearGradient(0, 1, 0,0 , [{
           offset: 0,
           color: '#990000'
         }, {
@@ -136,7 +136,12 @@ export default {
             name:'骑行人数',
             type:'bar',
             barWidth: '60%',
-            data:data
+            data:data,
+            itemStyle:{
+              normal:{
+                barBorderRadius:[5, 5, 5, 5],
+              }
+            },
           }
         ]
       };
@@ -164,7 +169,6 @@ export default {
       }
       let PRBicycleShared_myChart2 = echarts.init(document.getElementById('domain2'));
       let option1 = {
-        backgroundColor:' #122044',
         color: ['#FF6633','#00C6FF', '#8A00E1', '#CC9900'], //环形图每块的颜色
         tooltip: {
           trigger: 'item',
@@ -192,7 +196,8 @@ export default {
           {
             name:'单车公司',
             type:'pie',
-            radius: ['40%', '60%'],
+            radius: ['50%', '70%'],
+            center:['50%', '60%'],
             avoidLabelOverlap: false,
             label: {
               normal: {
@@ -291,7 +296,6 @@ export default {
 
       let PRBicycleShared_myChart3 = echarts.init(document.getElementById('domain3'));
       let option3 = {
-        backgroundColor:'#122044',
         tooltip: {
           formatter: function (params) {
             return '租车数量: ' + params.value[1].toFixed(0);
@@ -426,10 +430,10 @@ export default {
 #rightdomain{
   position: absolute;
   top:0.1%;
-  width: 30%;
+  width: 28%;
   height:100%;
   z-index:600;
-  background-color:#08080D;
+  background-color: rgba(0,0,0,0.7);
 }
 #domain{
   height:30%;
@@ -437,22 +441,22 @@ export default {
   left:0.7%;
   top:1%;
   border:15px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border1.png") 20 stretch;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new.png") 20 stretch;
 }
 #domain2{
-  height:30%;
-  width:90%;
-  top:3%;
-  left:0.7%;
-  border:15px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border1.png") 20 stretch;
-}
-#domain3{
   height:25%;
   width:90%;
-  top:5%;
+  top:4%;
   left:0.7%;
   border:15px solid transparent;
-  -webkit-border-image: url("../../../assets/image/public_resource/border1.png") 20 stretch;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new.png") 20 stretch;
+}
+#domain3{
+  height:27%;
+  width:90%;
+  top:6%;
+  left:0.7%;
+  border:15px solid transparent;
+  -webkit-border-image: url("../../../assets/image/public_resource/border_new.png") 20 stretch;
 }
 </style>

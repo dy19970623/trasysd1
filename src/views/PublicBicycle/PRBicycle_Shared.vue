@@ -172,6 +172,7 @@ export default {
   position:absolute;
   z-index:9999;
   border:0px;
+  border-radius: 5px;
   box-shadow: 2px 2px 5px rgba(153, 153, 153, 1);
   font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
   font-weight: 700;

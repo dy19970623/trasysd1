@@ -3,15 +3,15 @@
   <div id="legend">
     <div id="legendbody">
       <div id="leg1">
-        <div id="img1" class="imgdiv"><img class="bike_img" src="../../../assets/image/PublicBicycle/u2064.png"></div>
+        <div id="img1" class="imgdiv"><img class="bike_img" src="../../../assets/image/PublicBicycle/point_blue.png"></div>
         <div id="txt1"  class="bike_legendtxt1"><span>使用情况前五名</span></div>
       </div>
       <div id="leg2">
-        <div id="img2" class="imgdiv"><img class="bike_img" src="../../../assets/image/PublicBicycle/u2020.png"></div>
+        <div id="img2" class="imgdiv"><img class="bike_img" src="../../../assets/image/PublicBicycle/point_yellow.png"></div>
         <div id="txt2" class="bike_legendtxt2"> <span>使用情况后五名</span></div>
       </div>
       <div id="leg3" class="imgdiv">
-        <div><img class="bike_img" src="../../../assets/image/PublicBicycle/u2026.png"></div>
+        <div><img class="bike_img" src="../../../assets/image/PublicBicycle/point1.png"></div>
         <div id="txt3" class="bike_legendtxt3"> <span>其他</span></div>
       </div>
     </div>
@@ -31,32 +31,32 @@ name: "bikelegend"
   height: 10%;
   width: 10%;
   left: 90%;
-  bottom: 10%;
+  bottom: 21%;
   z-index: 600;
 
 }
 .bike_img{
-  height: 50px;
-  width: 50px;
+  height: 30px;
+  width: 30px;
 }
 .bike_legendtxt1{
   position: absolute;
-  top:12%;
-  left:30%;
+  top:10%;
+  left:33%;
   float: right;
   font-size: 15px;
 }
 .bike_legendtxt2{
   position: absolute;
-  top:70%;
-  left:30%;
+  top:44%;
+  left:33%;
   float: right;
   font-size: 15px;
 }
 .bike_legendtxt3{
   position: absolute;
-  top:126%;
-  left:30%;
+  top:76%;
+  left:33%;
   float: right;
   font-size: 15px;
 }

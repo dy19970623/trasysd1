@@ -1,7 +1,7 @@
 <template>
   <div id>
     <div id="Sub_inputBox">
-     <StaAnalysis></StaAnalysis>
+      <StaAnalysis></StaAnalysis>
     </div>
   </div>
 </template>
@@ -30,15 +30,15 @@ export default {
 .el-tabs__content{
   display: none;
 }
-  .el-tabs__item {
-    color: #f5f7fa;
-  }
+.el-tabs__item {
+  color: #f5f7fa;
+}
 #Sub_inputBox{
   position: absolute;
-  width: 30%;
+  width: 28%;
   height:100%;
   z-index:600;
-  background-color:#08080D;
+  background-color: rgba(0,0,0,0.7);
   opacity: 95%;
 }
 
