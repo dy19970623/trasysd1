@@ -20,9 +20,9 @@
   import bikelegend from "./Child/bikelegend";
   import {request, requist} from "../../network/request"
   import bikesitedata from "../../assets/js/Bike_Search/PRBicycle_siteData.js"
-  import iconred from "../../assets/image/PublicBicycle/point1.png"
-  import iconblue_1 from "../../assets/image/PublicBicycle/point_blue.png"
-  import iconpurple_1 from "../../assets/image/PublicBicycle/point_yellow.png"
+  import iconred from "../../assets/image/PublicBicycle/point1.svg"
+  import iconblue_1 from "../../assets/image/PublicBicycle/point_blue.svg"
+  import iconpurple_1 from "../../assets/image/PublicBicycle/point_yellow.svg"
 
 
   let bike_station=[]

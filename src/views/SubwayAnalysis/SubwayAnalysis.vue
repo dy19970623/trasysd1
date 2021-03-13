@@ -15,8 +15,8 @@ import SubwayLegend from "./Child/SubwayLegend";
 
 import transportPoint from "../../assets/js/SubwayAnalysis/dataResourse/Subway_Flow_transportPoint"
 import linetransport from "../../assets/js/SubwayAnalysis/dataResourse/Subway_Flow_linetransportPoint"
-import subwaypng from "../../assets/image/SubwayAnalysis/u1992.png"
-import subwaympng from "../../assets/image/SubwayAnalysis/subwaym.png"
+import subwaypng from "../../assets/image/SubwayAnalysis/u1992.svg"
+import subwaympng from "../../assets/image/SubwayAnalysis/subwaym.svg"
 
 export default {
   name: "SubwayAnalysis",
@@ -40,23 +40,23 @@ export default {
       });
       let myIcon4 = L.icon({
         iconUrl: subwaypng,
-        iconSize: [29,29],
+        iconSize: [10,10],
         popupAnchor: [0, 0],
       });
 
       let myIcon1 = L.icon({
         iconUrl: subwaypng,
-        iconSize: [26, 26],
+        iconSize: [10, 10],
         popupAnchor: [0, 0],
       });
       let myIcon2 = L.icon({
         iconUrl: subwaypng,
-        iconSize: [23, 23],
+        iconSize: [10, 10],
         popupAnchor: [0, 0],
       });
       let myIcon3 = L.icon({
         iconUrl: subwaypng,
-        iconSize: [20, 20],
+        iconSize: [10, 10],
         popupAnchor: [0, 0],
       });
       //由于没有真实数据，展示为随机数
@@ -173,7 +173,7 @@ export default {
   mounted() {
     console.log(transportPoint.sitestation)
     let myMap = L.map('mapid',{zoomControl:false}).setView([39.915925, 116.37929], 11);
-    L.tileLayer('https://api.mapbox.com/styles/v1/litaizeng/cklt2ts8a21u318psl7vdmurq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ', {
+    L.tileLayer('https://api.mapbox.com/styles/v1/litaizeng/ckh4sgqak0i9319mywoay9rkv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ', {
       maxZoom: 18,
       minZoom:11,
       foo:'far',
