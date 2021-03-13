@@ -6,8 +6,8 @@
 <template>
   <div id="map" style="height:100%; width:100%">
     <div ref="map" id="Bmap" ></div>
-    <div ref="TaxiDPoint_container" id="chart" ></div>
-    <div id="legend"><img src="../../assets/image/TaxiAnalysis/legend.png" ></div>
+    <div ref="TaxiDPoint_container" id="chart" style="position: absolute;"></div>
+
   </div>
 </template>
 
@@ -1505,7 +1505,7 @@ export default {
         var res = [];
         var val=[];
         for (var i = 0; i < data.length; i++) { //遍历获取的所有数据
-          val.push([data[i].lng,data[i].lat,15]) //赋值经纬度
+          val.push([data[i].lng,data[i].lat,200]) //赋值经纬度
           res.push({
             value: val[i]
           });
@@ -1517,7 +1517,7 @@ export default {
       const option = {
         baseOption : {
           bmap: {
-            center: [116.403, 39.923],
+            center: [116.453, 39.923],
             zoom: 12,
             roam: true,
           }, //bmap
@@ -1545,19 +1545,23 @@ export default {
             }
           },
           visualMap: {
-            show: false,
-            right:"2%",
+            show: true,
+            right:"4%",
             bottom: "5%",
             calculable: false,
             text: ["高", "低"],
             min: 0,
-            max: 5,
+            max: 500,
             seriesIndex: 0,
             inRange: { //定义 在选中范围中 的视觉元素
               color: ['rgb(000,000,255)', 'rgb(000,255,255)', 'rgb(000,255,000)','rgb(255,255,000)','rgb(255,000,000)'],
 
-            },     textStyle:{
-
+            },
+            padding:15,
+            borderColor: '#3d97f6',
+            borderWidth: 2,
+            backgroundColor: 'rgba(21,25,28,0.8)',
+            textStyle:{
               color:'#fff'
             }
           },
@@ -1874,14 +1878,9 @@ export default {
   width:25%;
   height: 45%;
   top: 1%;
-  position: absolute;
+  right: 2%;
   z-index:999;
   padding: 30px 15px 5px 25px;;
 
-}
-#legend{
-  right: 3%;
-  bottom: 5%;
-  position: absolute;
 }
 </style>

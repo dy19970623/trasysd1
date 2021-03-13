@@ -6,7 +6,7 @@
 <template>
   <div id="app" style="height:100%;width:100%;">
     <div ref="map" id="main" style="height:100%;width:100%; "></div>
-    <div id="legend"><img src="../../assets/image/TaxiAnalysis/legend.png" ></div>
+
   </div>
 </template>
 
@@ -1430,7 +1430,7 @@ export default {
         var res = [];
         var val=[];
         for (var i = 0; i < data.length; i++) { //遍历获取的所有数据
-          val.push([data[i].lng,data[i].lat,2]) //赋值经纬度
+          val.push([data[i].lng,data[i].lat,200]) //赋值经纬度
           res.push({
             value: val[i]
           });
@@ -1470,15 +1470,24 @@ export default {
             }
           },
           visualMap: {
-            show: false,
-            top: 'top',
+            show: true,
+            right:"4%",
+            bottom: "5%",
+            calculable: false,
+            text: ["高", "低"],
             min: 0,
-            max: 5,
+            max: 500,
             seriesIndex: 0,
-            calculable: true,
             inRange: { //定义 在选中范围中 的视觉元素
               color: ['#9287e7', '#5bc49f', '#FFFF00','darkorange','#CC0000'],
             },
+            padding:15,
+            borderColor: '#3d97f6',
+            borderWidth: 2,
+            backgroundColor: 'rgba(21,25,28,0.8)',
+            textStyle:{
+              color:'#fff'
+            }
           },
           series:[{
             type: 'heatmap',
@@ -1526,7 +1535,7 @@ export default {
                 borderColor:'#ffebcd'
               }
             },
-            data: ['8:00', '9:00', '10:00', '11:00', '12:00']
+            data: ['7:00','8:00', '9:00', '10:00', '11:00', '12:00']
           },
         },
 
@@ -1536,7 +1545,7 @@ export default {
           {series: [{data: converData(heatmapData[2])}]},
           {series: [{data: converData(heatmapData[3])}]},
           {series: [{data: converData(heatmapData[4])}]},
-
+          {series: [{data: converData(heatmapData[5])}]},
         ]
 
       }
@@ -1563,9 +1572,5 @@ export default {
 .anchorBL {
   display: none;
 }
-#legend{
-  right: 3%;
-  bottom: 5%;
-  position: absolute;
-}
+
 </style>
