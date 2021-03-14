@@ -1428,7 +1428,8 @@
             coords: points,
             lineStyle: {
               normal: {
-                color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * idx))
+                 color:'#FAB301'
+                //color: echarts.color.modifyHSL('#5A94DF', Math.round(hStep * idx))
               }
             }
           };
