@@ -37,13 +37,15 @@
                       padding-top: 4%;
                       height: 50px;
                       line-height: 50%;cursor: pointer;
-                      font-family: '微软雅黑 ';
-                 text-align: center;font-size: 30px;
+                      font-family: '微软雅黑 ';font-weight: 800;
+                 text-align: center;font-size: 30px;letter-spacing:18px;
                  background: linear-gradient(to left,#1a95be, #0be9f4);
                  -webkit-background-clip: text;
                  color: transparent;
+                 text-shadow: 0 0 13px white ;
+                 /*text-shadow: .2rem 0rem 2rem white,-.2rem 0rem 2rem white,0rem .2rem 2rem white,0rem -.2rem 2rem white;*/
                  ">
-                     交&nbsp;&nbsp;通&nbsp;&nbsp;大&nbsp;&nbsp;数&nbsp;&nbsp;据&nbsp;&nbsp;可&nbsp;&nbsp;视&nbsp;&nbsp;化&nbsp;&nbsp;平&nbsp;&nbsp;台
+                     交通大数据可视化平台
 
                  </div>
                </router-link>

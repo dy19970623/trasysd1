@@ -5,7 +5,7 @@
   <div id="Taxi3dTrace" >
     <div id="Taxi3dTrace_Map" class="container" ></div>
     <div id='Taxi3dTrace_taxiQuery'>
-      <div style="font-size:26px;margin-left: 5%;">出&nbsp;租&nbsp;车&nbsp;时&nbsp;空&nbsp;轨&nbsp;迹&nbsp;查&nbsp;询</div>
+      <div class="title" >出租车时空轨迹查询</div>
       &nbsp&nbsp&nbsp
       <select id="Taxi3dTrace_taxiID">
           <option value="13301104001" >13301104001</option>
@@ -13,21 +13,21 @@
           <option value="13301104003" class="taxi_Id">13301104003</option>
           <option value="13301104004" class="taxi_Id">13301104004</option>
       </select>
-      <input type="button" @click="Taxi3dTrace_addTrace" value="查询" />
-      <input type="button" @click="Taxi3dTrace_removeTrace" value="清空" /><br><br>
+      <input class="btus01" type="button" @click="Taxi3dTrace_addTrace" value="查询" />
+      <input class="btus02" type="button" @click="Taxi3dTrace_removeTrace" value="清空" /><br><br>
       <div id='Taxi3dTrace_imageInfo'>
-          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zaike.png">&nbsp;&nbsp;&nbsp;&nbsp;
-          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_kongzai.png">&nbsp;&nbsp;&nbsp;&nbsp;
-          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zhuche.png">&nbsp;&nbsp;&nbsp;&nbsp;
-          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_kai.png">&nbsp;&nbsp;&nbsp;&nbsp;
-          <img align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_qita.png"><br>
+          <img class="tuli" align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zaike.png">
+          <img class="tuli" align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_kongzai.png">
+          <img class="tuli" align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_zhuche.png">
+          <img class="tuli" align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_xiache.png">
+          <img class="tuli" align="middle" src="../../assets/image/TaxiAnalysis/Taxi3dTrace_qita.png"><br>
       </div>
       <div id="Taxi3dTrace_text">
-        <span>载客</span>&nbsp;&nbsp;&nbsp;
-        <span>空载</span>&nbsp;&nbsp;&nbsp;
-        <span>驻车</span>&nbsp;&nbsp;&nbsp;
-        <span>上车</span>&nbsp;&nbsp;&nbsp;
-        <span>其他</span>&nbsp;&nbsp;&nbsp;
+        <span class="span01">载客</span>
+        <span class="span01">空载</span>
+        <span class="span01">驻车</span>
+        <span class="span01">下车</span>
+        <span class="span01">其他</span>
       </div>
 
 
@@ -58,7 +58,7 @@
               bearing : 30,  // 旋转角
               dragRotatePitch: true,
               baseLayer: new maptalks.TileLayer('base', {
-                urlTemplate:'https://api.mapbox.com/styles/v1/litaizeng/cklt2ts8a21u318psl7vdmurq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
+                urlTemplate:'https://api.mapbox.com/styles/v1/litaizeng/ckm398gud9bmz17rykd0lemst/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
                 subdomains: ['a','b','c','d'],
                 attribution: '&copy; <a href="http://osm.org">OpenStreetMap</a> contributors, &copy; <a href="https://carto.com/">CARTO</a>'
               })
@@ -76,15 +76,15 @@
             function Taxi3dTrace_arrColor(status){
               if (status == 0) {
                 let color = status;
-                return color = "Yellow";
+                return color = "#ffc56e";
               };
               if (status == 1) {
                 let color = status;
-                return color = "OrangeRed";
+                return color = "#0092bc";
               };
               if (status == 2) {
                 let color = status;
-                return color = "GhostWhite";
+                return color = "#d0006f";
               };
               if (status == 3) {
                 let color = status;
@@ -92,7 +92,7 @@
               };
               if (status == 4) {
                 let color = status;
-                return color = "SkyBlue";
+                return color = "#e6e6e6";
               };
             };
             function Taxi3dTrace_removeTrace(){
@@ -136,54 +136,87 @@
 </script>
 
 <style scoped>
-
-#Taxi3dTrace_taxiQuery{
-  position:absolute;
-  top:26px;
-  left:25px;
-  z-index:100;
-  font-size:20px;
-  font-weight:700;
-  color: white;
-}
-#TaxiTrace_imageInfo{
-  position:absolute;
-  top:15%;
-  right:3%;
-  z-index:100;
-  color: #ffffff;
-}
 #Taxi3dTrace{width:100%;height:100%}
-
 .container{width:100%;height:100%}
-#Taxi3dTrace_taxiID{
-  width: 159px;
-  height: 33px;
-  margin-top: 22px;
+#Taxi3dTrace_taxiQuery{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 19%;
+  height: 30%;
+  z-index: 100;
+  font-size: 20px;
+  font-weight: 700;
   color: white;
-  background: transparent;
-  border: 1px solid #FFFFFF;
-  border-radius: 5px;
+  background-color: rgba(0,0,0,0.7);
+  background-image: url("../../assets/image/TaxiAnalysis/chaxun.png");
+  background-size: 100% 100%;
 }
-.taxi_Id{
-  width: 159px;
-  height: 33px;
-  background: transparent;
-  border: 1px solid #FFFFFF;
-  border-radius: 5px;
-}
-input{
-  width: 52px;
-  height: 28px;
-}
-#Taxi3dTrace_imageInfo{
 
+.title{
+  position: absolute;
+  left: 14%;
+  margin-top: 10%;
+  color: #02C1D7;
+  /*font-weight: 300;*/
+  font-size: 28px;
+  font-family: '微软雅黑 Regular';
+}
+
+.btus01{
+  position: absolute;
+  left: 53%;
+  top: 36%;
+  width: 61px;
+  height: 34px;
+  text-align: center;
+  font-size: 17px;
+  border-radius: 6px;
+}
+.btus02{
+  position: absolute;
+  left: 71%;
+  top: 36%;
+  width: 61px;
+  height: 34px;
+  text-align: center;
+  font-size: 17px;
+  border-radius: 6px;
+}
+#Taxi3dTrace_taxiID{
+  position: absolute;
+  top: 36%;
+  left: 11%;
+  width: 145px;
+  height: 35px;
+  background-color: black;
+  color: white;
+  border-radius: 6px;
+  background-color: #19344bb3;
+}
+
+#Taxi3dTrace_imageInfo{
+  position: absolute;
+  margin-top: 24%;
+  margin-left: 14%;
   margin-bottom: 3%;
 }
 
 #Taxi3dTrace_text{
+  position: absolute;
+  top: 74%;
+  margin-left: 13%;
   margin-top: 1px;
-
   font-size:16px;
+}
+.tuli{
+  margin-right: 18px;
+  margin-left: 4px;
+}
+.span01{
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 11px;
+  margin-left: 1px;
 }
 </style>

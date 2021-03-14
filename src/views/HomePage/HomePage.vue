@@ -3,29 +3,29 @@
       <div id="cesiumContainer"></div>
       <div id="leftBox">
         <div   class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;left: 40%;">地铁客流总量</p>
+          <p class="homepage_font" style="left: 41%">地铁客流总量</p>
           <div id="subwayChart"></div>
         </div>
         <div   class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;left: 37%;">城区公交OD对比</p>
+          <p class="homepage_font" style="left: 38%">城区公交OD对比</p>
           <div id="busChart"></div>
         </div>
         <div  class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;left: 38%;">自行车租还情况</p>
+          <p class="homepage_font" style="left: 40%">自行车租还情况</p>
           <div id="bikeChart" ></div>
         </div>
       </div>
       <div id="rightBox">
         <div class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;right: 36%;">停车场类型分布</p>
+          <p class="homepage_font" style="left: 40%">停车场类型分布</p>
           <div id="parkChart"></div>
         </div>
         <div class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;right: 36%;">出租车运行情况</p>
+          <p class="homepage_font" style="left: 39%">出租车运行情况</p>
           <div id="taxiChart"></div>
         </div>
         <div  class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;right: 34%;">出行方式耗时对比</p>
+          <p class="homepage_font" style="left: 38%">出行方式耗时对比</p>
           <div id="busAndTaxiChart"></div>
         </div>
       </div>
@@ -536,17 +536,14 @@ export default {
                  }
                },
                splitLine: {
-                 lineStyle: {
-                   // 使用深浅的间隔色
-                   color: "#403a3a"
-                 }
+                 show: false
                } ,
                nameTextStyle:{
                  color:"white"
                },
                axisLine: {
                  lineStyle: {
-                   color: "white"
+                   color: "#403a3a"
                  }
                },
              },
@@ -560,17 +557,17 @@ export default {
                      let colorList = [
                        new graphic.LinearGradient(0, 0, 0, 1, [{
                          offset: 0,
-                         color: '#990000'
+                         color: '#ed5c5c'
                        }, {
                          offset: 1,
-                         color: '#FF9999'
+                         color: '#990000'
                        }]),
                        new graphic.LinearGradient(0, 0, 0, 1, [{
                          offset: 0,
                          color: '#00CCFF'
                        }, {
                          offset: 1,
-                         color: '#845EC2'
+                         color: '#40bdf2'
                        }]),
                        new graphic.LinearGradient(0, 0, 0, 1, [{
                          offset: 0,
@@ -673,10 +670,9 @@ export default {
              top:"10%",
              left:"65%",
              // bottom:"bottom",
-             textStyle: {
-               fontSize: 13,
-               fontWeight: 500,
-               color: 'white'
+             textStyle:{
+               color:'#FFF',
+               fontSize: 12
              },
            },
            grid: {
@@ -719,15 +715,13 @@ export default {
                }
              },
              splitLine: {
-               lineStyle: {
-                 // 使用深浅的间隔色
-                 color: "#403a3a"
-               }
+               show: false
              }
            },
            series: [{
              name: '租',
              type: 'bar',
+             barMaxWidth:"55%",
              barGap: '-100%',
              data: data1,
              animationDelay: function (idx) {
@@ -748,6 +742,7 @@ export default {
            }, {
              name: '还',
              type: 'bar',
+             barMaxWidth:"55%",
              data: data2,
              animationDelay: function (idx) {
                return idx * 10 + 100;
@@ -756,10 +751,10 @@ export default {
                normal: {
                  color: new graphic.LinearGradient(0, 0, 0, 1, [{
                    offset: 0,
-                   color: '#92C5B0'
+                   color: '#0c5649'
                  }, {
                    offset: 1,
-                   color: '#689EA9'
+                   color: '#1accac'
                  }]),
                  barBorderRadius:[0, 0, 5, 5]
                }
@@ -782,18 +777,21 @@ export default {
            formatter: '{b} : {c}个'
          },
          legend: {
-           orient: 'horizontal',
-           bottom:'10%',
+           orient: 'vertical',
+           top:'22%',
+           itemGap: 20,
+           right:'10%',
            data:['单位大院','公建配建','居住小区','其他权属'],
-           textStyle: {
-             color: 'white',
+           textStyle:{
+             color:'#FFF',
+             fontSize: 12
            }
          },
          series: [
            {
              name:'停车场类型分布',
              type:'pie',
-             center:['50%','45%'],
+             center:['40%','50%'],
              radius: ['35%', '55%'],
              avoidLabelOverlap: false,
              label: {
@@ -823,7 +821,7 @@ export default {
              ]
            }
          ],
-         color:['#FF6633','#00C6FF', '#8A00E1', '#CC9900']
+         color:['#0278E7','#00C6FF', '#af06fe', '#FF6633']
        };
        myChart.setOption(option);
      },
@@ -847,7 +845,8 @@ export default {
            left:"35%",
            // bottom:"bottom",
            textStyle: {
-             color: 'white'
+               color:'#FFF',
+               fontSize: 12
            }
          },
 
@@ -894,10 +893,7 @@ export default {
              }
            },
            splitLine: {
-             lineStyle: {
-               // 使用深浅的间隔色
-               color: "#403a3a"
-             }
+             show: false
            }
          },
          series: [
@@ -930,7 +926,8 @@ export default {
            left: 'center',
            bottom: '20px',
            textStyle:{
-             color:'#FFF'
+               color:'#FFF',
+               fontSize: 12
            },
            Width:2,
            Height:2,
@@ -963,7 +960,7 @@ export default {
            {
              name: '登量',
              type: 'pie',
-             radius: ['20%', '60%'],
+             radius: ['25%', '55%'],
              center: ['30%', '45%'],
              roseType: 'radius',
              itemStyle: {
@@ -985,12 +982,12 @@ export default {
                {value: 205162, name: '丰台'},
                {value: 63162, name: '石景山'},
              ],
-             color:['#FF6633','#00C6FF','#8A00E1','#0278E7','#CC9900','#92C5B0']
+             color:['#FF6633','#00C6FF','#af06fe','#0278E7','#ffbf00','#00f8cc']
            },
            {
              name: '降量',
              type: 'pie',
-             radius: ['20%', '60%'],
+             radius: ['25%', '55%'],
              center: ['70%', '45%'],
              roseType: 'radius',
              itemStyle: {
@@ -1034,10 +1031,11 @@ export default {
          },
          legend:{
            data:['公交车','出租车'],
-           top:'20px',
+           top:'10%',
            right:'8%',
            textStyle:{
-             color:'#FFF'
+             color:'#FFF',
+             fontSize: 12
            }
          },
          grid: {
@@ -1081,10 +1079,7 @@ export default {
              }
            },
            splitLine: {
-             lineStyle: {
-               // 使用深浅的间隔色
-               color: "#403a3a"
-             }
+             show: false
            }},
          series: [{
            data: [32, 30, 31, 32, 33, 26, 23,21,21,22,22,20,
@@ -1099,7 +1094,7 @@ export default {
              data: [12, 12, 12, 13, 16,19,19,20,19,18,18,16,
                15,17,19,19,20,21,18,15,14,14,13,7],
              name:'出租车',
-             color:'#00C6FF',
+             color:'#00f8cc',
              type: 'line',
              smooth: true
            },
@@ -1140,7 +1135,7 @@ export default {
   left:0px;
   height: 100%;
   width:28%;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.7);
   /*background-image: linear-gradient(to right,#0D0715,#000033,#00093A,#0D0715,#000033,#000838,#000000)*/
 }
 #subwayChart
@@ -1165,7 +1160,7 @@ export default {
   right:0px;
   height: 100%;
   width:28%;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.7);
   /*background-image: linear-gradient(to right,#0D0715,#000033,#00093A,#0D0715,#000033,#000838,#000000)*/
 }
 #parkChart
@@ -1188,5 +1183,17 @@ export default {
   height: 33%;
   background-image: url("../../assets/image/HomePage/Border2.png");
   background-size: 100% 100%;
+}
+.homepage_font{
+  position: absolute;
+  margin: 0;
+  height: 4%;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: '微软雅黑';
+  color: orange;
+  /*background: linear-gradient(to left,#1a95be, #0be9f4);*/
+  /*-webkit-background-clip: text;*/
+  /*color: transparent;*/
 }
 </style>

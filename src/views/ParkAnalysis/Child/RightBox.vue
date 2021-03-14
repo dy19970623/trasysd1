@@ -45,6 +45,7 @@
   .el-tabs__item {
     color: #f5f7fa;
   }
+
   #RightBox{
     position: absolute;
     float: left;
@@ -57,32 +58,31 @@
     background-color: rgba(0,0,0,0.7)
   }
 
-  #RightBox .el-tabs__header {
+  .el-tabs__header {
     position: relative;
     padding-top: 3%;
-    /*margin: 0 0 15px;*/
-    margin: 0;
+    margin: 0 0 15px;
   }
-  #RightBox .el-tabs__item{
+  .el-tabs__item{
     font-size: 20px;
   }
 
-  #RightBox .el-tabs__content {
+  .el-tabs__content {
     overflow: hidden;
     position: relative;
     height: 92%;
   }
 
-  #RightBox .el-tab-pane{
+  .el-tab-pane{
     width:100%;
     height: 100%;
   }
-  #RightBox .el-tabs__nav{
+  .el-tabs__nav{
     float: inherit;
   }
-  #RightBox .el-tabs__active-bar{
+  .el-tabs__active-bar{
     float: inherit;
-    height: 0px;
+     height: 0px;
 }
   .el-main{
     overflow: hidden;

@@ -8,7 +8,7 @@
     </div>
     <div class="Taxi_Query">
       <p class="title">出租车轨迹查询</p>
-      <el-select v-model="value" placeholder="13301104001" @change="select" class="shuru" size="mini">
+      <el-select v-model="value" placeholder="13301104001" @change="select" class="shuru" size="mini" :popper-append-to-body="false">
         <el-option
           v-for="item in selectID"
           :key="item.value"
@@ -19,16 +19,21 @@
       <el-button @click="TaxiTrace_traceQuery()" class="butel01" size="mini" >查询</el-button>
       <el-button @click="TaxiTrace_traceClear()" class="butel02" size="mini">清空</el-button>
       <div id="TaxiTrace_imageInfo">
-        <img class="image"  src="../../assets/image/TaxiAnalysis/qidian.png">
-        <img class="image" src="../../assets/image/TaxiAnalysis/shangche.png">
-        <img class="image" src="../../assets/image/TaxiAnalysis/xiache.png">
-        <img class="image" src="../../assets/image/TaxiAnalysis/qita.png">
-        <img class="image" src="../../assets/image/TaxiAnalysis/kongzai.png">
-        <img class="image"  src="../../assets/image/TaxiAnalysis/zhongdian.png"><br>
-        <span>起点</span><span>&nbsp&nbsp载客</span><span>&nbsp下车</span><span>&nbsp其他</span><span>&nbsp;空载</span><span>&nbsp;终点</span>
+          <img class="image1"  src="../../assets/image/TaxiAnalysis/qidian.png">
+          <img class="image1" src="../../assets/image/TaxiAnalysis/shangche1.png">
+          <img class="image1" src="../../assets/image/TaxiAnalysis/xiache1.png">
+          <img class="image1" src="../../assets/image/TaxiAnalysis/qita1.png">
+          <img class="image1" src="../../assets/image/TaxiAnalysis/kongzai1.png">
+          <img class="image1"  src="../../assets/image/TaxiAnalysis/zhongdian.png">
+        <div id="legeng">
+          <span class="span01">起点</span><span class="span01">载客</span><span class="span01">下车</span><span class="span01">其他</span><span class="span01">空载</span><span class="span01">终点</span>
+        </div>
       </div>
     </div>
-
+    <!--  <img src="../../assets/image/TaxiAnalysis/gjLengend.png" style="position: absolute;
+    right: 0px;
+    bottom: 0px;
+    width: 8%;">-->
   </div>
 </template>
 <script>
@@ -90,18 +95,18 @@
           addMarker0:function(carID,point,i,length,carEvent){
           // 创建图标对象
           //事件字段EVENT的值 0、1、2、3、4 分别代表客人下车、客人上车、锁车门、开车门和其他情况，状态字段STATE的值 0、1、2、3、4 分别代表空载、满载、驻车、停运和其他情况
-          let imageLu = (i == 0 && 'qidian')||(i == length-1 && 'zhongdian')||(carEvent == 0 && 'xiache')||(carEvent == 1 && 'shangche')||(carEvent == 2 && 'qita')||(carEvent == 10 && 'xiache')||(carEvent == 11 && 'shangche')||(carEvent == 12 && 'qita')||'kongzai';
+          let imageLu = (i == 0 && 'qidian') ||(i == length-1 && 'zhongdian') ||(carEvent == 0 && 'xiache')||(carEvent == 1 && 'shangche')||(carEvent == 2 && 'qita')||(carEvent == 10 && 'xiache')||(carEvent == 11 && 'shangche')||(carEvent == 12 && 'qita')||'kongzai';
           //if(i=0){imageLu='起点'};if(i=length){imageLu='终点'};if(carEvent=0) {imageLu='下车'};if(carEvent=1) {imageLu='上车'};if(carEvent=4) {imageLu='其他'};if(carState=0){imageLu='空载'}
             let myIcon = new BMap.Icon(require("../../assets/image/TaxiAnalysis/"+imageLu+".png"), new BMap.Size(25, 25), {
             // 指定定位位置。
             // 当标注显示在地图上时，其所指向的地理位置距离图标左上
             // 角各偏移10像素和25像素。您可以看到在本例中该位置即是
             // 图标中央下端的尖角位置。
-            anchor: new BMap.Size(5, 5),
+             anchor: new BMap.Size(7, 7),
             // 设置图片偏移。
             // 当您需要从一幅较大的图片中截取某部分作为标注图标时，您
             // 需要指定大图的偏移位置，此做法与css sprites技术类似。
-            imageOffset: new BMap.Size(0, 0)   // 设置图片偏移
+             imageOffset: new BMap.Size(0, 0)   // 设置图片偏移
           });
           let marker = new BMap.Marker(point, {icon: myIcon});
           //var marker = new BMap.Marker(point);
@@ -112,8 +117,25 @@
           marker.addEventListener("click", function () { this.openInfoWindow(infoWindow); });*/
 
         },
-          addLine(point0,point1){
-              let polyline = new BMap.Polyline([point0,point1],{strokeColor:"#ffff00", strokeWeight:3, strokeOpacity:0.5});
+          addLine(point0,point1,a){
+            let color;
+            if (a == 0 || a == 10) {
+              color = "#0092bc";
+              }
+              else if (a == 1 || a == 11)
+               {
+                color = "#ffc56e";
+              }
+              else if (a == 2 || a == 12)
+              {
+                color = "GhostWhite";
+              }
+              else
+              {
+                color = "OrangeRed";
+              }
+
+            let polyline = new BMap.Polyline([point0,point1],{strokeColor:color, strokeWeight:4});
               map.addOverlay(polyline);
           },
           TaxiTrace_dataTrans1(dataN) {
@@ -135,7 +157,7 @@
           if(global.dataI > 0){
             if (global.carEvent[global.dataI]==global.carEvent[global.dataI-1]) {that.addMarker0(global.carID,global.point[global.dataI],global.dataI,global.carLength,parseInt(global.carEvent[global.dataI])+10);};
             if (global.carEvent[global.dataI]!=global.carEvent[global.dataI-1]) {that.addMarker0(global.carID,global.point[global.dataI],global.dataI,global.carLength,global.carEvent[global.dataI]);};
-            that.addLine(global.point[global.dataI-1],global.point[global.dataI]);
+            that.addLine(global.point[global.dataI-1],global.point[global.dataI],global.carEvent[global.dataI]);
           };
             global.dataI+=1;
           if (global.dataI>global.carLength-1) {clearInterval(global.t)}//最后一项清除循环
@@ -384,7 +406,7 @@
           "featureType": "village",
           "elementType": "labels",
           "stylers": {
-            "visibility": "on"
+            "visibility": "off"
           }
         }, {
           "featureType": "district",
@@ -1531,35 +1553,9 @@
             "weight": 1.2,
             "visibility": "on"
           }
-        }, {
-          "featureType": "district",
-          "elementType": "labels",
-          "stylers": {
-            "visibility": "on"
-          }
-        }, {
-          "featureType": "village",
-          "elementType": "labels.text",
-          "stylers": {
-            "fontsize": 1
-          }
-        }, {
-          "featureType": "village",
-          "elementType": "labels.text.fill",
-          "stylers": {
-            "color": "#ffffff00",
-            "weight": 10
-          }
-        }, {
-          "featureType": "village",
-          "elementType": "labels.text.stroke",
-          "stylers": {
-            "color": "#ffffff00",
-            "weight": 0
-          }
         }];
         map = new BMap.Map('allmap');
-        map.centerAndZoom(new BMap.Point(116.403, 39.923), 13.5);  // 初始化地图,设置中心点坐标和地图级别
+        map.centerAndZoom(new BMap.Point(116.403, 39.923), 12);  // 初始化地图,设置中心点坐标和地图级别
         map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
         map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
         map.setMapStyle({styleJson:styleJson});
@@ -1585,37 +1581,47 @@
     position: absolute;
     top: 0%;
     left: 0;
-
     z-index: 100;
     font-size: 28px;
     font-weight: 700;
     color: #FFFFFF;
-
-    background: #08080D;
     height: 33%;
     width: 20%;
+    background-image: url("../../assets/image/TaxiAnalysis/chaxun.png");
+    background-size: 100% 100%;
+    background-color: rgba(0,0,0,0.7);
   }
   #TaxiTrace_imageInfo{
-     position: absolute;
-     top: 55%;
-     left: 9%;
-     font-weight: 300;
-     font-size: 12px;
-     color: #FFFFFF;
+    position: absolute;
+    top: 54%;
+    left: 13%;
+
   }
-  .image{
-    width: 25px;
-    height: 25px;
+  .imgbox
+  {
+    width: 100%;
+    height: 10%;
   }
+  .imgtext
+  {
+    float: left;
+    margin: 0;
+  }
+
   .title{
-      position: absolute;
-      left: 9%;
+    position: absolute;
+    left: 22%;
+    margin-top: 11%;
+    color: #02C1D7;
+    font-weight: 300;
+    font-size: 28px;
+    font-family: '\5FAE\8F6F\96C5\9ED1 Regular';
   }
   .shuru{
     position: absolute;
     top: 35%;
-    left: 9%;
-    width: 120px;
+    left: 13%;
+    width: 148px;
     background-color: black;
     color: white;
 
@@ -1623,13 +1629,14 @@
   .el-input--mini .el-input__inner {
     height: 28px;
     line-height: 28px;
-    background-color: black;
-    color:aliceblue;
+    background-color: #19344bb3;
+    color:#bcd4e8;
+    border-color:#3d97f6;
 }
   .butel01{
       position: absolute;
       top: 35%;
-      left: 52%;
+      left: 53%;
      padding-right: 10px;
 
       /* width: 50px;
@@ -1645,7 +1652,7 @@
   .butel02{
       position: absolute;
       top: 35%;
-      left: 69%;
+      left: 67%;
       margin-right: 10px;
 
       /* width: 50px;
@@ -1655,11 +1662,38 @@
       font-size: 15px;
       color: #08080D;
   }
-
+  .image1{
+    margin-right: 25px;
+    float: left;
+    width: 25px;
+    height: 25px;
+    iconSize: 100;
+  }
   .anchorBL{
     display:none;
   }
   .BMap_cpyCtrl{
     display:none;
     }
+  #leth{
+    width:125px;
+    height: 215px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgba(40, 176, 213, 1);
+    background-color: #1E1E1E;
+    position:absolute;
+    right: 3%;
+    bottom: 9%;
+    z-index:99;
+  }
+.span01{
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 19px;
+}
+#legeng{
+  position: absolute;
+  top:83%;
+}
 </style>
