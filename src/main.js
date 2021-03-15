@@ -7,7 +7,9 @@ import 'element-ui/lib/theme-chalk/index.css';
 import * as Cesium from 'cesium/Cesium'
 import * as widgets from 'cesium/Widgets/widgets.css'
 import * as vueJsonp from 'vue-jsonp'
-
+import Axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, Axios);
 require('echarts-extension-amap')
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false

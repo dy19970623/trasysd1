@@ -136,7 +136,7 @@ export default {
   top:0px;
   width: 100%;
   color: white;
-  background: url("../assets/image/HomePage/1.png");
+  background: url("../assets/image/HomePage/title.png");
   background-size: 100% 100%;
   padding: 0px;
 }

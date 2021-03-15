@@ -72,7 +72,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new CopyWebpackPlugin([{ from: path.join(cesiumSource, 'Widgets'), to: 'Widgets' }]),
     new webpack.DefinePlugin({
       CESIUM_BASE_URL: JSON.stringify('/')
-    })
+    }),
+    new CopyWebpackPlugin([ { from: path.join('./static', 'model'), to: 'model3D'}]),
   ]
 })
 

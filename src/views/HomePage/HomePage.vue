@@ -1,31 +1,60 @@
 <template>
     <div class="homepage">
       <div id="cesiumContainer"></div>
+      <div id="selectNamenbox">
+        <el-select v-model="value" placeholder="" @change="selectIndex" popper-class="selectFrom" id="selectbox1" class="selectbox" :popper-append-to-body="false" style="background-color: #19344bb3">
+          <el-option
+            v-for="item in selectName"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value">
+          </el-option>
+        </el-select>
+      </div>
+      <div id="LayerControl">
+        <p class="LayerControltitle">图层控制</p>
+        <div style="width: 50px;height: 50px;float:left;" @click="selectMainRoad()"  v-model="maindis" id="mainbox">
+          <img class="imagelabel" src="../../assets/image/HomePage/1.png" v-show="mainIcon">
+          <img  class="imagelabel" src="../../assets/image/HomePage/0.png"  v-show="!mainIcon">
+        </div>
+        <div style="width: 50px;height: 50px;float:left" @click="selectSecondRoad()"  v-model="seconddis" id="secondbox">
+          <img  class="imagelabel" src="../../assets/image/HomePage/2.png" v-show="secondIcon">
+          <img  class="imagelabel" src="../../assets/image/HomePage/0.png"  v-show="!secondIcon">
+        </div>
+        <div style="width: 50px;height: 50px;float:left" @click="selectFreeWay()"  v-model="freedis" id="freebox">
+          <img  class="imagelabel" src="../../assets/image/HomePage/3.png" v-show="freeIcon">
+          <img  class="imagelabel" src="../../assets/image/HomePage/0.png"  v-show="!freeIcon">
+        </div>
+        <div style="width: 50px;height: 50px;float:left" @click="selectAccessRoad()"  v-model="accessdis" id="accessbox">
+          <img  class="imagelabel" src="../../assets/image/HomePage/4.png" v-show="accessIcon">
+          <img  class="imagelabel" src="../../assets/image/HomePage/0.png"  v-show="!accessIcon">
+        </div>
+      </div>
       <div id="leftBox">
         <div   class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;left: 40%;">地铁客流总量</p>
+          <p class="homepage_font" style="left: 41%">地铁客流总量</p>
           <div id="subwayChart"></div>
         </div>
         <div   class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;left: 37%;">城区公交OD对比</p>
+          <p class="homepage_font" style="left: 38%">城区公交OD对比</p>
           <div id="busChart"></div>
         </div>
         <div  class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;left: 38%;">自行车租还情况</p>
+          <p class="homepage_font" style="left: 40%">自行车租还情况</p>
           <div id="bikeChart" ></div>
         </div>
       </div>
       <div id="rightBox">
         <div class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;right: 36%;">停车场类型分布</p>
+          <p class="homepage_font" style="left: 40%">停车场类型分布</p>
           <div id="parkChart"></div>
         </div>
         <div class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;right: 36%;">出租车运行情况</p>
+          <p class="homepage_font" style="left: 39%">出租车运行情况</p>
           <div id="taxiChart"></div>
         </div>
         <div  class="grid-table">
-          <p style="color: white;margin: 0;height: 2%;position:absolute;right: 34%;">出行方式耗时对比</p>
+          <p class="homepage_font" style="left: 38%">出行方式耗时对比</p>
           <div id="busAndTaxiChart"></div>
         </div>
       </div>
@@ -33,405 +62,598 @@
 </template>
 
 <script>
+  import {stationflow} from "../../assets/js/BusAnalysis/Station_Flow"
+  import  homepageG from '../../assets/js/HomePage/homepagedata'
   import { graphic } from 'echarts/lib/export'
+  let viewer,Cesium
 export default {
    name: "HomePage",
-   methods:{
-     Cesium() {
-       /**
-        * 本系统用到的相关代码
-        */
-/*
-       let TraSys_Tomcat_Ip="http://10.100.54.135:8080";
-       let TraSyS_GeoServer_Ip="http://10.100.54.135:8888";
-//主干道
-       let TrasSys_MainRoad_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:mainroad84&maxFeatures=5000&outputFormat=application%2Fjson";
-//快速干道
-       let TrasSys_FreeWay_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:freeway&maxFeatures=5000&outputFormat=application%2Fjson";
-//绿地
-       let TrasSys_GreenLand_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:greenland&maxFeatures=5000&outputFormat=application%2Fjson";
-//边界
-       let TrasSys_Boundary_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:boundary&maxFeatures=5000&outputFormat=application%2Fjson";
-//街道划分
-       let TrasSys_StreetOffice_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:streetoffice&maxFeatures=5000&outputFormat=application%2Fjson";
-//次干道
-       let TrasSys_SecondRoad_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:secondaryroad&maxFeatures=5000&outputFormat=application%2Fjson";
-//水系
-       let TrasSys_WaterMap_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:hyd&maxFeatures=5000&outputFormat=application%2Fjson";
-//支路及街坊路
-       let TrasSys_AccessRoad_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:accessroad&maxFeatures=5000&outputFormat=application%2Fjson";
-*/
+  data() {
+    return {
+      selectName: [{
+        value: '北京市白盒模型',
+        label: '北京市白盒模型'
+      }, {
+        value: '鄂尔多斯三维',
+        label: '鄂尔多斯三维'
+      }, {
+        value: '故宫三维影像',
+        label: '故宫三维影像'
+      }, {
+        value: '杭州倾斜影像',
+        label: '杭州倾斜影像'
+      }],
+      value:{},
+      taxi_msg:{},
+      mainRoadEntity:{},
+      maindis:true,
+      seconddis:true,
+      freedis:true,
+      accessdis:true,
+      mainIcon:true,
+      secondIcon:true,
+      freeIcon:true,
+      accessIcon:true
+    }
+  },
+  methods:{
+    selectIndex(value) {
+      let select
+      this.item = this.selectName.find((item) => {
+        if (value=="北京市白盒模型") {let bbb =1;this.selectindex(bbb);}
+        if (value=="鄂尔多斯三维") {let bbb =2;this.selectindex(bbb);}
+        if (value=="故宫三维影像") {let bbb =3;this.selectindex(bbb);}
+        if (value=="杭州倾斜影像") {let bbb =4;this.selectindex(bbb);}
+      })
+      return  homepageG.selectNameIndex
+    },
+    selectindex(a){
+      if (a==1)
+      {
+        viewer.camera.flyTo({
+          destination : Cesium.Cartesian3.fromDegrees(116.3732, 39.9470,500),
+          orientation : {
+            heading : Cesium.Math.toRadians(0.0),
+            pitch : Cesium.Math.toRadians(-25.0),
+            roll : 0.0
+          }
+        });
+      }
+      if (a==2)
+      {
+        viewer.camera.flyTo({
+          destination : Cesium.Cartesian3.fromDegrees(109.8448, 39.6596,100),
+          orientation : {
+            heading : Cesium.Math.toRadians(0.0),
+            pitch : Cesium.Math.toRadians(-5),
+            roll : 0.0
+          }})
+      }
+      if (a==3)
+      {
+        viewer.camera.flyTo({
+          destination : Cesium.Cartesian3.fromDegrees(116.3866, 39.9112,500),
+          orientation : {
+            heading : Cesium.Math.toRadians(0.0),
+            pitch : Cesium.Math.toRadians(-25.0),
+            roll : 0.0
+          }
+        });
+      }
+      if (a==4)
+      {
+        viewer.camera.flyTo({
+          destination : Cesium.Cartesian3.fromDegrees(119.9494, 29.336,500),
+          orientation : {
+            heading : Cesium.Math.toRadians(0.0),
+            pitch : Cesium.Math.toRadians(-25.0),
+            roll : 0.0
+          }
+        });
+      }
+    },
+    selectMainRoad()
+    {
+      this.mainIcon = !this.mainIcon
+      if (!this.maindis)
+      {
+        for(var i=0;i<homepageG.mainRoadEntity.length;i++){
+          homepageG.mainRoadEntity[i].show=true;
+          this.maindis=true;
+        }
+      }
+      else {
+        for(var i=0;i<homepageG.mainRoadEntity.length;i++){
+          homepageG.mainRoadEntity[i].show=false;
+          this.maindis=false;
+        }
+      }
+    },
+    selectSecondRoad()
+    {
+      this.secondIcon = !this.secondIcon
+      if(!this.seconddis)
+      {
+        homepageG.SecondRoadDataSource.show=true;
+        this.seconddis=true;
+      }
+      else{
+        homepageG.SecondRoadDataSource.show=false;
+        this.seconddis=false;
+      }
+    },
+    selectFreeWay()
+    {
+      this.freeIcon = !this.freeIcon
+      if(!this.freedis)
+      {
+        homepageG.FreeWayDataSource.show=true;
+        this.freedis=true;
+      }
+      else{
+        homepageG.FreeWayDataSource.show=false;
+        this.freedis=false;
+      }
+    },
+    selectAccessRoad(){
+      this.accessIcon = !this.accessIcon
+      if(!this.accessdis)
+      {
+        homepageG.AccessRoadDataSource.show=true;
+        this.accessdis=true;
+      }
+      else{
+        homepageG.AccessRoadDataSource.show=false;
+        this.accessdis=false;
+      }
+    },
+    Cesium() {
+      /**
+       * 本系统用到的相关代码
+       */
+      let that=this
+      function addWFSLayer(url,options={},callback=null){ //加载geoserve数据函数
+        const defaultOptions= {
+          service: 'WFS',
+          version: '1.0.0',
+          request: 'GetFeature',
+          outputFormat: 'application/json'
+        }
+        if(!options['typeName']){
+          alert('typeName参数必须提供')
+          return
+        }
+        for(let key in options){
+          defaultOptions[key]=options[key]
+        }
+        let urlString=url+'?'
+        for(let key in defaultOptions){
+          urlString+=`&${key}=${defaultOptions[key]}`
+        }
+        that.axios.get(urlString).then((res)=>{
+          if(res.status==200){
+            if(callback){
+              callback(res.data)
+            }
+          }
+        }).catch((e)=>{
+          //console.log(e)
+        })
+      }
+      Cesium = this.cesium
+      Cesium.Camera.DEFAULT_VIEW_FACTOR=-0.25//摄像机视口远近参数，可设置地球大小
+      Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(90, 0, 110, 90);//西南东北，默认显示中国
+      Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYjYzZDU2YS04OTYwLTQ5MzUtYjVjNC04NGJjOWFiZTc1ZTkiLCJpZCI6MzUzOTUsImlhdCI6MTYxNDIzMjU4OX0.MIdsd58Fto7ZMGcYdN7Diq643oSflOlj94qpvEFNmtA'
+      viewer = new Cesium.Viewer('cesiumContainer',{
+        baseLayerPicker:false,
+        fullscreenButton:false,						//全屏按钮
+        vrButton:false,
+        geocoder:false,								//地理编码搜索框
+        homeButton:true,							//HOME按钮
+        infoBox:true,								//信息窗口
+        sceneModePicker:true,
+        selectionIndicator:false,					//选择要素窗口关闭
+        navigationHelpButton:true,
+        timeline:true,                             //时间轴
+        animation:true,
+        shouldAnimate: true,
+        imageryProvider : new Cesium.MapboxStyleImageryProvider({
+          url:'https://api.mapbox.com/styles/v1',
+          username:'litaizeng',
+          styleId: 'cklrhlip10ib717qkkr26fm1t',
+          accessToken: 'pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
+          scaleFactor:true,
 
-       let Cesium = this.cesium
-       Cesium.Camera.DEFAULT_VIEW_FACTOR=-0.25//摄像机视口远近参数，可设置地球大小
-       Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(90, 0, 110, 90);//西南东北，默认显示中国
-       Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIyYjYzZDU2YS04OTYwLTQ5MzUtYjVjNC04NGJjOWFiZTc1ZTkiLCJpZCI6MzUzOTUsImlhdCI6MTYxNDIzMjU4OX0.MIdsd58Fto7ZMGcYdN7Diq643oSflOlj94qpvEFNmtA'
-
-       let viewer = new Cesium.Viewer('cesiumContainer',{
-         baseLayerPicker:false,
-         fullscreenButton:false,						//全屏按钮
-         vrButton:false,
-         geocoder:false,								//地理编码搜索框
-         homeButton:true,							//HOME按钮
-         infoBox:true,								//信息窗口
-         sceneModePicker:true,
-         selectionIndicator:false,					//选择要素窗口关闭
-         navigationHelpButton:true,
-         timeline:false,                             //时间轴
-         animation:false,
-         shouldAnimate: true,
-         imageryProvider : new Cesium.MapboxStyleImageryProvider({
-           url:'https://api.mapbox.com/styles/v1',
-           username:'litaizeng',
-           styleId: 'cklt2ts8a21u318psl7vdmurq',
-           // accessToken: 'pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNraDR1emlzdTAxemwzMm9idjVvYnp5bGkifQ.gZpF28lTXbMX7MbiFILcZw',
-           accessToken: 'pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
-
-           scaleFactor:true,
-
-
-
-         }),
-       });
-
+        }),
+      });
       viewer._cesiumWidget._creditContainer.style.display = "none";// 隐藏版权
-       setTimeout(function(){
-         viewer.camera.flyTo({
-           destination : Cesium.Cartesian3.fromDegrees(116.3654, 39.9043,10000),
-         });
-       },500);
-  /*     let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
-         url : 'http://10.100.59.120:8081/BJC/tileset.json'
-       }));
-       tileset.readyPromise.then(function(tileset) {
-         // tile.properties is not defined until readyPromise resolves.
-         let properties = tileset.properties;
-         if (Cesium.defined(properties)) {
-           for (let name in properties) {
-             console.log(properties[name]);
-           }
-         }
-       });
-       //设定了模拟时间的边界
-       let start = Cesium.JulianDate.fromDate(new Date(2015, 2, 25, 16));
-       let stop = Cesium.JulianDate.addSeconds(start, 30, new Cesium.JulianDate());
-       //确保查看器处于预期的时间
-       viewer.clock.startTime = start.clone();
-       viewer.clock.stopTime = stop.clone();
-       viewer.clock.currentTime = start.clone();
-       viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //循环结束时
-       // 时间变化来控制速度
-       viewer.clock.multiplier = 5;
-       //给时间线设置边界
-       viewer.timeline.zoomTo(start, stop);
-       function computeFlight(positionArray) {
-         let property = new Cesium.SampledPositionProperty();
-         for (let i = 0; i <positionArray.length; i ++) {
-           let time = Cesium.JulianDate.addSeconds(start, i, new Cesium.JulianDate());
-           let position =new Cesium.Cartesian3.fromDegrees(positionArray[i][0],positionArray[i][1]);
-           property.addSample(time, position);
-         }
-         return property;
-       }
-       let mainRoadEntity=[];
-       Cesium.loadJson(TrasSys_MainRoad_GeoJson).then(function(jsonData) {
-         // Do something with the JSON object
-         let Station_features = jsonData.features;
+      viewer.animation.container.style.visibility='hidden';
+      viewer.timeline.container.style.visibility='hidden';
+      // 设置初始化
+      viewer.camera.setView({
+        destination: Cesium.Cartesian3.fromDegrees(116.3654, 39.9043,19830000),
+        orientation: {
+          heading : Cesium.Math.toRadians(0),
+          pitch : Cesium.Math.toRadians(-90),
+          roll : Cesium.Math.toRadians(0)
+        }
+      });
+      setTimeout(function(){
+        viewer.camera.flyTo({
+          destination : Cesium.Cartesian3.fromDegrees(116.3654, 39.9043,100),
+        });
+      },5000);
+      //加载北京市建筑物百白盒模型
+      let tileset = viewer.scene.primitives.add(new Cesium.Cesium3DTileset({
+        url : 'http://10.100.54.135:8080/BJTiles/tileset.json'
+      }));
+      tileset.readyPromise.then(function(tileset) {
+        // tile.properties is not defined until readyPromise resolves.
+        let properties = tileset.properties;
+        if (Cesium.defined(properties)) {
+          for (let name in properties) {
+            //console.log(properties[name]);
+          }
+        }
+      });
+      //故宫3DMax影像
+      var x = 380;
+      var y = -660;
+      var z = 910;
+      var step = 10;
+// var x = 0;
+// var y = 0;
+// var z = 0;
+      var m = Cesium.Matrix4.fromArray([
+        1.0, 0.0, 0.0, 0.0,
+        0.0, 1.0, 0.0, 0.0,
+        0.0, 0.0, 1.0, 0.0,
+        x, y, z, 1.0
+      ]);
+      var gugongtileset = new Cesium.Cesium3DTileset({
+        type:"3dtiles",
+        url:'/api/guGongTile/tileset.json',
+        modelMatrix: m  //方法一，动态修改modelMatrix
+      });
+      var fixGltf = function(gltf) {
+        if (!gltf.extensionsUsed) {
+          return;
+        }
+        var v = gltf.extensionsUsed.indexOf('KHR_technique_webgl');
+        var t = gltf.extensionsRequired.indexOf('KHR_technique_webgl');
+        if (v !== -1) {
+          gltf.extensionsRequired.splice(t, 1, 'KHR_techniques_webgl');
+          gltf.extensionsUsed.splice(v, 1, 'KHR_techniques_webgl');
+          gltf.extensions = gltf.extensions || {};
+          gltf.extensions['KHR_techniques_webgl'] = {};
+          gltf.extensions['KHR_techniques_webgl'].programs = gltf.programs;
+          gltf.extensions['KHR_techniques_webgl'].shaders = gltf.shaders;
+          gltf.extensions['KHR_techniques_webgl'].techniques = gltf.techniques;
+          var techniques = gltf.extensions['KHR_techniques_webgl'].techniques;
+          gltf.materials.forEach(function (mat, index) {
+            gltf.materials[index].extensions['KHR_technique_webgl'].values = gltf.materials[index].values;
+            gltf.materials[index].extensions['KHR_techniques_webgl'] = gltf.materials[index].extensions['KHR_technique_webgl'];
+            var vtxfMaterialExtension = gltf.materials[index].extensions['KHR_techniques_webgl'];
+            for (var value in vtxfMaterialExtension.values) {
+              var us = techniques[vtxfMaterialExtension.technique].uniforms;
+              for (var key in us) {
+                if (us[key] === value) {
+                  vtxfMaterialExtension.values[key] = vtxfMaterialExtension.values[value];
+                  delete vtxfMaterialExtension.values[value];
+                  break;
+                }
+              }
+            };
+          });
+          techniques.forEach(function (t) {
+            for (var attribute in t.attributes) {
+              var name = t.attributes[attribute];
+              t.attributes[attribute] = t.parameters[name];
+            };
+            for (var uniform in t.uniforms) {
+              var name = t.uniforms[uniform];
+              t.uniforms[uniform] = t.parameters[name];
+            };
+          });
+        }
+      }
+      Object.defineProperties(Cesium.Model.prototype, {
+        _cachedGltf: {
+          set: function (value) {
+            this._vtxf_cachedGltf = value;
+            if (this._vtxf_cachedGltf && this._vtxf_cachedGltf._gltf) {
+              fixGltf(this._vtxf_cachedGltf._gltf);
+            }
+          },
+          get: function () {
+            return this._vtxf_cachedGltf;
+          }
+        }
+      });
+      //杭州小镇倾斜影像
+      var hangzhoutileset = new Cesium.Cesium3DTileset({
+        type:"3dtiles",
+        url:'/api/hangZhouTile/tileset.json',
+      });
+      //鄂尔多斯3DMax影像
+      var edstileset = new Cesium.Cesium3DTileset({
+        type:"3dtiles",
+        url:'/api/erdsTile/tileset.json',
+        modelMatrix:Cesium.Matrix4.IDENTITY
+      });
+      viewer.scene.primitives.add(edstileset);
+      viewer.scene.primitives.add(hangzhoutileset);
+      hangzhoutileset.readyPromise.then(function(tileset) {
+        // Set the camera to view the newly added tileset
+        /*viewer.camera.viewBoundingSphere(hangzhoutileset.boundingSphere, new Cesium.HeadingPitchRange(0, -0.5, 0));*/
+        var heightOffset = -100;
+        var boundingSphere = tileset.boundingSphere;
+        var cartographic = Cesium.Cartographic.fromCartesian(boundingSphere.center);
+        var surface = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, 0.0);
+        var offset = Cesium.Cartesian3.fromRadians(cartographic.longitude, cartographic.latitude, heightOffset);
+        var translation = Cesium.Cartesian3.subtract(offset, surface, new Cesium.Cartesian3());
+        tileset.modelMatrix = Cesium.Matrix4.fromTranslation(translation);
+      });
+      viewer.scene.primitives.add(gugongtileset);
 
-
-         for(let i=0;i<Station_features.length;i++){
-           let alphaValue=Math.random();
-           if(alphaValue<=0.2){
-             alphaValue=0.2;
-           }
-           let dengjiValue="暂无";
-           if(alphaValue<=0.2){
-             dengjiValue="畅通";
-           }
-           else if(alphaValue>0.2&&alphaValue<=0.4){
-             dengjiValue="基本畅通";
-           }
-           else if(alphaValue>0.4&&alphaValue<=0.6){
-             dengjiValue="轻度拥堵";
-           }
-           else if(alphaValue>0.6&&alphaValue<=0.8){
-             dengjiValue="中度拥堵";
-           }
-           else if(alphaValue>0.8&&alphaValue<=1.0){
-             dengjiValue="严重拥堵";
-           }
-           let widthvalue=alphaValue*25;
-           let ppposition=computeFlight(Station_features[i].geometry.coordinates["0"]);
-           mainRoadEntity[i] = viewer.entities.add({
-             //Set the entity availability to the same interval as the simulation time.
-             availability : new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
-               start : start,
-               stop : stop
-             })]),
-             //Use our computed positions
-             position : ppposition,
-             //Automatically compute orientation based on position movement.
-             orientation : new Cesium.VelocityOrientationProperty(ppposition),
-             //Load the Cesium plane model to represent the entity
-             model : {
-               uri : 'htc.gltf',
-               minimumPixelSize : 20,
-               distanceDisplayCondition:new Cesium.DistanceDisplayCondition(10.0, 20000.0)
-             },
-             //Show the path as a pink line sampled in 1 second increments.
-             path : {
-               resolution : 1,
-               material : new Cesium.PolylineGlowMaterialProperty({
-                 glowPower : 0.2,
-                 color : Cesium.Color.ORANGERED.withAlpha(alphaValue)
-               }),
-               width :widthvalue
-             },
-             name:"MainRoad",
-             description:'<table class="cesium-infoBox-defaultTable"><tbody>' +
-               '<tr><th>拥堵等级</th><td>' +dengjiValue+ '</td></tr>' +
-               '<tr><th>道路名称</th><td>' +Station_features[i].properties.标准名称+ '</td></tr>' +
-               '<tr><th>道路类型</th><td>' +"主干道"+ '</td></tr>' +
-               '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
-               '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
-               '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
-               '<tr><th>分类代码</th><td>' +Station_features[i].properties.分类代码+ '</td></tr>' +
-               '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
-               '</tbody></table>'
-           });
-
-         }
-       }).otherwise(function(error) {
-         // an error occurred
-       });
-       let FreeWayDataSource;
-       let FreeWayPromise=Cesium.GeoJsonDataSource.load(TrasSys_FreeWay_GeoJson);
-       FreeWayPromise.then(function(dataSource) {
-         FreeWayDataSource=dataSource;
-         viewer.dataSources.add(dataSource);
-         let entities = dataSource._entityCollection._entities._array; // 获取所有对象
-         for (let i = 0; i < entities.length; i++) {
-           let entity = entities[i];
-           let polyline = {
-             positions:entity.polyline._positions,
+      //设定了模拟时间的边界
+      let start = Cesium.JulianDate.fromDate(new Date(2015, 2, 25, 16));
+      let stop = Cesium.JulianDate.addSeconds(start, 45, new Cesium.JulianDate());
+      function computeFlight(positionArray) {
+        let property = new Cesium.SampledPositionProperty();
+        for (let i = 0; i <positionArray.length; i ++) {
+          let time = Cesium.JulianDate.addSeconds(start, i, new Cesium.JulianDate());
+          let position =new Cesium.Cartesian3.fromDegrees(positionArray[i][0],positionArray[i][1]);
+          property.addSample(time, position);
+        }
+        return property;
+      }
+      //确保查看器处于预期的时间
+      viewer.clock.startTime = start.clone();
+      viewer.clock.stopTime = stop.clone();
+      viewer.clock.currentTime = start.clone();
+      viewer.clock.clockRange = Cesium.ClockRange.LOOP_STOP; //循环结束时
+      // 时间变化来控制速度
+      viewer.clock.multiplier = 5;
+      //给时间线设置边界
+      viewer.timeline.zoomTo(start, stop);
+      //加载主干道
+      //var mainRoadEntity=[];
+      var TraSyS_GeoServer_Ip="http://10.100.54.135:8888";
+      var TraSys_MainRoad_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:mainroad84&maxFeatures=5000&outputFormat=application%2Fjson";
+      addWFSLayer('http://10.100.54.135:8888/geoserver/cite/ows',{
+        typeName:'cite%3Amainroad84'
+      },(geojson) =>{
+        var Station_features = geojson.features;
+        for (var i = 0; i < Station_features.length; i++)
+        {
+          var alphaValue=Math.random();
+          if(alphaValue<=0.2){
+            alphaValue=0.2;
+          }
+          var dengjiValue="暂无";
+          if(alphaValue<=0.2){
+            dengjiValue="畅通";
+          }
+          else if(alphaValue>0.2&&alphaValue<=0.4){
+            dengjiValue="基本畅通";
+          }
+          else if(alphaValue>0.4&&alphaValue<=0.6){
+            dengjiValue="轻度拥堵";
+          }
+          else if(alphaValue>0.6&&alphaValue<=0.8){
+            dengjiValue="中度拥堵";
+          }
+          else if(alphaValue>0.8&&alphaValue<=1.0){
+            dengjiValue="严重拥堵";
+          }
+          var widthvalue=alphaValue*25;
+          var ppposition=computeFlight(Station_features[i].geometry.coordinates["0"]);
+          homepageG.mainRoadEntity[i] = viewer.entities.add({
+            //Set the entity availability to the same interval as the simulation time.
+            availability : new Cesium.TimeIntervalCollection([new Cesium.TimeInterval({
+              start : start,
+              stop : stop
+            })]),
+            //Use our computed positions
+            position : ppposition,
+            //Automatically compute orientation based on position movement.
+            orientation : new Cesium.VelocityOrientationProperty(ppposition),
+            //Load the Cesium plane model to represent the entity
+            model : {
+              uri : 'model3D/GroundVehicle.glb',
+              minimumP1ixelSize :50,
+              scale:8,
+              distanceDisplayCondition:new Cesium.DistanceDisplayCondition(10.0, 20000.0),
+            },
+            //Show the path as a pink line sampled in 1 second increments.
+            path : {
+              resolution : 1,
+              material : new Cesium.PolylineGlowMaterialProperty({
+                glowPower : 0.2,
+                color : Cesium.Color.ORANGERED.withAlpha(alphaValue)
+              }),
+              width :widthvalue
+            },
+            name:"MainRoad",
+            /*     description:'<table class="cesium-infoBox-defaultTable"><tbody>' +
+                   '<tr><th>拥堵等级</th><td>' +dengjiValue+ '</td></tr>' +
+                   '<tr><th>道路名称</th><td>' +Station_features[i]._properties._标准名称+ '</td></tr>' +
+                   '<tr><th>道路类型</th><td>' +"主干道"+ '</td></tr>' +
+                   '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
+                   '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
+                   '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
+                   '<tr><th>分类代码</th><td>' +Station_features[i]._properties._分类代码+ '</td></tr>' +
+                   '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
+                   '</tbody></table>'*/
+          });
+        }
+      })
+      //加载快速干道
+      //var FreeWayDataSource;
+      var TrasSys_FreeWay_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:freeway&maxFeatures=5000&outputFormat=application%2Fjson";
+      var FreeWayPromise=Cesium.GeoJsonDataSource.load(TrasSys_FreeWay_GeoJson);
+      FreeWayPromise.then(function(dataSource) {
+        homepageG.FreeWayDataSource=dataSource;
+        viewer.dataSources.add(dataSource);
+        var entities = dataSource._entityCollection._entities._array; // 获取所有对象
+        for (var i = 0; i < entities.length; i++) {
+          var entity = entities[i];
+          var polyline = {
+            positions:entity.polyline._positions,
 //                        width:15,
 //                        material:Cesium.Color.GRAY,
-             //material:Cesium.Color.RED
-             width:8,
-             material:Cesium.Color.SLATEGRAY
-           }
-           entity.polyline=polyline;
-           entity.name="FreeWay";
-           entity.description='<table class="cesium-infoBox-defaultTable"><tbody>' +
-             '<tr><th>道路名称</th><td>' +entity._properties._NAME+ '</td></tr>' +
-             '<tr><th>道路类型</th><td>' +"快速干道"+ '</td></tr>' +
-             '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>ORGTYPE</th><td>' +entity._properties._ORGTYPE+ '</td></tr>' +
-             '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
-             '</tbody></table>';
-         }
-       });
-
-//加载西城区次干道
-       let SecondRoadDataSource;
-       let SecondRoadPromise=Cesium.GeoJsonDataSource.load(TrasSys_SecondRoad_GeoJson);
-       SecondRoadPromise.then(function(dataSource) {
-         SecondRoadDataSource=dataSource;
-         viewer.dataSources.add(dataSource);
-         let entities = dataSource._entityCollection._entities._array; // 获取所有对象
-         for (let i = 0; i < entities.length; i++) {
-           let entity = entities[i];
-           let polyline = {
-             positions:entity.polyline._positions,
+            //material:Cesium.Color.RED
+            width:8,
+            material:Cesium.Color.SLATEGRAY
+          }
+          entity.polyline=polyline;
+          entity.name="FreeWay";
+          entity.description='<table class="cesium-infoBox-defaultTable"><tbody>' +
+            '<tr><th>道路名称</th><td>' +entity._properties._NAME+ '</td></tr>' +
+            '<tr><th>道路类型</th><td>' +"快速干道"+ '</td></tr>' +
+            '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>ORGTYPE</th><td>' +entity._properties._ORGTYPE+ '</td></tr>' +
+            '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
+            '</tbody></table>';
+        }
+      });
+      //加载西城区次干道
+      //var SecondRoadDataSource;
+      var TrasSys_SecondRoad_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:secondaryroad&maxFeatures=5000&outputFormat=application%2Fjson";
+      var SecondRoadPromise=Cesium.GeoJsonDataSource.load(TrasSys_SecondRoad_GeoJson);
+      SecondRoadPromise.then(function(dataSource) {
+        homepageG.SecondRoadDataSource=dataSource;
+        viewer.dataSources.add(dataSource);
+        var entities = dataSource._entityCollection._entities._array; // 获取所有对象
+        for (var i = 0; i < entities.length; i++) {
+          var entity = entities[i];
+          var polyline = {
+            positions:entity.polyline._positions,
 //                        width:6,
 //                        material:Cesium.Color.GRAY
-             //material:Cesium.Color.MAGENTA
-             width:4,
-             material:Cesium.Color.SLATEGRAY
-           }
-           entity.polyline=polyline;
-           entity.name="SecondRoad";
-           entity.description='<table class="cesium-infoBox-defaultTable"><tbody>' +
-             '<tr><th>道路名称</th><td>' +entity._properties.标准名称+ '</td></tr>' +
-             '<tr><th>道路类型</th><td>' +"次干道"+ '</td></tr>' +
-             '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>分类代码</th><td>' +entity._properties._分类代码+ '</td></tr>' +
-             '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
-             '</tbody></table>';
-         }
-       });
-
-//加载西城区支路及街道
-       let AccessRoadDataSource;
-       let AccessRoadPromise=Cesium.GeoJsonDataSource.load(TrasSys_AccessRoad_GeoJson);
-       AccessRoadPromise.then(function(dataSource) {
-         AccessRoadDataSource=dataSource;
-         viewer.dataSources.add(dataSource);
-         let entities = dataSource._entityCollection._entities._array; // 获取所有对象
-         for (let i = 0; i < entities.length; i++) {
-           let entity = entities[i];
-           let polyline = {
-             positions:entity.polyline._positions,
+            //material:Cesium.Color.MAGENTA
+            width:4,
+            material:Cesium.Color.SLATEGRAY
+          }
+          entity.polyline=polyline;
+          entity.name="SecondRoad";
+          entity.description='<table class="cesium-infoBox-defaultTable"><tbody>' +
+            '<tr><th>道路名称</th><td>' +entity._properties.标准名称+ '</td></tr>' +
+            '<tr><th>道路类型</th><td>' +"次干道"+ '</td></tr>' +
+            '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>分类代码</th><td>' +entity._properties._分类代码+ '</td></tr>' +
+            '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
+            '</tbody></table>';
+        }
+      });
+      //加载西城区支路及街道
+      //var AccessRoadDataSource;
+      var TrasSys_AccessRoad_GeoJson=TraSyS_GeoServer_Ip+"/geoserver/cite/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cite:accessroad&maxFeatures=5000&outputFormat=application%2Fjson";
+      var AccessRoadPromise=Cesium.GeoJsonDataSource.load(TrasSys_AccessRoad_GeoJson);
+      AccessRoadPromise.then(function(dataSource) {
+        homepageG.AccessRoadDataSource=dataSource;
+        viewer.dataSources.add(dataSource);
+        var entities = dataSource._entityCollection._entities._array; // 获取所有对象
+        for (var i = 0; i < entities.length; i++) {
+          var entity = entities[i];
+          var polyline = {
+            positions:entity.polyline._positions,
 //                        width:4,
 //                        material:Cesium.Color.GRAY
-             width:3,
-             material:Cesium.Color.SLATEGRAY
-             //material:Cesium.Color.GREEN
-           }
-           entity.polyline=polyline;
-           entity.name="SecondRoad";
-           entity.description='<table class="cesium-infoBox-defaultTable"><tbody>' +
-             '<tr><th>道路名称</th><td>' +entity._properties.道路名称+ '</td></tr>' +
-             '<tr><th>道路类型</th><td>' +"支路及街坊路"+ '</td></tr>' +
-             '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>分类代码</th><td>' +"暂无"+ '</td></tr>' +
-             '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
-             '</tbody></table>';
-         }
-       });
-       let GreenLandDataSource;
-       let GreenLandPromise=Cesium.GeoJsonDataSource.load(TrasSys_GreenLand_GeoJson);
-       GreenLandPromise.then(function(dataSource) {
-         GreenLandDataSource=dataSource;
-         viewer.dataSources.add(dataSource);
-         let entities = dataSource._entityCollection._entities._array; // 获取所有对象
-         for (let i = 0; i < entities.length; i++) {
-           let entity = entities[i];
-//    	entity.polygon.material ='./lvcao.jpg';
-           entity.polygon.material=Cesium.Color.fromBytes(20,50,20);
-//        entity.polygon.material=Cesium.Color.fromBytes(58,42,7);
-           entity.polygon.outline = false;
-           entity.polygon.extrudedHeight=0.4;
-         }
-       });
+            width:3,
+            material:Cesium.Color.SLATEGRAY
+            //material:Cesium.Color.GREEN
+          }
+          entity.polyline=polyline;
+          entity.name="SecondRoad";
+          entity.description='<table class="cesium-infoBox-defaultTable"><tbody>' +
+            '<tr><th>道路名称</th><td>' +entity._properties.道路名称+ '</td></tr>' +
+            '<tr><th>道路类型</th><td>' +"支路及街坊路"+ '</td></tr>' +
+            '<tr><th>车道数</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>车道宽</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>里程</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>分类代码</th><td>' +"暂无"+ '</td></tr>' +
+            '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
+            '</tbody></table>';
+        }
+      });
+      let unquireData=[];
+      unquireData.push(stationflow[0]);
+      for(let i=1;i<stationflow.length;i++) {
+        let flag=false;
+        for(let j=0;j<unquireData.length;j++) {
+          if(stationflow[i].stationname.toString()==unquireData[j].stationname.toString()){
+            unquireData[j].countnum=(parseInt(unquireData[j].countnum)+parseInt(stationflow[i].countnum)).toString();
+            flag=true;
+          }
+        };
+        if(!flag){
+          unquireData.push(stationflow[i]);
+        }
+      };
+      for(let i=0;i<unquireData.length;i++){
+        let pcolor = 2;
+        if(unquireData[i].countnum<500){
+          pcolor = 2;
+        }else if(unquireData[i].countnum>500&&unquireData[i].countnum<2000){
+          pcolor = 3;
+        }else if(unquireData[i].countnum>2000&&unquireData[i].countnum<3500){
+          pcolor = 4;
+        }else if(unquireData[i].countnum>3500&&unquireData[i].countnum<5000){
+          pcolor = 5;
+        }else if(unquireData[i].countnum>5000&&unquireData[i].countnum<6500){
+          pcolor = 6;
+        }else if(unquireData[i].countnum>6500&&unquireData[i].countnum<8000){
+          pcolor = 7;
+        }else if(unquireData[i].countnum>8000&&unquireData[i].countnum<10000){
+          pcolor = 8;
+        }else if(unquireData[i].countnum>10000&&unquireData[i].countnum<15000){
+          pcolor = 9;
+        }else if(unquireData[i].countnum>15000&&unquireData[i].countnum<20000){
+          pcolor = 10;
+        }
+        else{
+          pcolor = 11;
+        }
+        let surfacePosition = Cesium.Cartesian3.fromDegrees(Number(unquireData[i].longitude), Number(unquireData[i].latitude), 0);
+        let heightPosition = Cesium.Cartesian3.fromDegrees(Number(unquireData[i].longitude), Number(unquireData[i].latitude), Number(unquireData[i].countnum/10));
+        let name = unquireData[i].stationname;
 
-//加载西城区水系
-       let WaterMapDataSource;
-       let WaterMapPromise=Cesium.GeoJsonDataSource.load(TrasSys_WaterMap_GeoJson);
-       WaterMapPromise.then(function(dataSource) {
-         WaterMapDataSource=dataSource;
-         viewer.dataSources.add(dataSource);
-         let entities = dataSource._entityCollection._entities._array; // 获取所有对象
-         for (let i = 0; i < entities.length; i++) {
-           let entity = entities[i];
-//    	entity.polygon.material ='./hushui.jpg';
-           entity.polygon.material =Cesium.Color.fromBytes(6,2,49);
-           entity.polygon.outline = false;
-           entity.polygon.extrudedHeight=0.5;
-         }
-
-       });
-//西城区街道办边界
-       let StreetOfficeDataSource;
-       let StreetOfficePromise=Cesium.GeoJsonDataSource.load(TrasSys_StreetOffice_GeoJson);
-       StreetOfficePromise.then(function(dataSource) {
-         StreetOfficeDataSource=dataSource;
-         viewer.dataSources.add(dataSource);
-         let entities = dataSource._entityCollection._entities._array; // 获取所有对象
-         let colorHash = {};
-         for (let i = 0; i < entities.length; i++) {
-           // 逐一遍历循环
-           let entity = entities[i];
-           let name = entity.properties.JDNAME;
-           let color = colorHash[name];
-           if (!color) {
-             color = Cesium.Color.fromRandom({
-               alpha : 0.7
-             });
-             colorHash[name] = color;
-           }
-           entity.name="StreetOffice";
-           entity.polygon.material = Cesium.Color.GAINSBORO.withAlpha(0.5);
-           entity.polygon.extrudedHeight=0.3;
-           entity.description='<table class="cesium-infoBox-defaultTable"><tbody>' +
-             '<tr><th>街道编号</th><td>' +entity._properties._JDCODE+ '</td></tr>' +
-             '<tr><th>街道名称</th><td>' +entity._properties._JDNAME+ '</td></tr>' +
-             '<tr><th>街道面积</th><td>' +entity._properties._Shape_Area+ '</td></tr>' +
-             '<tr><th>所属区域</th><td>' +"北京市西城区"+ '</td></tr>' +
-             '</tbody></table>';
-         }
-         StreetOfficeDataSource.show=false;
-       });
-       let unquireData=[];
-       unquireData.push(datatest[0]);
-       for(let i=1;i<datatest.length;i++) {
-         let flag=false;
-         for(let j=0;j<unquireData.length;j++) {
-           if(datatest[i].stationname.toString()==unquireData[j].stationname.toString()){
-             unquireData[j].countnum=(parseInt(unquireData[j].countnum)+parseInt(datatest[i].countnum)).toString();
-             flag=true;
-           }
-         };
-         if(!flag){
-           unquireData.push(datatest[i]);
-         }
-       };
-       for(let i=0;i<unquireData.length;i++){
-         let pcolor = 2;
-         if(unquireData[i].countnum<500){
-           pcolor = 2;
-         }else if(unquireData[i].countnum>500&&unquireData[i].countnum<2000){
-           pcolor = 3;
-         }else if(unquireData[i].countnum>2000&&unquireData[i].countnum<3500){
-           pcolor = 4;
-         }else if(unquireData[i].countnum>3500&&unquireData[i].countnum<5000){
-           pcolor = 5;
-         }else if(unquireData[i].countnum>5000&&unquireData[i].countnum<6500){
-           pcolor = 6;
-         }else if(unquireData[i].countnum>6500&&unquireData[i].countnum<8000){
-           pcolor = 7;
-         }else if(unquireData[i].countnum>8000&&unquireData[i].countnum<10000){
-           pcolor = 8;
-         }else if(unquireData[i].countnum>10000&&unquireData[i].countnum<15000){
-           pcolor = 9;
-         }else if(unquireData[i].countnum>15000&&unquireData[i].countnum<20000){
-           pcolor = 10;
-         }
-         else{
-           pcolor = 11;
-         }
-
-         let surfacePosition = Cesium.Cartesian3.fromDegrees(unquireData[i].longitude, unquireData[i].latitude, 0);
-         let heightPosition = Cesium.Cartesian3.fromDegrees(unquireData[i].longitude, unquireData[i].latitude, unquireData[i].countnum/10);
-         let name = unquireData[i].stationname;
-
-         //WebGL Globe only contains lines, so that's the only graphics we create.
-         let polyline = new Cesium.PolylineGraphics();
+        //WebGL Globe only contains lines, so that's the only graphics we create.
+        let polyline = new Cesium.PolylineGraphics();
 //         polyline.material = new Cesium.ColorMaterialProperty(Cesium.Color.MEDIUMSEAGREEN);
-         polyline.material = new Cesium.ColorMaterialProperty(Cesium.Color.ORANGE)
-         polyline.width = new Cesium.ConstantProperty(pcolor);
-         polyline.followSurface = new Cesium.ConstantProperty(false);
-         polyline.positions = new Cesium.ConstantProperty([surfacePosition, heightPosition]);
+        polyline.material = new Cesium.ColorMaterialProperty(Cesium.Color.ORANGE)
+        polyline.width = new Cesium.ConstantProperty(pcolor);
+        polyline.followSurface = new Cesium.ConstantProperty(false);
+        polyline.positions = new Cesium.ConstantProperty([surfacePosition, heightPosition]);
 
-         //The polyline instance itself needs to be on an entity.
-         let entity = new Cesium.Entity({
-           position:heightPosition,
-           label: {
-             text :'公交站位:'+unquireData[i].stationname.toString()+'\n'+'今日登量:'+unquireData[i].countnum+'人次',
-             horizontalOrigin:Cesium.HorizontalOrigin.CENTER,
-             backgroundColor : Cesium.Color.fromBytes(246,145,14),
-             showBackground : true,
-             backgroundPadding:new Cesium.Cartesian2(10,10),
-             verticalOrigin :Cesium.VerticalOrigin.BOTTOM,
-             pixelOffset :new Cesium.Cartesian2(0,-15),
-             scaleBydistance:true,
-             scaleByDistance : new Cesium.NearFarScalar(200,1, 2000,0.0),
+        //The polyline instance itself needs to be on an entity.
+        let entity = new Cesium.Entity({
+          position:heightPosition,
+          label: {
+            text :'公交站位:'+unquireData[i].stationname.toString()+'\n'+'今日登量:'+unquireData[i].countnum+'人次',
+            horizontalOrigin:Cesium.HorizontalOrigin.CENTER,
+            backgroundColor : Cesium.Color.fromBytes(246,145,14),
+            showBackground : true,
+            backgroundPadding:new Cesium.Cartesian2(10,10),
+            verticalOrigin :Cesium.VerticalOrigin.BOTTOM,
+            pixelOffset :new Cesium.Cartesian2(0,-15),
+            scaleBydistance:true,
+            scaleByDistance : new Cesium.NearFarScalar(200,1, 2000,0.0),
 
-           },
-           polyline:polyline,
+          },
+          polyline:polyline,
 
-         });
-         //entity.polyline.distanceDisplayCondition=new Cesium.DistanceDisplayCondition(10.0, 20000.0);
-
-         viewer.entities.add(entity);
-       }*/
-     },
+        });
+        //entity.polyline.distanceDisplayCondition=new Cesium.DistanceDisplayCondition(10.0, 20000.0);
+        viewer.entities.add(entity);
+      }
+    },
      TaxiChart(){
        let myChart = this.$echarts.init(document.getElementById('taxiChart'));
        let option={
@@ -536,17 +758,14 @@ export default {
                  }
                },
                splitLine: {
-                 lineStyle: {
-                   // 使用深浅的间隔色
-                   color: "#403a3a"
-                 }
+                 show: false
                } ,
                nameTextStyle:{
                  color:"white"
                },
                axisLine: {
                  lineStyle: {
-                   color: "white"
+                   color: "#403a3a"
                  }
                },
              },
@@ -560,17 +779,17 @@ export default {
                      let colorList = [
                        new graphic.LinearGradient(0, 0, 0, 1, [{
                          offset: 0,
-                         color: '#990000'
+                         color: '#ed5c5c'
                        }, {
                          offset: 1,
-                         color: '#FF9999'
+                         color: '#990000'
                        }]),
                        new graphic.LinearGradient(0, 0, 0, 1, [{
                          offset: 0,
                          color: '#00CCFF'
                        }, {
                          offset: 1,
-                         color: '#845EC2'
+                         color: '#40bdf2'
                        }]),
                        new graphic.LinearGradient(0, 0, 0, 1, [{
                          offset: 0,
@@ -673,10 +892,9 @@ export default {
              top:"10%",
              left:"65%",
              // bottom:"bottom",
-             textStyle: {
-               fontSize: 13,
-               fontWeight: 500,
-               color: 'white'
+             textStyle:{
+               color:'#FFF',
+               fontSize: 12
              },
            },
            grid: {
@@ -719,15 +937,13 @@ export default {
                }
              },
              splitLine: {
-               lineStyle: {
-                 // 使用深浅的间隔色
-                 color: "#403a3a"
-               }
+               show: false
              }
            },
            series: [{
              name: '租',
              type: 'bar',
+             barMaxWidth:"55%",
              barGap: '-100%',
              data: data1,
              animationDelay: function (idx) {
@@ -748,6 +964,7 @@ export default {
            }, {
              name: '还',
              type: 'bar',
+             barMaxWidth:"55%",
              data: data2,
              animationDelay: function (idx) {
                return idx * 10 + 100;
@@ -756,10 +973,10 @@ export default {
                normal: {
                  color: new graphic.LinearGradient(0, 0, 0, 1, [{
                    offset: 0,
-                   color: '#92C5B0'
+                   color: '#0c5649'
                  }, {
                    offset: 1,
-                   color: '#689EA9'
+                   color: '#1accac'
                  }]),
                  barBorderRadius:[0, 0, 5, 5]
                }
@@ -782,18 +999,21 @@ export default {
            formatter: '{b} : {c}个'
          },
          legend: {
-           orient: 'horizontal',
-           bottom:'10%',
+           orient: 'vertical',
+           top:'22%',
+           itemGap: 20,
+           right:'10%',
            data:['单位大院','公建配建','居住小区','其他权属'],
-           textStyle: {
-             color: 'white',
+           textStyle:{
+             color:'#FFF',
+             fontSize: 12
            }
          },
          series: [
            {
              name:'停车场类型分布',
              type:'pie',
-             center:['50%','45%'],
+             center:['40%','50%'],
              radius: ['35%', '55%'],
              avoidLabelOverlap: false,
              label: {
@@ -823,7 +1043,7 @@ export default {
              ]
            }
          ],
-         color:['#FF6633','#00C6FF', '#8A00E1', '#CC9900']
+         color:['#0278E7','#00C6FF', '#af06fe', '#FF6633']
        };
        myChart.setOption(option);
      },
@@ -847,7 +1067,8 @@ export default {
            left:"35%",
            // bottom:"bottom",
            textStyle: {
-             color: 'white'
+               color:'#FFF',
+               fontSize: 12
            }
          },
 
@@ -894,10 +1115,7 @@ export default {
              }
            },
            splitLine: {
-             lineStyle: {
-               // 使用深浅的间隔色
-               color: "#403a3a"
-             }
+             show: false
            }
          },
          series: [
@@ -930,7 +1148,8 @@ export default {
            left: 'center',
            bottom: '20px',
            textStyle:{
-             color:'#FFF'
+               color:'#FFF',
+               fontSize: 12
            },
            Width:2,
            Height:2,
@@ -963,7 +1182,7 @@ export default {
            {
              name: '登量',
              type: 'pie',
-             radius: ['20%', '60%'],
+             radius: ['25%', '55%'],
              center: ['30%', '45%'],
              roseType: 'radius',
              itemStyle: {
@@ -985,12 +1204,12 @@ export default {
                {value: 205162, name: '丰台'},
                {value: 63162, name: '石景山'},
              ],
-             color:['#FF6633','#00C6FF','#8A00E1','#0278E7','#CC9900','#92C5B0']
+             color:['#FF6633','#00C6FF','#af06fe','#0278E7','#ffbf00','#00f8cc']
            },
            {
              name: '降量',
              type: 'pie',
-             radius: ['20%', '60%'],
+             radius: ['25%', '55%'],
              center: ['70%', '45%'],
              roseType: 'radius',
              itemStyle: {
@@ -1034,10 +1253,11 @@ export default {
          },
          legend:{
            data:['公交车','出租车'],
-           top:'20px',
+           top:'10%',
            right:'8%',
            textStyle:{
-             color:'#FFF'
+             color:'#FFF',
+             fontSize: 12
            }
          },
          grid: {
@@ -1081,10 +1301,7 @@ export default {
              }
            },
            splitLine: {
-             lineStyle: {
-               // 使用深浅的间隔色
-               color: "#403a3a"
-             }
+             show: false
            }},
          series: [{
            data: [32, 30, 31, 32, 33, 26, 23,21,21,22,22,20,
@@ -1099,7 +1316,7 @@ export default {
              data: [12, 12, 12, 13, 16,19,19,20,19,18,18,16,
                15,17,19,19,20,21,18,15,14,14,13,7],
              name:'出租车',
-             color:'#00C6FF',
+             color:'#00f8cc',
              type: 'line',
              smooth: true
            },
@@ -1121,7 +1338,28 @@ export default {
   }
 }
 </script>
-
+<style>
+/*  .el-input .el-input__inner {
+    height: 28px;
+    line-height: 28px;
+    background-color: #19344bb3;
+    color:#bcd4e8;
+    border-color:#3d97f6;
+  }
+  .el-select .el-input__inner {
+    cursor: pointer;
+    padding-right: 35px;
+    background-color: #19344bb3;
+    color:#bcd4e8;
+    border-color:#3d97f6;
+  }*/
+  .el-input--suffix .el-input__inner {
+    padding-right: 30px;
+    background-color: #19344bb3;
+    color:#bcd4e8;
+    border-color:#3d97f6;
+  }
+</style>
 <style scoped>
 .homepage{
   width: 100%;
@@ -1133,6 +1371,61 @@ export default {
   margin: 0;
   padding: 0;
 }
+#selectNamenbox
+{
+  position: absolute;
+  float: left;
+  top:10px;
+  left:600px;
+}
+#LayerContro
+{
+  float: right;
+  display: block;
+  position: absolute;
+  top: 0.5em;
+  right: 30%;
+  z-index: 5;
+  color: #FFF;
+  border-radius: 0.25em;
+  width: 50px;
+  background-color: rgba(0,0,0,0.3
+  );
+}
+.LayerControltitle
+{
+  margin: 0;
+  font-size: 22px;
+  float: left;
+  height: 20%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.9);
+}
+.LayerControlcontent
+{
+  margin: 0;
+  font-size: 18px;
+  float: left;
+  width: 100%;
+  text-align: left;
+}
+#MainRoadControl
+{
+  background: url("../../assets/image/TaxiAnalysis/xiache.png");
+}
+.imagelabel{
+  width: 50px;
+  height: 50px;
+}
+.selectbox
+{
+  background-color: black;
+  color: white;
+}
+#selectbox1
+{
+  background-color:#19344bb3;
+}
 #leftBox{
   position: absolute;
   top:0px;
@@ -1140,7 +1433,7 @@ export default {
   left:0px;
   height: 100%;
   width:28%;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.7);
   /*background-image: linear-gradient(to right,#0D0715,#000033,#00093A,#0D0715,#000033,#000838,#000000)*/
 }
 #subwayChart
@@ -1165,7 +1458,7 @@ export default {
   right:0px;
   height: 100%;
   width:28%;
-  background-color: rgba(0,0,0,0.9);
+  background-color: rgba(0,0,0,0.7);
   /*background-image: linear-gradient(to right,#0D0715,#000033,#00093A,#0D0715,#000033,#000838,#000000)*/
 }
 #parkChart
@@ -1188,5 +1481,17 @@ export default {
   height: 33%;
   background-image: url("../../assets/image/HomePage/Border2.png");
   background-size: 100% 100%;
+}
+.homepage_font{
+  position: absolute;
+  margin: 0;
+  height: 4%;
+  font-weight: bold;
+  font-size: 18px;
+  font-family: '微软雅黑';
+  color: orange;
+  /*background: linear-gradient(to left,#1a95be, #0be9f4);*/
+  /*-webkit-background-clip: text;*/
+  /*color: transparent;*/
 }
 </style>
