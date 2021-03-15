@@ -1366,18 +1366,17 @@
   }
   #time1{
     width:300px;
-    color: aliceblue;
     text-align: center;
-    border: 2px solid #409eff;
-    background-color: #606266;
+    color: #bcd4e8;
+    border: 2px solid #3d97f6;
+    background-color: rgba(25,52,75,0.7);
   }
   #time2{
     width:300px;
-    background-color: black;
-    color: aliceblue;
     text-align: center;
-    border: 2px solid #409eff;
-    background-color: #606266;
+    color: #bcd4e8;
+    border: 2px solid #3d97f6;
+    background-color: rgba(25,52,75,0.7);
   }
   #position{
     padding-top: 2%;
@@ -1386,12 +1385,11 @@
   }
   #park {
     padding-left: 5%;
-    background-color: black;
-    color: aliceblue;
     text-align: center;
     width: 375px;
-    border: 2px solid #409eff;
-    background-color: #606266;
+    color: #bcd4e8;
+    border: 2px solid #3d97f6;
+    background-color: rgba(25,52,75,0.7);
   }
 
   #a1 {

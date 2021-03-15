@@ -4,7 +4,7 @@
 <template>
   <div id="box">
     <div id="RightBox" >
-      <el-tabs style="height: 100% " v-model="activeName">
+      <el-tabs style="height: 100%"  v-model="activeName">
         <el-tab-pane label=" 统计分析" name="first" style="left:5%" :key="'first'"  ><Analysis/></el-tab-pane>
         <el-tab-pane label="停车场信息管理" name="second" :key="'second'"><Manage/> </el-tab-pane>
         <el-tab-pane label="停车诱导" name="third"  :key="'third'"><Guide/></el-tab-pane>
