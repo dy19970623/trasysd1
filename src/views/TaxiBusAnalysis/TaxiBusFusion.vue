@@ -8,23 +8,33 @@
       <div style="position: absolute;font-weight: 700;color:#02C1D7;font-size: 24px;z-index: 99;margin-left: 15%;margin-top: 0.5%;">出租车和公交车晚高峰出行热点</div>
       <div id="wanmap"></div>
     </div>
-   <div class="legend">
-      <div id="bus">
-        <div>公交车登量</div>
-          <div id="lengendcolor">
+   <div class="legend" >
+      <div id="bus" >
+        <div style="padding: 10px 15px 10px 15px;
+    border-bottom: 1px solid rgba(40, 176, 213, 1);">公交车登量</div>
+          <div id="lengendcolor" style="margin-top: 12px;">
               <div id="max"></div>
               <div id="middle"></div>
               <div id="little"></div>
           </div>
           <div id="lengendcontent">
-              <div >&gt1500</div>
-              <div style=" margin-top: 5px;">1000-1500</div>
-              <div style=" margin-top: 5px;">0-1000</div>
+              <div style="     padding-top: 9px;">&gt1500</div>
+              <div style=" margin-top: 37px;">1000-1500</div>
+              <div style=" margin-top: 33px;">0-1000</div>
           </div>
       </div>
-      <div id="taxi">
-        <div style="float: left">出租车和出行热点</div>
-        <img src="../../assets/image/TaxiBusAnalysis/relitu.png" >
+      <div id="taxi" >
+        <div style="padding: 10px 15px 10px 15px;
+    border-bottom: 1px solid rgba(40, 176, 213, 1);">出租车热点</div>
+        <div id="heatmapcon">
+          <img style="float: left" src="../../assets/image/TaxiBusAnalysis/relitu.png" >
+          <div style="float: left;">
+            <div style="     padding-top: 9px;">800</div>
+            <div style=" margin-top: 37px;">400</div>
+            <div style=" margin-top: 33px;">0</div></div>
+
+        </div>
+
       </div>
     </div>
   </div>
@@ -218,19 +228,27 @@
 }
 
   .legend{
-      border-width: 1px;
-      border-style: solid;
-      border-color: rgba(40, 176, 213, 1);
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(40, 176, 213, 1);
     color: white;
     position: absolute;
     bottom: 0px;
-    float: right;
-      width: 9%;
     right: 0px;
+    background-color: rgba(0,0,0,0.7);
   }
 
+  #bus{
+    float: right;
+
+  }
+  #taxi{
+    float: left;
+    border-right: 1px solid rgba(40, 176, 213, 1);
+  }
   #lengendcolor{
       margin-right: 7px;
+    margin-left: 7px;
       float: left;
   }
 
@@ -243,11 +261,13 @@
       width: 25px;
       height: 25px;
       background-color: #00FF00;
+     margin-top: 26px;
   }
   #little{
       width: 25px;
       height: 25px;
       background-color: #0000FF;
+    margin-top: 26px;
   }
 
 </style>
