@@ -1378,7 +1378,7 @@ export default {
   top:10px;
   left:600px;
 }
-#LayerContro
+#LayerControl
 {
   float: right;
   display: block;

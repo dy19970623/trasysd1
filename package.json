@@ -32,6 +32,7 @@
     "three": "^0.126.0",
     "vue": "^2.5.2",
     "vue-amap": "^0.5.10",
+    "vue-axios": "^3.2.4",
     "vue-baidu-map": "^0.21.22",
     "vue-jsonp": "^2.0.0",
     "vue-router": "^3.0.1",
