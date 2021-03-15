@@ -58,29 +58,29 @@
     background-color: rgba(0,0,0,0.7)
   }
 
-  .el-tabs__header {
+  #RightBox .el-tabs__header {
     position: relative;
     padding-top: 3%;
-    margin: 0 0 15px;
+    margin: 0;
   }
-  .el-tabs__item{
+  #RightBox .el-tabs__item{
     font-size: 20px;
   }
 
-  .el-tabs__content {
+  #RightBox .el-tabs__content {
     overflow: hidden;
     position: relative;
     height: 92%;
   }
 
-  .el-tab-pane{
+  #RightBox .el-tab-pane{
     width:100%;
     height: 100%;
   }
-  .el-tabs__nav{
+  #RightBox  .el-tabs__nav{
     float: inherit;
   }
-  .el-tabs__active-bar{
+  #RightBox .el-tabs__active-bar{
     float: inherit;
      height: 0px;
 }
