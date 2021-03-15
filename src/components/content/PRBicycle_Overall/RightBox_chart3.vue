@@ -311,9 +311,13 @@ export default {
   opacity: 0.5;
 }
 .title3 {
+  width: 97.6%;
   height: 12%;
   font-size:125%;
-  line-height: 200%;
+  text-align:center;
+  line-height: 250%;
   color:rgb(44, 188, 255);
+  font-weight:bold;
+  margin-left: 0.5%;
 }
 </style>

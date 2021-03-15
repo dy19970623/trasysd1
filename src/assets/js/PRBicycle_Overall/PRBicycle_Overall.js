@@ -49,6 +49,29 @@ res=[res,35]
 return res
 //mapload(res);
 } 
+//LASTUPTIME
+function date() {
+  let res = [];
+  for (let i = 0; i < bike_station.length+1; i++) {
+    if(i==bike_station.length){
+      var site_LAT = 30.52;
+      var site_LON = 114.31;
+      var site_NAME = '武汉';
+      var site_MAXBIKE = 50;
+    }
+    else{
+      var time = bike_station[i].LASTUPTIME;
+    }
+    if (time) {
+      res.push({
+        Time: time,
+      });
+    }
+  }
+  res=[res,35]
+  //console.log(res)
+  return res
+}
 
 //车站总体情况
 let echart11_num1=1396;
@@ -98,6 +121,7 @@ for (let i = 0; i < echart12_day.length; i++) {
 export default {
   //地图
   drawsite,
+  date,
   //车站总体情况
   echart11_num,
   remove_line3,

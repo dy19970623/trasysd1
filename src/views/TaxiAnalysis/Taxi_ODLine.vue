@@ -11,13 +11,13 @@
 import echarts from 'echarts' 
 import 'echarts-gl'
 import 'echarts/extension/bmap/bmap'
-import TaxiODLine from '../../assets/js/TaxiODLine/TaxiODLine'
-//import ODData from '../assets/js/TaxiODLine/ODData'
+//import TaxiODLine from '../../assets/js/TaxiODLine/TaxiODLine'
+import ODData from '../../assets/js/TaxiODLine/ODData'
 
 export default {
   data() {
     return {
-      taxi_ODData:TaxiODLine.taxi_ODData,
+      //taxi_ODData:TaxiODLine.taxi_ODData,
        mapStyle: {
          styleJson: [{
     "featureType": "land",
@@ -1417,6 +1417,7 @@ export default {
   methods: {
     getbmap() {
       let option= { 
+       baseOption : {
         bmap: { 
           // 百度地图中心经纬度
           center: [116.4, 39.95],
@@ -1430,20 +1431,10 @@ export default {
           },
           
           
-			  },
-        
-        title : {
-          text: '',
-          left: 'center',
-          top: 26,
-          textStyle : {
-              color:'white',
-                   fontSize: 24,
-          }
-        },
+			  },    
         roam: true,   //是否开启鼠标缩放和平移漫游
         title: {
-          text: '出租车乘客OD图',
+          text: '出租车各区乘客OD图',
           right: '20px',
           top: 26,
           textStyle: {
@@ -1465,11 +1456,11 @@ export default {
           //zlevel: 3,
           effect: {
             show: true,
-            constantSpeed: 10,
+            constantSpeed: 30,
             //period: 3, //箭头指向速度，值越小速度越快
-            trailLength: 0.2, //特效尾迹长度[0,1]值越大，尾迹越长重
+            trailLength: 0.6, //特效尾迹长度[0,1]值越大，尾迹越长重
             trailWidth: 1,
-            trailOpacity: 0.5,
+            //trailOpacity: 0.5,
             //symbol: 'arrow', //箭头图标
             symbolSize: 1.5, //图标大小
           },
@@ -1480,26 +1471,70 @@ export default {
               normal: {
                 width: 0.2, //线条宽度
                 opacity: 0.2, //尾迹线条透明度
-                color: {
-                  type: 'linear',
-                  x: 1,
-                  y: 0,
-                  x2: 0,
-                  y2: 1,
-                  colorStops: [{
-                    offset: 0,
-                    color: 'rgb(20, 15, 2)' // 0% 处的颜色
-                  }, {
-                    offset: 1,
-                    color: '#2098FF' // 100% 处的颜色
-                  }],
-                  global: false // 缺省为 false
-                },
+                color: 'rgb(0, 38, 70,1)' // 100% 处的颜色
                 //curveness: .3 //尾迹线条曲直度
               },
           },
-          data:this.taxi_ODData
-			  }]
+          //data:this.taxi_ODData
+			  }],
+        timeline: {
+              axisType: 'category',
+              autoPlay: false,
+              playInterval: 10000,
+              bottom:'45px',
+              lineStyle:{
+                color:'#6495ed',
+                shadowColor:'#a9a9a9',
+                labelColor:'#c0c0c0'
+              },
+              label:{
+                normal:{color:"#fffdd0"},
+                emphasis:{color:"#fffdd0"}
+              },
+              itemStyle:{
+                normal:{
+                  color:'#00008b',
+                  shadowColor:'#a9a9a9',
+                },
+                emphasis:{
+                  color:'#ffebcd'
+                }
+              },
+              checkpointStyle:{
+                color:'#6495ed',
+                borderColor:'#ffebcd',
+                borderWidth:1
+              },
+              controlStyle:{
+                normal:{
+                  color:'#6495ed',
+                  borderColor:'#6495ed'
+                },
+                emphasis:{
+                  color:'#4b0082',
+                  borderColor:'#ffebcd'
+                }
+              },
+              data: ['东城区', '西城区','朝阳区','昌平区','大兴区','房山区','丰台区','海淀区','怀柔区','门头沟区','石景山区','顺义区','通州区','延庆区']
+              },
+        },
+        options:[
+          {series: [{data: ODData.odData_dongcheng}]},
+          {series: [{data: ODData.odData_xicheng}]},
+          {series: [{data: ODData.odData_chaoyang}]},
+          {series: [{data: ODData.odData_changping}]},
+          {series: [{data: ODData.odData_daxing}]},
+          {series: [{data: ODData.odData_fangshan}]},
+          {series: [{data: ODData.odData_fengtai}]},
+          {series: [{data: ODData.odData_haidian}]},
+          {series: [{data: ODData.odData_huairou}]},
+          {series: [{data: ODData.odData_mentougou}]},
+          {series: [{data: ODData.odData_shijingshan}]},
+          {series: [{data: ODData.odData_shunyi}]},
+          {series: [{data: ODData.odData_tongzhou}]},
+          {series: [{data: ODData.odData_yanqing}]}
+          
+        ]
       }
       let map = echarts.init(this.$refs.map) 
       map.setOption(option) // 获取到的百度地图对象bmap适用于所有的百度地图的接口
@@ -1508,7 +1543,6 @@ export default {
       bmap.setMinZoom(11)
       // 设置最大缩放值
       bmap.setMaxZoom(15)
-      
     }
   },
 
@@ -1517,7 +1551,7 @@ export default {
 </script>
 
 <style>
-body, html,.map {
+.map {
    width:100%;
    height:100%;
    overflow: hidden;
