@@ -5,6 +5,24 @@
   <div id="parkflow" style="height: 100%;width: 100%" >
     <div id="map" style="height:100%; width: 100%"></div>
     <RightBox/>
+    <div id="Legend">
+      <div id="1" style="height:30px">
+        <img style="float:left;height:25px;width:20px" src="../../assets/image/ParkAnalysis/marker2x.png" >
+        <div style="float:right;margin-left:5px">停车场点位</div>
+      </div>
+      <div id="2" style="height:30px">
+        <img style="float:left;height: 20px;width: 20px" src="../../assets/image/ParkAnalysis/pp1.png" >
+        <div style="float:right;margin-left:5px">一级诱导屏</div>
+      </div>
+      <div id="3" style="height:30px">
+        <img style="float:left;height:20px;width: 20px" src="../../assets/image/ParkAnalysis/pp2.png" >
+        <div style="float:right;margin-left:5px">二级诱导屏</div>
+      </div>
+      <div id="4" style="height:30px">
+        <img style="float:left;height:20px;width: 20px" src="../../assets/image/ParkAnalysis/pp3.png" >
+        <div style="float:right;margin-left:5px">三级诱导屏</div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -224,7 +242,7 @@
               }));
           }
         };
-        //表示质疑????
+
         L.featureGroup(test_click).on('mouseover', function(place){
           for(let i = 0; i<data.length; i++){
             if(data[i][20] ==place.latlng.lat &&data[i][21] ==place.latlng.lng){
@@ -297,8 +315,6 @@
 
 
 
-
-        //不知道这是干什么用的，视图看起来很别扭
         // let shownLayer, polygon;
         // function removePolygon() {
         //   if (shownLayer) {
@@ -384,5 +400,16 @@
 </script>
 
 <style>
-
+#parkflow #Legend{
+  border-width: 1px;
+  border-style: solid;
+  border-color: rgba(40, 176, 213, 1);
+  color: white;
+  position: absolute;
+  bottom:1%;
+  right: 2%;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 999;
+  padding: 10px;
+}
 </style>

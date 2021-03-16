@@ -100,7 +100,7 @@
   /* 表格内背景颜色 */
 
   #chart .el-table th{
-    color: orange;
+    color: #02C1D7;
     font-weight: 700;
     background-color: rgba(42, 91, 132, 0.7);
     font-size: 16px;

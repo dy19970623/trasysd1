@@ -208,7 +208,7 @@
   /* 表格内背景颜色 */
 
   #abc .el-table th{
-    color: orange;
+    color: #02C1D7;
     font-weight: 700;
     background-color:rgba(43,81,113,0.7);
     font-size: 16px;

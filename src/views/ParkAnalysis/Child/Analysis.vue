@@ -166,15 +166,16 @@
             text: '停车场流量最高TOP5',
             y:'2%',
             textStyle:{
-              fontSize:15,color:'#FFFFFF'
+              fontSize:18,
+              color:'#02C1D7'
             }
 
           },{
             text: '停车场流量最低TOP5',
-            fontSize:15,color:'#FFFFFF',
             y: '45%',
             textStyle:{
-              fontSize:15,color:'#FFFFFF'
+              fontSize:18,
+              color:'#02C1D7'
             }
 
           }],
@@ -425,7 +426,8 @@
             text: '停车场流量分析',
             y:'-2%',
             textStyle:{
-              fontSize:15,color:'#FFFFFF'
+              fontSize:18,
+              color:'#02C1D7'
             }
           }],
           tooltip : {
@@ -599,7 +601,8 @@
             text: '停车场流量最高TOP5',
             y:'2%',
             textStyle:{
-              fontSize:15,color:'#FFFFFF'
+              fontSize:18,
+              color:'#02C1D7'
             }
             //textAlign: 'center'
           }/*, {
@@ -614,7 +617,8 @@
             text: '停车场流量最低TOP5',
             y: '45%',
             textStyle:{
-              fontSize:15,color:'#FFFFFF'
+              fontSize:18,
+              color:'#02C1D7'
             }
             //textAlign: 'center'
           }],
@@ -916,7 +920,8 @@
               text: '停车场流量分析',
               y:'-2%',
               textStyle:{
-                fontSize:15,color:'#FFFFFF'
+                fontSize:18,
+                color:'#02C1D7'
               }
             }],
             tooltip : {
@@ -1055,7 +1060,8 @@
               text: '停车场流量分析',
               y:'-2%',
               textStyle:{
-                fontSize:15,color:'#FFFFFF'
+                fontSize:18,
+                color:'#02C1D7'
               }
             }],
             tooltip : {
@@ -1237,7 +1243,8 @@
               text: '停车场流量分析',
               y:'-2%',
               textStyle:{
-                fontSize:15,color:'#FFFFFF'
+                fontSize:18,
+                color:'#02C1D7'
               }
             }],
             tooltip : {
@@ -1353,13 +1360,13 @@
     height:100%;
   }
   #one {
-    margin-top:2%;
+    margin-top:3%;
     background-size: 100% 100%;
     background-image: url("../../../assets/image/ParkAnalysis/top.png");
     height: 48%;
   }
   #two{
-    margin-top:10px;
+    margin-top:16px;
     background-size: 100% 100%;
     background-image: url("../../../assets/image/ParkAnalysis/top.png");
     height: 47%;
@@ -1393,7 +1400,7 @@
   }
 
   #a1 {
-    padding-top: 6%;
+    padding-top: 5%;
     padding-left: 5%;
     width: 96%;
     /* height: 19%; */
