@@ -1452,7 +1452,7 @@ export default {
             right: '20px',
             top: 26,
             textStyle: {
-              fontSize: 30,
+              fontSize: 23,
               color: '#feb64d'
             }
           },

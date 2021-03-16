@@ -28,6 +28,7 @@ const Taxi_Zone =() =>import('../views/TaxiAnalysis/Taxi_Zone')
 
 //数据融合
 const TaxiBusFusion =() =>import('../views/TaxiBusAnalysis/TaxiBusFusion')
+const Taxi_BackHeat =() =>import('../views/TaxiAnalysis/Taxi_BackHeat')
 //自己加上自己的懒加载
 Vue.use(VueRouter)
 //创建router
@@ -127,6 +128,10 @@ const routes=[
   {
     path: '/taxi_bus',
     component:TaxiBusFusion,
+  },
+  {
+    path: '/taxi_backheat',
+    component:Taxi_BackHeat,
   }
 ]
 

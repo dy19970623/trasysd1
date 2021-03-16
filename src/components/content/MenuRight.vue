@@ -30,6 +30,7 @@
       <el-submenu  index="3">
         <template slot="title" style="background:transparent"><div class="plabel">数据融合</div></template>
         <el-menu-item index="3-1"><router-link to="/taxi_bus"><div class="plabel1">交通热点分析</div></router-link></el-menu-item>
+        <el-menu-item index="3-2"><router-link to="/taxi_backheat"><div class="plabel1">逆向热力图</div></router-link></el-menu-item>
 
       </el-submenu>
     </el-menu>
