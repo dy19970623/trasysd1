@@ -32,7 +32,7 @@ export default {
       let PRBicycle_Overall_option2 = {
 		    //backgroundColor: 'rgba(255,255,255,0.1)',
 		    title: [{
-		        x: "10%",
+		        x: "11%",
             y: "75%",
 		        bottom: 40,
 		        text: '车站数量',
@@ -43,7 +43,7 @@ export default {
                 backgroundColor: 'red',
 		        },
 		    }, {
-		        x: "42%",
+		        x: "43%",
             y: "75%",
 		        bottom: 40,
 		        text: '空闲车辆',
@@ -53,7 +53,7 @@ export default {
 		            color: 'white'
 		        },
 		    }, {
-		        x: "70.8%",
+		        x: "72%",
             y: "75%",
 		        bottom: 40,
 		        text: '锁位使用率%',
@@ -335,7 +335,7 @@ export default {
 #chordChart1{
   width: 90%;
   height: 78%;
-  margin-top: 1%;
+  margin-top: 0%;
   margin-left: 5%;
   background:url(../../../assets/image/PRBicycle_Overall/Bar_LeftTop1.png);
   background-repeat: no-repeat;
@@ -345,9 +345,14 @@ export default {
   opacity: 0.5;
 }
 .title1 {
-  height: 15%;
+  width: 99.4%;
+  height: 16%;
   font-size:125%;
+  text-align:center;
   line-height: 200%;
   color:rgb(44, 188, 255);
+  font-weight:bold;
+  width: 97.6%;
+  margin-left: 0.5%;
 }
 </style>

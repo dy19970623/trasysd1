@@ -4,7 +4,7 @@
 <template>
   <div id="box">
     <div id="RightBox" >
-      <el-tabs style="height: 100% " v-model="activeName">
+      <el-tabs style="height: 100%"  v-model="activeName">
         <el-tab-pane label=" 统计分析" name="first" style="left:5%" :key="'first'"  ><Analysis/></el-tab-pane>
         <el-tab-pane label="停车场信息管理" name="second" :key="'second'"><Manage/> </el-tab-pane>
         <el-tab-pane label="停车诱导" name="third"  :key="'third'"><Guide/></el-tab-pane>
@@ -45,6 +45,7 @@
   .el-tabs__item {
     color: #f5f7fa;
   }
+
   #RightBox{
     position: absolute;
     float: left;
@@ -60,7 +61,6 @@
   #RightBox .el-tabs__header {
     position: relative;
     padding-top: 3%;
-    /*margin: 0 0 15px;*/
     margin: 0;
   }
   #RightBox .el-tabs__item{
@@ -77,12 +77,12 @@
     width:100%;
     height: 100%;
   }
-  #RightBox .el-tabs__nav{
+  #RightBox  .el-tabs__nav{
     float: inherit;
   }
   #RightBox .el-tabs__active-bar{
     float: inherit;
-    height: 0px;
+     height: 0px;
 }
   .el-main{
     overflow: hidden;

@@ -197,9 +197,15 @@ export default {
   opacity: 0.5;
 }
 .title2 {
+  width: 99.4%;
   height: 13%;
   font-size:125%;
-  line-height: 200%;
+  line-height: 250%;
+  text-align:center;
   color:rgb(44, 188, 255);
+  font-weight:bold;
+
+  width: 97.6%;
+  margin-left: 0.5%;
 }
 </style>

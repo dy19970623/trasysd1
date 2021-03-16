@@ -6,7 +6,7 @@
 <template>
   <div id="PRBicycle_Shared">
     <div id="PRBicycleShared_container" class="container"></div>
-    <input id="domain4" class="button blue" type="button" @click="changeRentOverlay();" value="切换借车点/还车点位置" />
+
     <rightdomain ref="rightdomain"></rightdomain>
     <SharedLengend></SharedLengend>
   </div>
@@ -164,22 +164,7 @@ export default {
 .container{
   width:100%;height:100%
 }
-#domain4 {
-  width:12%;
-  height:7%;
-  top:92%;
-  left:43%;
-  position:absolute;
-  z-index:9999;
-  border:0px;
-  border-radius: 5px;
-  box-shadow: 2px 2px 5px rgba(153, 153, 153, 1);
-  font-family: '微软雅黑 Bold', '微软雅黑 Regular', '微软雅黑';
-  font-weight: 700;
-  font-style: normal;
-  font-size: 20px;
-  color: #1E1E1E;
-}
+
 
 .container .BMap_cpyCtrl{
   display: none;

@@ -25,7 +25,7 @@ export default {
     RightBox
   },
   mounted() {
-    setInterval(this.remove_line2,10000)
+    setInterval(this.remove_line2,1000)
   },
   computed: {
 
@@ -105,7 +105,7 @@ export default {
           zoom: 12,
           pitch: 60,
           bearing: -10,
-          style: 'mapbox://styles/litaizeng/cklt2ts8a21u318psl7vdmurq',
+          style: 'mapbox://styles/litaizeng/ckm398gud9bmz17rykd0lemst',
           boxHeight: 35,
 
           postEffect: {
@@ -137,7 +137,7 @@ export default {
           name:'空闲车辆',
           shading: 'realistic',
           coordinateSystem: 'mapbox',
-          minHeight:10,
+          minHeight:10,//10.2
           barSize: 0.2,
           silent: false,
           label: {
@@ -155,6 +155,10 @@ export default {
     },
     remove_line2() {
       let res = PRBicycleOverall.drawsite()
+      for (let i = 0; i < res[0].length; i++) {
+        const element = res[0][i].value[2];
+        //console.log(element)  
+      }
       this.mapload(res)
     }
 
@@ -163,7 +167,7 @@ export default {
 </script>
 
 <style>
-body, html,.map {
+.map {
    width:100%;
    height:100%;
    overflow: hidden;

@@ -73,7 +73,7 @@ export default {
 </script>
 
 <style>
-.el-tabs__content{
+  #Bike_inputBox .el-tabs__content{
   display: none;
 }
   .el-tabs__item {
@@ -88,5 +88,15 @@ export default {
     z-index:600;
     background-color:#08080D;
     opacity: 0.95;
+  }
+  #Bike_inputBox .el-tabs__nav{
+    float: inherit;
+  }
+  #Bike_inputBox .el-tabs__active-bar{
+    float: inherit;
+    height: 0px;
+  }
+  #Bike_inputBox .el-tabs__item{
+    font-size: 20px;
   }
 </style>

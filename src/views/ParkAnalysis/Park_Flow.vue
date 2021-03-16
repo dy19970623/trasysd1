@@ -41,8 +41,8 @@
         let map = L.map("map", {
           minZoom: 3,
           maxZoom: 18,
-          center: [39.91, 116.35],
-          zoom: 12,
+          center: [39.92, 116.35],
+          zoom: 13,
           zoomControl: false,
           attributionControl: false,
           crs: L.CRS.EPSG3857,

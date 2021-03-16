@@ -1,25 +1,42 @@
 <template>
   <div class="content">
-    <div id="zaomap">
+    <div id="leftbox">
+      <div style="position: absolute;font-weight: 700;color:#02C1D7;font-size: 24px;z-index: 99;margin-left: 16%;margin-top: 0.5%;">出租车和公交车早高峰出行热点</div>
+      <div id="zaomap"></div>
     </div>
-    <div id="wanmap">
+    <div id="rightbox">
+      <div style="position: absolute;font-weight: 700;color:#02C1D7;font-size: 24px;z-index: 99;margin-left: 15%;margin-top: 0.5%;">出租车和公交车晚高峰出行热点</div>
+      <div id="wanmap"></div>
     </div>
-    <div class="title">
-      <div style="float: left;width: 50%">出租车和公交车早高峰出行热点</div>
-      <div style="float: left;width: 50%">出租车和公交车晚高峰出行热点</div>
-    </div>
-<!--    <div class="legend">
-      <p>图例</p>
-      <div id="bus">
-        <div>公交车登量</div>
-        <div>
-          <p>大于1500</p>
-          <p>1000-1500</p>
-          <p>0-1000</p>
-        </div>
+   <div class="legend" >
+      <div id="bus" >
+        <div style="padding: 10px 15px 10px 15px;
+    border-bottom: 1px solid rgba(40, 176, 213, 1);">公交车登量</div>
+          <div id="lengendcolor" style="margin-top: 12px;">
+              <div id="max"></div>
+              <div id="middle"></div>
+              <div id="little"></div>
+          </div>
+          <div id="lengendcontent">
+              <div style="     padding-top: 9px;">&gt1500</div>
+              <div style=" margin-top: 37px;">1000-1500</div>
+              <div style=" margin-top: 33px;">0-1000</div>
+          </div>
       </div>
-      <div id="taxi">出租车和公交车晚高峰出行热点</div>
-    </div>-->
+      <div id="taxi" >
+        <div style="padding: 10px 15px 10px 15px;
+    border-bottom: 1px solid rgba(40, 176, 213, 1);">出租车热点</div>
+        <div id="heatmapcon">
+          <img style="float: left" src="../../assets/image/TaxiBusAnalysis/relitu.png" >
+          <div style="float: left;">
+            <div style="     padding-top: 9px;">800</div>
+            <div style=" margin-top: 37px;">400</div>
+            <div style=" margin-top: 33px;">0</div></div>
+
+        </div>
+
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -41,7 +58,7 @@
             bearing : 30,  // 旋转角
             dragRotatePitch: true,
             baseLayer: new maptalks.TileLayer('base', {
-              urlTemplate:'https://api.mapbox.com/styles/v1/litaizeng/cklt2ts8a21u318psl7vdmurq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
+              urlTemplate:'https://api.mapbox.com/styles/v1/litaizeng/ckh4sgqak0i9319mywoay9rkv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
               subdomains: ['a','b','c','d'],
             }),
             attribution:false
@@ -54,7 +71,7 @@
             bearing : 30,  // 旋转角
             dragRotatePitch: true,
             baseLayer: new maptalks.TileLayer('base', {
-              urlTemplate:'https://api.mapbox.com/styles/v1/litaizeng/cklt2ts8a21u318psl7vdmurq/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
+              urlTemplate:'https://api.mapbox.com/styles/v1/litaizeng/ckh4sgqak0i9319mywoay9rkv/tiles/256/{z}/{x}/{y}@2x?access_token=pk.eyJ1IjoibGl0YWl6ZW5nIiwiYSI6ImNrbHhycTZyNzEza2IydnBsbmo3dHh0Z3UifQ.q8qjMrqztI3hgqcyxolfMQ',
               subdomains: ['a','b','c','d'],
             }),
             attribution:false
@@ -86,12 +103,16 @@
             if(BusZaoGaoFeng.msg[i].CHANGE_NUM>500){
               let textNamerr=BusZaoGaoFeng.msg[i].siteName+","+BusZaoGaoFeng.msg[i].CHANGE_NUM;
               let colorrr="";
+              let widthrrr;
               if(BusZaoGaoFeng.msg[i].CHANGE_NUM>1500){
-                colorrr='#8A00E1';
+                colorrr='#FF0000';
+                widthrrr =8;
               }else if(BusZaoGaoFeng.msg[i].CHANGE_NUM>1000){
-                colorrr='#00C5FF';
+                colorrr='#00FF00';
+                widthrrr =6;
               }else{
-                colorrr='#C20B45';
+                colorrr='#0000FF';
+                widthrrr=4
               }
               let fff=2000+parseInt(BusZaoGaoFeng.msg[i].CHANGE_NUM);
               let poi1=[parseFloat(BusZaoGaoFeng.msg[i].lat), parseFloat(BusZaoGaoFeng.msg[i].lng)];
@@ -99,7 +120,7 @@
               let unitLine = new maptalks.LineString(poii, {
                 symbol: {
                   'lineColor': colorrr,
-                  'lineWidth': 4
+                  'lineWidth': widthrrr
                 },
                 properties: {
                   'altitude': [1000,fff] //altitude for all vertexes
@@ -116,12 +137,16 @@
             if(BusWanGaoFeng.msg[i].CHANGE_NUM>500){
               let textNamerr=BusWanGaoFeng.msg[i].siteName+","+BusWanGaoFeng.msg[i].CHANGE_NUM;
               let colorrr="";
+              let widthrrr;
               if(BusWanGaoFeng.msg[i].CHANGE_NUM>1500){
-                colorrr='#8A00E1';
+                colorrr='#FF0000';
+                widthrrr =8;
               }else if(BusWanGaoFeng.msg[i].CHANGE_NUM>1000){
-                colorrr='#00C5FF';
+                colorrr='#00FF00';
+                widthrrr =6;
               }else{
-                colorrr='#C20B45';
+                colorrr='#0000FF';
+                widthrrr=4;
               }
               let fff=2000+parseInt(BusWanGaoFeng.msg[i].CHANGE_NUM);
               let poi1=[parseFloat(BusWanGaoFeng.msg[i].lat), parseFloat(BusWanGaoFeng.msg[i].lng)];
@@ -129,7 +154,7 @@
               let unitLine = new maptalks.LineString(poii, {
                 symbol: {
                   'lineColor': colorrr,
-                  'lineWidth': 4
+                  'lineWidth': widthrrr,
                 },
                 properties: {
                   'altitude': [1000,fff] //altitude for all vertexes
@@ -148,12 +173,16 @@
              that.map2.setCenter(a)
              let b=that.map.getZoom()
              that.map2.setZoom(b)
+            let c=that.map.getView()
+            that.map2.setView(c)
           });
           this.map2.on('viewchange', function (param) {
             let a=that.map2.getCenter()
             that.map.setCenter(a)
             let b=that.map2.getZoom()
             that.map.setZoom(b)
+            let c=that.map.getView()
+            that.map2.setView(c)
           });
         }
 
@@ -165,33 +194,80 @@
   {
     width: 100%;
     height: 100%;
+  }
+  #leftbox
+  {
+    float: left;
+    width: 50%;
+    height: 100%;
+    background-image: url("../../assets/image/TaxiBusAnalysis/border.png");
+    background-size: 100% 100%;
+  }
+  #rightbox
+  {
 
+    float: left;
+    width: 50%;
+    height: 100%;
+    background-image: url("../../assets/image/TaxiBusAnalysis/border.png");
+    background-size: 100% 100%;
   }
 #zaomap
 {
-  float: left;
-  width: 50%;
-  height: 100%;
+  margin-top: 0.5%;
+  margin-left: 0.5%;
+  width: 99%;
+  height: 99%;
 }
 #wanmap
  {
-  float: left;
-  width: 50%;
-  height: 100%;
+  margin-top: 0.5%;
+  margin-left: 0.5%;
+  width: 99%;
+  height: 99%;
 }
-  .title{
-    position: absolute;
-    width: 100%;
-    top: 10px;
-    color: white;
-  }
+
   .legend{
-    background-color: #19344B;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgba(40, 176, 213, 1);
     color: white;
     position: absolute;
-    border:1px solid #2cbcff;
-    bottom:10px;
-    float:left;
-    left:100px
+    bottom: 0px;
+    right: 0px;
+    background-color: rgba(0,0,0,0.7);
   }
+
+  #bus{
+    float: right;
+
+  }
+  #taxi{
+    float: left;
+    border-right: 1px solid rgba(40, 176, 213, 1);
+  }
+  #lengendcolor{
+      margin-right: 7px;
+    margin-left: 7px;
+      float: left;
+  }
+
+    #max{
+        width: 25px;
+        height: 25px;
+        background-color: #FF0000;
+    }
+   #middle{
+      width: 25px;
+      height: 25px;
+      background-color: #00FF00;
+     margin-top: 26px;
+  }
+  #little{
+      width: 25px;
+      height: 25px;
+      background-color: #0000FF;
+    margin-top: 26px;
+  }
+
 </style>

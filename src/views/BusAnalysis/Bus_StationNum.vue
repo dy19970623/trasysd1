@@ -66,7 +66,7 @@ export default {
 	        realtime: false,//拖拽时，是否实时更新
           inverse:true,  //是否反转 visualMap 组件
 	        inRange: {
-	           color: ['#E3CFA7', '#D97362', '#CCA56C ', '#E07072', '#C20B45']
+	           color: ['#E3CFA7', '#CCA56C', '#D97362 ', '#E07072', '#C20B45']
 	        },
 	        max:8795,
           itemHeight:25,
@@ -86,7 +86,7 @@ export default {
 	        pitch: 60,
 	        bearing: -10,
           renderOnMoving:false,
-	        style: 'mapbox://styles/litaizeng/cklt2ts8a21u318psl7vdmurq',
+	        style: 'mapbox://styles/litaizeng/ckm398gud9bmz17rykd0lemst',
 	        boxHeight: 35,
 	        postEffect: {
 	            enable: true,
@@ -217,6 +217,7 @@ export default {
         itemStyle: {
           //柱形图圆角，鼠标移上去效果，如果只是一个数字则说明四个参数全部设置为那么多
           normal: {
+             barBorderRadius:[4, 4, 0, 0],
             color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{
               offset: 0,
               color: '#19344B'
@@ -701,11 +702,7 @@ export default {
 
 <style>
 /*@import '../assets/css/BusStationNum/3D_bar.css';*/
-.BusStationNum{
-  height: 25%;
-  width: 100%;
-}
-body, html,.map {
+.map {
    width:100%;
    height:100%;
    overflow: hidden;
@@ -732,7 +729,6 @@ body, html,.map {
   background-repeat: no-repeat;
   background-size: 100% 100%;
 }
-
 .BSN_Chart1{
   width: 89%;
   height: 78%;
@@ -780,9 +776,10 @@ input::-webkit-input-placeholder {
   height: 80%;
   margin-right: 2%;
   text-align:center;
-  border: 1px solid white;
+  border: 1px solid #3d97f6 ;
   border-radius: 9px;
-  background-color:DimGrey;
+  background-color:rgba(25,52,75,0.7) ;
+  -webkit-text-fill-color:#bcd4e8;/* 设置字体颜色 */
 }
 /*按钮 */
 .layui-btn:hover {background-color:rgb(201, 201, 201)}
@@ -812,7 +809,7 @@ input::-webkit-input-placeholder {
   width: 80%;
   left:10%;
   color: white;
-  margin-top: 16%;
+  margin-top: 14%;
 }
 .layui-table {/*table */
   width: 100%;
@@ -845,7 +842,7 @@ td{background-color:#3b3b3b;}
   width: 90%;
   height: 34%;
   padding: 0 0;
-  margin-top: 30%;
+  margin-top:26%;
   margin-left:5%;
 }
 #charts{
@@ -853,7 +850,7 @@ td{background-color:#3b3b3b;}
 	float:right;
   position: absolute;
   width: 84%;
-  height: 30%;
+  height: 28%;
   padding: 0 0;
   margin-top: 30%;
   margin-left:5%;;

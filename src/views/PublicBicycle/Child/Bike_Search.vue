@@ -568,7 +568,7 @@ export default {
 }
 #chart1{
   position:absolute;
-  top:5%;
+  top:7%;
   width: 82%;
   height: 20%;
   border:40px solid transparent;
@@ -576,7 +576,7 @@ export default {
 }
 #chart2{
   position: absolute;
-  top: 36%;
+  top: 39%;
   width: 83%;
   height: 49%;
   border: 40px solid transparent;

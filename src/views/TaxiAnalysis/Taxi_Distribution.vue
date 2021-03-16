@@ -1465,7 +1465,7 @@ export default {
   methods: {
     getbmap() {
       let mapData = {
-        title:'出租车位置分布',
+        title:'早高峰出租车位置分布',
         mapColor:'#5c9ac1',   //地图填充颜色
         borderColor:'#5278a7',//地图边框颜色
         shadowColor: '#5174a4', //阴影颜色
@@ -1598,7 +1598,7 @@ export default {
 </script>
 
 <style>
-body, html,#Taxi_mainMap {
+#Taxi_mainMap {
    width:100%;
    height:100%;
    overflow: hidden;

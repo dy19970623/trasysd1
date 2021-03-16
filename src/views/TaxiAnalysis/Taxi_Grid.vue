@@ -6,7 +6,8 @@
  */
 <template>
 <div id="TaxiGrid">
-  <div ref="map" class="map"></div></div>
+  <div ref="map" class="map"></div>
+</div>
 </template>
 <script>
 import echarts from 'echarts'
@@ -1417,7 +1418,7 @@ export default {
     getbmap() {
     let COLORS = ["#DCF0FF","#BBE1FD","#8FCAF4", "#58A9E4", "#0D8DE9", "#0D6EB4", "#00528D","#023356"];
 
-    let lngExtent = [116.06, 116.72];	//经纬度的范围
+    let lngExtent = [116.12, 116.78];	//经纬度的范围
 		let latExtent = [39.7, 40.2];
 		let cellCount = [50, 50];			//设置经纬度范围内网格的个数，南北方向50个，东西方向50个
 		let cellSizeCoord = [				//单个网格的经度范围和纬度范围
@@ -1472,11 +1473,26 @@ export default {
 				(latExtent[0] + latIndex * cellSizeCoord[1]).toFixed(6)
 			]));
 		}
-
+console.log(data)
 
     let option = {
-      tooltip: {},
+      title: {
+          text: '出租车乘客OD网格图',
+          right: '20px',
+          top: 26,
+          textStyle: {
+            fontSize: 30,
+            color: '#feb64d'
+          }
+        },
 			legend:{right:'5%'},
+      tooltip: {
+	      // trigger: 'item',
+	      transitionDuration: 0,
+	      formatter: function(station) {
+	        return 'OD点：' + station.data[3] +'个';
+	      }
+	    },
 			visualMap: {
 				type: 'piecewise',//定义为分段型
 				inverse: true,//是否反转 visualMap 组件
@@ -1484,27 +1500,27 @@ export default {
 				right: '2%',
 				pieces: [
 				{
-					value: 0,label:'0-5', color: COLORS[7]
+				  gt:0,lte:5,label:'0-5', color: COLORS[7]
 				},
 				{
-					value: 1,label:'5-100', color: COLORS[6]
+					gt:5,lte:100,label:'5-100', color: COLORS[6]
 				}, {
-					value: 2,label:'100-500', color: COLORS[5]
+					gt:100,lte:500,label:'100-500', color: COLORS[5]
 				}, {
-					value: 3,label:'500-1000', color: COLORS[4]
+					gt:500,lte:1000,label:'500-1000', color: COLORS[4]
 				}, {
-					value: 4,label:'1000-1500', color: COLORS[3]
+					gt:1000,lte:1500,label:'1000-1500', color: COLORS[3]
 				}, {
-					value: 5,label:'1500-2000', color: COLORS[2]
+					gt:1500,lte:2000,label:'1500-2000', color: COLORS[2]
 				},{
-					value: 6,label:'2000-3000', color: COLORS[1]
+					gt:2000,lte:3000,label:'2000-3000', color: COLORS[1]
 				},{
-					value: 7,label:'3000以上', color: COLORS[0]
+					gt:3000,label:'3000以上', color: COLORS[0]
 				}],
 				borderColor: '#A9A9A9',
 				borderWidth: 1.5,
 				backgroundColor: 'dimgray',
-				dimension: 2,
+				dimension: 3,
         textStyle: {
           //图例文字的样式
           color: '#FFF'     //图例文字颜色，大小等配置
@@ -1546,7 +1562,7 @@ export default {
     let map = echarts.init(this.$refs.map)
     map.setOption(option) // 获取到的百度地图对象bmap适用于所有的百度地图的接口
     let bmap = map.getModel().getComponent('bmap').getBMap()
-    bmap.addControl(new BMap.MapTypeControl())
+    //bmap.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP ]}))// 选择地图类型 (地图,卫星,三维),这里只引用了地图和卫星两种
     bmap.setMapStyle(this.mapStyle)
     }
   },
@@ -1556,7 +1572,7 @@ export default {
 </script>
 
 <style>
-body, html,.map {width:100%;height:100%;overflow: hidden;margin:0;font-family:"微软雅黑";position:absolute;}
+.map {width:100%;height:100%;overflow: hidden;margin:0;font-family:"微软雅黑";position:absolute;}
 .anchorBL{
   display:none
 }
